@@ -1,0 +1,14 @@
+{
+    "name": "fullstack-boilerplate",
+    "version": "1.0.0",
+    "description": "Fullstack application using Nuxt/Tailwind - AdonisJS/PotgreSQL",
+    "main": "index.js",
+    "scripts": {
+      "dev": "pnpm -r run dev",
+      "build": "pnpm -r run build"
+    },
+    "keywords": [],
+    "author": "DOLMAZON Dylan",
+    "license": "ISC"
+  }
+  
