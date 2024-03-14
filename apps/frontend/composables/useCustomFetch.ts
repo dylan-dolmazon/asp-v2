@@ -11,11 +11,16 @@ type HttpMethod =
   | "OPTIONS"
   | "TRACE";
 
-export const useCustomFetch = <T>(url: string, method: HttpMethod = "GET") => {
+export const useCustomFetch = <T>(
+  url: string,
+  method: HttpMethod = "GET",
+  datas?: any
+) => {
   const defaults: UseFetchOptions<T> = {
-    baseURL: "https://api.publicapis.org/",
+    baseURL: "http://localhost:3333",
     method: method,
     server: false,
+    body: datas,
   };
 
   return useLazyFetch(url, defaults);

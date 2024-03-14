@@ -1,32 +1,78 @@
 <script setup lang="ts">
-const schema = {
-  drink: (value: string) => {
-    if (value) {
-      return true;
-    }
+import type { Entry } from "@shared/types/EntriesTypes";
+import * as yup from "yup";
 
-    return "You must choose a drink";
-  },
+const schema = yup.object({
+  title: yup.string().required(),
+  api: yup.string().required(),
+  description: yup.string().required(),
+  auth: yup.string().required(),
+  https: yup.boolean().required(),
+  cors: yup.string().required(),
+  category: yup.string().required(),
+  link: yup.string().required(),
+});
+
+const onSubmit = async (values: Entry, { resetForm }: any) => {
+  await createEntry(values);
+  resetForm();
 };
-
-function onSubmit(values: any) {
-  console.log(JSON.stringify(values, null, 2));
-}
 </script>
 
 <template>
-  <div id="app">
-    <Form :validation-schema="schema" @submit="onSubmit" v-slot="{ values }">
-      <Field name="drink" type="radio" value="" /> None
-      <Field name="drink" type="radio" value="Tea" /> Tea
-      <Field name="drink" type="radio" value="Coffee" /> Coffee
+  <div class="flex flex-col text-center justify-center h-screen pt-10">
+    <h1 class="text-4xl font-bold mb-10">Add a new Entrie</h1>
+    <Form :validation-schema="schema" @submit="onSubmit">
+      <div class="inline-block">
+        <div class="m-5 flex flex-col w-96">
+          <Field name="title" placeholder="title" />
+          <ErrorMessage name="title" />
+        </div>
 
-      <ErrorMessage name="drink" />
+        <div class="m-5 flex flex-col w-96">
+          <Field name="api" placeholder="api" />
+          <ErrorMessage name="api" />
+        </div>
 
-      <button>Submit</button>
+        <div class="m-5 flex flex-col w-96">
+          <Field name="description" placeholder="description" />
+          <ErrorMessage name="description" />
+        </div>
 
-      <p>Values</p>
-      <pre>{{ values }}</pre>
+        <div class="m-5 flex flex-col w-96">
+          <Field name="auth" placeholder="auth" />
+          <ErrorMessage name="auth" />
+        </div>
+      </div>
+
+      <div class="inline-block">
+        <div class="m-5 flex flex-col w-96">
+          <Field
+            name="https"
+            type="checkbox"
+            :value="true"
+            :unchecked-value="false"
+            placeholder="https"
+          />
+          <ErrorMessage name="https" />
+        </div>
+
+        <div class="m-5 flex flex-col w-96">
+          <Field name="cors" placeholder="cors" />
+          <ErrorMessage name="cors" />
+        </div>
+
+        <div class="m-5 flex flex-col w-96">
+          <Field name="category" placeholder="category" />
+          <ErrorMessage name="category" />
+        </div>
+
+        <div class="m-5 flex flex-col w-96">
+          <Field name="link" placeholder="link" />
+          <ErrorMessage name="link" />
+        </div>
+      </div>
+      <button class="block w-fit mx-auto mt-5" type="submit">Submit</button>
     </Form>
   </div>
 </template>

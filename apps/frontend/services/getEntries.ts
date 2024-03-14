@@ -1,9 +1,5 @@
-import type { Entries } from "@shared/types/EntriesTypes";
-import { useCustomFetch } from "../composables/useCustomFetch";
+import type { Entry } from "@shared/types/EntriesTypes";
 
 export const getEntries = async () => {
-  return useCustomFetch<{
-    count: number;
-    entries: Entries[];
-  }>("entries");
+  return useCustomFetch<Entry[]>("entries");
 };
