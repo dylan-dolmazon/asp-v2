@@ -30,7 +30,9 @@
     "#start/*": "./start/*.js",
     "#tests/*": "./tests/*.js",
     "#config/*": "./config/*.js",
-    "@shared/*": ["../../shared/*"]
+    "@shared/*": [
+      "../../shared/*"
+    ]
   },
   "devDependencies": {
     "@adonisjs/assembler": "^7.1.x",
@@ -56,6 +58,8 @@
     "@adonisjs/cors": "^2.2.x",
     "@adonisjs/lucid": "^20.1.x",
     "@vinejs/vine": "^1.7.x",
+    "axios": "^1.6.x",
+    "dayjs": "^1.11.x",
     "luxon": "^3.4.x",
     "pg": "^8.11.x",
     "reflect-metadata": "^0.2.x"

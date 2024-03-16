@@ -4,10 +4,10 @@ import { storeUserValidator } from '#validators/Auth/store_user'
 import type { HttpContext } from '@adonisjs/core/http'
 
 export default class AuthController {
-  async register({ request }: HttpContext) {
+  async register({ request, response }: HttpContext) {
     const payload = await request.validateUsing(storeUserValidator)
 
-    return User.create(payload)
+    return response.status(201).send(User.create(payload))
   }
 
   async login({ request, response }: HttpContext) {

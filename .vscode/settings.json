@@ -11,4 +11,16 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "prettier.prettierPath": "",
+  "sqltools.connections": [
+    {
+      "previewLimit": 50,
+      "server": "localhost",
+      "port": 5432,
+      "driver": "PostgreSQL",
+      "database": "asp-v2",
+      "username": "dylan",
+      "password": "root",
+      "name": "asp-v2"
+    }
+  ]
 }
