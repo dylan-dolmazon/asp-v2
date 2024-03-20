@@ -17,8 +17,9 @@ export const storeUserValidator = vine.compile(
       const user = await db.from('users').where('email', value).first()
       return !user
     }),
-    firstName: vine.string().trim().minLength(3).alphaNumeric(),
-    lastName: vine.string().trim().minLength(3).alphaNumeric(),
+    firstname: vine.string().trim().minLength(3).alphaNumeric(),
+    lastname: vine.string().trim().minLength(3).alphaNumeric(),
+    role: vine.enum(['admin', 'moderator', 'user']),
     password: vine.string().minLength(6),
   })
 )

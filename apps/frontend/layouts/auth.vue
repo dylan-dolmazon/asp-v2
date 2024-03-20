@@ -16,6 +16,7 @@ useHead({
 <style lang="scss">
 .Auth {
   background-color: theme("colors.default.DEFAULT");
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;

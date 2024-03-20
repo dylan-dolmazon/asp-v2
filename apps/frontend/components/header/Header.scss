@@ -1,0 +1,56 @@
+.Header {
+  position: relative;
+  &-navbar {
+    nav {
+      border-top: 1px solid theme("colors.white");
+      width: 100%;
+    }
+
+    &-img {
+      margin: 40px 0;
+      transform: translate(100%);
+    }
+
+    &-item {
+      display: block;
+      padding: 1rem 0;
+      margin: 20px 0;
+      cursor: pointer;
+
+      &--active {
+        border-right: 5px solid theme("colors.secondary.DEFAULT");
+      }
+    }
+  }
+
+  &-user {
+    position: fixed;
+    bottom: 0;
+    border-top: 1px solid theme("colors.white");
+
+    &-settings {
+      &--disabled {
+        display: none;
+      }
+
+      &--enabled {
+        display: block;
+        position: absolute;
+        left: 80%;
+        bottom: 80%;
+        z-index: 999;
+        background-color: theme("colors.background.settings");
+        color: theme("colors.white");
+        width: 215px;
+        border-radius: 20px;
+        padding: 20px;
+      }
+    }
+
+    &-connectIcon {
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
+  }
+}

@@ -41,11 +41,12 @@ export default {
           info: "hsl(212, 100%, 95%)",
           header: "#282c32",
           settings: "#1c1e23",
+          surface: "#e4e4e4"
         },
-        error: { DEFAULT: "hsl(5, 85%, 50%)" },
-        success: { DEFAULT: "hsl(120, 70%, 40%)" },
-        warning: { DEFAULT: "hsl(42, 100%, 60%)" },
-        info: { DEFAULT: "hsl(212, 100%, 45%)" },
+        error:"hsl(5, 85%, 50%)" ,
+        success:"hsl(120, 70%, 40%)" ,
+        warning:  "hsl(42, 100%, 60%)" ,
+        info: "hsl(212, 100%, 45%)" ,
         black:  "#000" ,
         white:  "#fff" ,
         logo: {

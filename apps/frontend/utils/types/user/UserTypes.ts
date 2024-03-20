@@ -1,10 +1,11 @@
-import { number, string } from "yup";
-
 export type User = {
   id?: number;
-  firstName: string;
-  lastName: string;
+  firstname: string;
+  lastname: string;
   username: string;
   email: string;
-  accessTokens?: string;
+  token?: Token;
+  updateAt?: string;
+  createdAt?: string;
+  role: string;
 };

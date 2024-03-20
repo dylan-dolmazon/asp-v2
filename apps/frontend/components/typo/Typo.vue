@@ -7,7 +7,7 @@ defineProps<{
 </script>
 
 <template>
-  <div>
+  <div class="inline-block">
     <template v-if="tag === 'span'">
       <span :class="['Typo', format, className]"><slot /></span>
     </template>

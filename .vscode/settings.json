@@ -11,6 +11,10 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "prettier.prettierPath": "",
+  "module-templates.engine": "handlebars",
+  "module-templates.templateFiles": [
+    "./templates/component.json",
+  ],
   "sqltools.connections": [
     {
       "previewLimit": 50,

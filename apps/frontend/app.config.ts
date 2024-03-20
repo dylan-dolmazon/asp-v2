@@ -3,5 +3,12 @@ export default defineAppConfig({
   ui: {
     primary: "default",
     gray: "gris",
+    notifications: {
+      position: "bottom-0",
+    },
+    success: "bg-success",
+    error: "bg-error",
+    warning: "bg-warning",
+    info: "bg-info",
   },
 });

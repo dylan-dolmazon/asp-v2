@@ -14,7 +14,7 @@ export default class AuthController {
     const { email, password } = await request.validateUsing(loginUserValidator)
 
     const user = await User.verifyCredentials(email, password)
-    const token = await User.accessTokens.create(user)
+    const token = await User.accessTokens.create(user, [user.role])
     return response.ok({
       token: token,
       ...user.serialize(),

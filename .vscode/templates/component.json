@@ -1,0 +1,37 @@
+{
+  "react-component": {
+    "displayName": "{{camel name}}",
+    "defaultPath": "apps/frontend/components",
+    "folder": "{{camel name}}",
+    "questions": {
+      "name": "Component name"
+    },
+    "files": [
+      {
+        "name": "{{pascal name}}.vue",
+        "content": [
+          "<script setup lang=\"ts\">",
+          "</script>",
+          "",
+          "<template>",
+          "<div class=\"{{pascal name}}\">",
+          "  {{camel name}}",
+          "</div>",
+          "</template>",
+          "",
+          "<style>",
+          "@import \"./{{camel name}}.scss\";",
+          "</style>"
+        ]
+      },
+      {
+        "name": "{{pascal name}}.scss",
+        "content": [
+          ".{{pascal name}} {",
+          "  // styles for {{camel name}}",
+          "}"
+        ]
+      }
+    ]
+  }
+}

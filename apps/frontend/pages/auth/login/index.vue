@@ -7,8 +7,21 @@ const schema = yup.object({
 });
 
 const onSubmit = async (values: any, { resetForm }: any) => {
-  await loginUser(values.email, values.password);
-  resetForm();
+  const { error, data } = await loginUser(values.email, values.password);
+  if (!error.value && data?.value) {
+    resetForm();
+    addToast(
+      "Connexion réussie",
+      [`Content de vous revoir ${data.value?.username}`],
+      "success"
+    );
+    const { token, ...userValue } = data.value;
+    const userCookie = useCookie<User>("user");
+    const tokenCookie = useCookie<Token>("token");
+    userCookie.value = JSON.parse(JSON.stringify(userValue));
+    tokenCookie.value = JSON.parse(JSON.stringify(token));
+    navigateTo("/");
+  }
 };
 </script>
 
@@ -37,6 +50,7 @@ const onSubmit = async (values: any, { resetForm }: any) => {
             size="sm"
             color="primary"
             type="submit"
+            class="mt-6"
             variant="solid"
             block
             label="Se connecter"
@@ -45,5 +59,28 @@ const onSubmit = async (values: any, { resetForm }: any) => {
         </Form>
       </div>
     </div>
+    <div class="link flex justify-between mt-10 h-fit">
+      <CustomLink
+        href="/auth/register"
+        variant="white"
+        :typo="{ format: 'normal', tag: 'p' }"
+      >
+        Pas encore inscrit ?
+      </CustomLink>
+      <span class="h-full w-0.5 bg-white" />
+      <CustomLink
+        href=""
+        variant="white"
+        :typo="{ format: 'normal', tag: 'p' }"
+      >
+        Mot de passe oublié ?
+      </CustomLink>
+    </div>
   </NuxtLayout>
 </template>
+
+<style scoped lang="scss">
+.link {
+  width: 430px;
+}
+</style>
