@@ -10,6 +10,7 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@nuxt/image": "^1.4.x",
     "@nuxt/ui": "^2.14.x",
     "@vee-validate/nuxt": "^4.12.x",
     "@vee-validate/yup": "^4.12.x",

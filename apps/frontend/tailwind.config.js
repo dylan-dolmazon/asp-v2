@@ -46,8 +46,8 @@ export default {
         success: { DEFAULT: "hsl(120, 70%, 40%)" },
         warning: { DEFAULT: "hsl(42, 100%, 60%)" },
         info: { DEFAULT: "hsl(212, 100%, 45%)" },
-        black: { DEFAULT: "#000" },
-        white: { DEFAULT: "#fff" },
+        black:  "#000" ,
+        white:  "#fff" ,
         logo: {
           yellow: "#e2d618",
         },

@@ -1,0 +1,113 @@
+.checkboxContainer {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.checkboxContainer .tgl {
+  display: none;
+}
+.checkboxContainer .tgl,
+.checkboxContainer .tgl:after,
+.checkboxContainer .tgl:before,
+.checkboxContainer .tgl *,
+.checkboxContainer .tgl *:after,
+.checkboxContainer .tgl *:before,
+.checkboxContainer .tgl + .tgl-btn {
+  box-sizing: border-box;
+}
+.checkboxContainer .tgl::-moz-selection,
+.checkboxContainer .tgl:after::-moz-selection,
+.checkboxContainer .tgl:before::-moz-selection,
+.checkboxContainer .tgl *::-moz-selection,
+.checkboxContainer .tgl *:after::-moz-selection,
+.checkboxContainer .tgl *:before::-moz-selection,
+.checkboxContainer .tgl + .tgl-btn::-moz-selection,
+.checkboxContainer .tgl::selection,
+.checkboxContainer .tgl:after::selection,
+.checkboxContainer .tgl:before::selection,
+.checkboxContainer .tgl *::selection,
+.checkboxContainer .tgl *:after::selection,
+.checkboxContainer .tgl *:before::selection,
+.checkboxContainer .tgl + .tgl-btn::selection {
+  background: none;
+}
+.checkboxContainer .tgl + .tgl-btn {
+  outline: 0;
+  display: block;
+  width: 4em;
+  height: 2em;
+  position: relative;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.checkboxContainer .tgl + .tgl-btn:after,
+.checkboxContainer .tgl + .tgl-btn:before {
+  position: relative;
+  display: block;
+  content: "";
+  width: 50%;
+  height: 100%;
+}
+.checkboxContainer .tgl + .tgl-btn:after {
+  left: 0;
+}
+.checkboxContainer .tgl + .tgl-btn:before {
+  display: none;
+}
+.checkboxContainer .tgl:checked + .tgl-btn:after {
+  left: 50%;
+}
+
+.checkboxContainer .tgl-skewed + .tgl-btn {
+  overflow: hidden;
+  transform: skew(-10deg);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transition: all 0.2s ease;
+  font-family: sans-serif;
+  background: theme("colors.default.DEFAULT");
+  opacity: 0.6;
+}
+.checkboxContainer .tgl-skewed + .tgl-btn:after,
+.checkboxContainer .tgl-skewed + .tgl-btn:before {
+  transform: skew(10deg);
+  display: inline-block;
+  transition: all 0.2s ease;
+  width: 100%;
+  text-align: center;
+  position: absolute;
+  line-height: 2em;
+  font-weight: bold;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
+}
+.checkboxContainer .tgl-skewed + .tgl-btn:after {
+  left: 100%;
+  content: attr(data-tg-on);
+  color: #fafafa;
+}
+.checkboxContainer .tgl-skewed + .tgl-btn:before {
+  left: 0;
+  content: attr(data-tg-off);
+  color: #fff;
+}
+.checkboxContainer .tgl-skewed + .tgl-btn:active:before {
+  left: -10%;
+}
+.checkboxContainer .tgl-skewed:checked + .tgl-btn {
+  opacity: 1;
+}
+.checkboxContainer .tgl-skewed:checked + .tgl-btn:before {
+  left: -100%;
+}
+.checkboxContainer .tgl-skewed:checked + .tgl-btn:after {
+  left: 0;
+}
+.checkboxContainer .tgl-skewed:checked + .tgl-btn:active:after {
+  left: 10%;
+}

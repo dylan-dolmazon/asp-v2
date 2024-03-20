@@ -1,0 +1,50 @@
+.TextInput {
+  position: relative;
+  margin-bottom: calc(1em * 1.5);
+  width: 100%;
+}
+
+label {
+  display: block;
+  margin-bottom: 4px;
+  width: 100%;
+}
+
+input {
+  border-radius: 5px;
+  border: 2px solid transparent;
+  padding: 15px 10px;
+  outline: none;
+  background-color: theme("colors.default.100");
+  width: 100%;
+  height: 40px;
+  transition:
+    border-color 0.3s ease-in-out,
+    color 0.3s ease-in-out,
+    background-color 0.3s ease-in-out;
+}
+
+input:focus {
+  border-color: theme("colors.default.500");
+}
+
+.help-message {
+  position: absolute;
+  bottom: calc(-1.5 * 1em);
+  left: 0;
+  margin: 0;
+  font-size: 14px;
+}
+
+.TextInput.has-error input {
+  background-color: theme("colors.background.error");
+  color: theme("colors.error.DEFAULT");
+}
+
+.TextInput.has-error input:focus {
+  border-color: theme("colors.error.DEFAULT");
+}
+
+.TextInput.has-error .help-message {
+  color: theme("colors.error.DEFAULT");
+}
