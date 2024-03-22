@@ -29,10 +29,7 @@
     "#database/*": "./database/*.js",
     "#start/*": "./start/*.js",
     "#tests/*": "./tests/*.js",
-    "#config/*": "./config/*.js",
-    "@shared/*": [
-      "../../shared/*"
-    ]
+    "#config/*": "./config/*.js"
   },
   "devDependencies": {
     "@adonisjs/assembler": "^7.1.x",

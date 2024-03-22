@@ -1,9 +1,9 @@
 <template>
   <div class="Container w-full h-full">
-    <div class="Container-headerComponent h-full">
+    <div class="Container-headerComponent h-full fixed">
       <Header />
     </div>
-    <div class="Container-content h-full w-full">
+    <div class="Container-content w-full">
       <RoutingTopBar />
       <slot />
     </div>
@@ -18,8 +18,10 @@
     background-color: theme("colors.background.header");
   }
   &-content {
-    width: 100%;
-    height: 100%;
+    width: 95%;
+    height: fit-content;
+    margin-left: 5%;
+    padding-bottom: 40px;
   }
 }
 </style>

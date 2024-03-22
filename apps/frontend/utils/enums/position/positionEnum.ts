@@ -1,33 +1,27 @@
-enum PositionFull {
+export enum PositionFull {
   GOALKEEPER = "GOALKEEPER",
   DEFENDER = "DEFENDER",
   MIDFIELDER = "MIDFIELDER",
   FORWARD = "FORWARD",
 }
 
-enum PositionFullFr {
+export enum PositionFullFr {
   GOALKEEPER = "Gardien",
   DEFENDER = "Défenseur",
   MIDFIELDER = "Milieu",
   FORWARD = "Attaquant",
 }
 
-enum PositionAbb {
+export enum PositionAbb {
   GOALKEEPER = "G",
   DEFENDER = "DEF",
   MIDFIELDER = "MID",
   FORWARD = "FOR",
 }
 
-enum PositionAbbFr {
+export enum PositionAbbFr {
   GOALKEEPER = "G",
   DEFENDER = "DEF",
   MIDFIELDER = "MIL",
   FORWARD = "ATT",
 }
-
-export type Position =
-  | PositionFull
-  | PositionAbb
-  | PositionFullFr
-  | PositionAbbFr;

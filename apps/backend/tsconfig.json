@@ -22,7 +22,6 @@
       "#tests/*": ["./tests/*.js"],
       "#start/*": ["./start/*.js"],
       "#config/*": ["./config/*.js"],
-      "@shared/*": ["../../shared/*"],
     },
   },
 }

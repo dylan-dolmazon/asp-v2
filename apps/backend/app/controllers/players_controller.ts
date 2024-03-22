@@ -3,10 +3,28 @@ import { createPlayerValidator } from '#validators/Player/create'
 import { updatePlayerValidator } from '#validators/Player/update'
 import { updateManyPlayerValidator } from '#validators/Player/update_many'
 import type { HttpContext } from '@adonisjs/core/http'
-
+import { getCountry } from '#services/country/get_country'
 export default class PlayersController {
-  async index(_ctx: HttpContext) {
-    return Player.all()
+  async index({ request }: HttpContext) {
+    const { page = 1 } = request.qs()
+    return await Player.query().orderBy('id', 'desc').paginate(page, 10)
+  }
+
+  async getRanking({ request }: HttpContext) {
+    const { page = 1 } = request.qs()
+    const players = await Player.query().orderBy('goalsscored', 'desc').paginate(page, 10)
+
+    // Utilisez Promise.all pour attendre que toutes les promesses se résolvent
+    const modifiedPlayers = await Promise.all(
+      players.serialize().data.map(async (player) => {
+        return {
+          ...player,
+          country: await getCountry(player.nationality),
+        }
+      })
+    )
+
+    return { data: modifiedPlayers, meta: players.serialize().meta }
   }
 
   async show({ params }: HttpContext) {

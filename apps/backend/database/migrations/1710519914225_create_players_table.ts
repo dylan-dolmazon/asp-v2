@@ -11,7 +11,7 @@ export default class extends BaseSchema {
       table.string('lastname').notNullable()
       table.integer('age').notNullable()
       table.string('position').notNullable()
-      table.string('nationality').notNullable()
+      table.string('nationality').notNullable().defaultTo('FR')
       table.integer('height').nullable()
       table.integer('weight').nullable()
       table.string('footed').notNullable()

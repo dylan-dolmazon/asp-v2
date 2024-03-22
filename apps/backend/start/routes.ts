@@ -26,6 +26,7 @@ router
 // ------------------- Players routes ------------------- //
 router.get('players/search', [PlayersController, 'search'])
 router.put('players/updates', [PlayersController, 'updateMany'])
+router.get('players/ranking', [PlayersController, 'getRanking'])
 router.resource('/players', PlayersController)
 
 // ------------------- User routes ------------------- //
@@ -37,12 +38,7 @@ router
   .prefix('user')
 
 // ------------------- Countries routes ------------------- //
-router
-  .group(() => {
-    router.get('', [CountriesController, 'index'])
-    router.get('/:code', [CountriesController, 'show'])
-  })
-  .prefix('countries')
+router.get('/countries', [CountriesController, 'index'])
 
 // ------------------- Dofas routes ------------------- //
 router

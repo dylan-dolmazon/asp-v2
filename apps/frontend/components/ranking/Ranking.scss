@@ -1,0 +1,47 @@
+.Ranking {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  margin-right: 15px;
+  border: 1.5px solid;
+  border-radius: 6px;
+  transform: rotate(45deg);
+
+  border-color: theme("colors.default.DEFAULT");
+  background-color: theme("colors.secondary.DEFAULT");
+  color: theme("colors.white");
+
+  &.classment-0 {
+    border-color: #dca146;
+    background: linear-gradient(
+      90deg,
+      rgba(253, 225, 141, 1) 0%,
+      rgba(249, 201, 101, 1) 59%,
+      rgba(197, 97, 13, 1) 100%
+    );
+  }
+
+  &.classment-1 {
+    border-color: #dca146;
+    background: linear-gradient(
+      90deg,
+      rgba(253, 225, 141, 1) 0%,
+      rgba(79, 76, 65, 1) 73%,
+      rgba(10, 8, 9, 1) 100%
+    );
+    color: theme("colors.white");
+  }
+
+  &.classment-2 {
+    border-color: #dca146;
+    background: linear-gradient(
+      90deg,
+      rgba(242, 242, 242, 1) 2%,
+      rgba(250, 250, 250, 1) 28%,
+      rgba(145, 145, 145, 1) 100%
+    );
+    color: theme("colors.black");
+  }
+}

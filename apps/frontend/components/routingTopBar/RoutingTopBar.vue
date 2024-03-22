@@ -34,7 +34,3 @@ const currentPage: pageType = pages_config.find(
     </div>
   </div>
 </template>
-
-<style>
-@import "./routingTopBar.scss";
-</style>
