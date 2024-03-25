@@ -1,7 +1,7 @@
 import { HttpContext } from '@adonisjs/core/http'
 import axios from 'axios'
 import dayjs from 'dayjs'
-import { Championnats, ClubInfo, Game } from '../../../../shared/types/ClubTypes.ts'
+import { Championnats, ClubInfo, Game } from '../../../frontend/utils/types/club/ClubTypes.ts'
 
 const apiUrl = 'https://api-dofa.fff.fr'
 

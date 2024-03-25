@@ -1,4 +1,4 @@
-export type pageType = {
+export type PageType = {
   title: string;
   url: string;
   path: string;

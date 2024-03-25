@@ -12,18 +12,15 @@ type HttpMethod =
   | "TRACE";
 
 export const useCustomFetch = async <T>(
-  url: string,
+  url: string | (() => string),
   method: HttpMethod = "GET",
-  datas?: any
+  options: UseFetchOptions<T> = {}
 ) => {
-  const defaults: UseFetchOptions<T> = {
+  const { data, pending, error } = await useLazyFetch(url, {
+    ...options,
+    method,
     baseURL: "http://localhost:3333",
-    method: method,
-    server: false,
-    body: datas,
-  };
-
-  const { data, pending, error } = await useLazyFetch(url, defaults);
+  });
   if (error.value?.data.errors) {
     addToast(
       `Erreur: ${error.value.statusCode} - ${error.value.statusMessage}`,

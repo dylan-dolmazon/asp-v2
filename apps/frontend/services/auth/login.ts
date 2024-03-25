@@ -1,3 +1,5 @@
 export const loginUser = async (email: string, password: string) => {
-  return useCustomFetch<User>(`user/login`, "POST", { email, password });
+  return await useCustomFetch<User>(`user/login`, "POST", {
+    body: { email, password },
+  });
 };

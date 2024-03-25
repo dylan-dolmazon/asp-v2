@@ -1,9 +1,9 @@
 <script setup lang="ts">
 const user = useCookie<User>("user");
 const route = useRoute();
-const currentPage: pageType = pages_config.find(
+const currentPage: PageType = pages_config.find(
   (page) => page.path === clearPagePathName(route.path)
-) as pageType;
+) as PageType;
 </script>
 
 <template>

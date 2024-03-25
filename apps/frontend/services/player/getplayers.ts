@@ -1,5 +1,7 @@
-import type { Player } from "@shared/types/PlayerTypes";
+import type { Player } from "~/utils/types/player/PlayerTypes";
 
 export const getPlayers = async (page: number = 1) => {
-  return useCustomFetch<{ data: Player[]; meta: Meta }>(`players?page=${page}`);
+  return await useCustomFetch<{ data: Player[]; meta: Meta }>(
+    `players?page=${page}`
+  );
 };

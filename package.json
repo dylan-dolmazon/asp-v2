@@ -2,6 +2,7 @@
     "name": "fullstack-boilerplate",
     "version": "1.0.0",
     "description": "Fullstack application using Nuxt/Tailwind - AdonisJS/PotgreSQL",
+    "type": "module",
     "main": "index.js",
         "scripts": {
       "dev": "pnpm -r run dev",

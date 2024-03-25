@@ -1,4 +1,4 @@
-export const pages_config: pageType[] = [
+export const pages_config: PageType[] = [
   {
     title: "",
     url: "",

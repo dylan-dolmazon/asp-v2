@@ -1,7 +1,5 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column, computed } from '@adonisjs/lucid/orm'
-import { getPosition } from '../../../../shared/functions/Position.ts'
-import { PositionFull } from '../../../frontend/utils/enums/position/positionEnum.ts'
+import { BaseModel, column } from '@adonisjs/lucid/orm'
 
 export default class Player extends BaseModel {
   @column({ isPrimary: true })
@@ -66,14 +64,4 @@ export default class Player extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime
-
-  @computed()
-  get fullname() {
-    return `${this.firstname} ${this.lastname.toUpperCase()}`
-  }
-
-  @computed()
-  get positionLabel() {
-    return getPosition(this.position as PositionFull)
-  }
 }

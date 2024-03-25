@@ -2,7 +2,7 @@ import {
   PositionFull,
   PositionAbbFr,
   PositionFullFr,
-} from "../../apps/frontend/utils/enums/position/positionEnum.ts";
+} from "../../enums/position/positionEnum.ts";
 
 export const getPosition = (
   position: PositionFull,

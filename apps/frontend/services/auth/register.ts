@@ -5,12 +5,14 @@ export const registerUser = async (
   lastname: string,
   password: string
 ) => {
-  return useCustomFetch<User>(`user/register`, "POST", {
-    email,
-    username,
-    lastname,
-    firstname,
-    password,
-    role: "user",
+  return await useCustomFetch<User>(`user/register`, "POST", {
+    body: {
+      email,
+      username,
+      lastname,
+      firstname,
+      password,
+      role: "user",
+    },
   });
 };

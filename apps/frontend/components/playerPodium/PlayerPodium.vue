@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { getPosition } from "../../../../shared/functions/Position";
+import { getPosition } from "~/utils/functions/position/getPosition";
 import type { FootedFull, PositionFull } from "../../.nuxt/imports";
 
 defineProps({
@@ -89,3 +89,4 @@ defineProps({
 <style>
 @import "./playerPodium.scss";
 </style>
+../../utils/functions/Position
