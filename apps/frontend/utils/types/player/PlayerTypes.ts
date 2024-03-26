@@ -7,10 +7,10 @@ export interface Player {
   id: string;
   firstname: string;
   lastname: string;
-  fullname: string;
+  fullname?: string;
   age: number;
   position: Position;
-  positionLabel: string;
+  positionLabel?: string;
   nationality: string;
   height?: number;
   weight?: number;

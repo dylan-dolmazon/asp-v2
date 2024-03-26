@@ -33,6 +33,7 @@ router.resource('/players', PlayersController)
 router
   .group(() => {
     router.post('register', [AuthController, 'register'])
+    router.post('register/admin', [AuthController, 'registerAdmin'])
     router.post('login', [AuthController, 'login'])
   })
   .prefix('user')

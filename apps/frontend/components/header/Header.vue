@@ -8,17 +8,6 @@ const toggleSettings = () => {
   settings ? settings.classList.toggle("Header-user-settings--enabled") : null;
 };
 
-const toggleDeleteActive = () => {
-  const settings = document.querySelector(".Header-user-settings");
-  settings ? settings.classList.remove("Header-user-settings--enabled") : null;
-  settings ? settings.classList.add("Header-user-settings--disabled") : null;
-};
-
-onMounted(() => {
-  const content = document.querySelector(".Container-content");
-  content ? content.addEventListener("click", toggleDeleteActive) : null;
-});
-
 const logout = () => {
   const userCookie = useCookie("user");
   const tokenCookie = useCookie("token");
@@ -111,13 +100,14 @@ const logout = () => {
             </li>
           </ul>
         </div>
-        <UAvatar
-          src="https://avatars.githubusercontent.com/u/739984?v=4"
-          alt="Avatar"
-          size="xl"
-          class="w-20 h-20 cursor-pointer"
-          :onclick="toggleSettings"
-        />
+        <button @click="toggleSettings">
+          <UAvatar
+            src="https://avatars.githubusercontent.com/u/739984?v=4"
+            alt="Avatar"
+            size="xl"
+            class="w-20 h-20 cursor-pointer"
+          />
+        </button>
       </div>
       <UButton v-else variant="link" to="/auth/login" class="w-20 h-20">
         <UIcon

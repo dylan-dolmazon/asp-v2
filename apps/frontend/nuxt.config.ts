@@ -12,6 +12,7 @@ export default defineNuxtConfig({
     "@vee-validate/nuxt",
     "@nuxtjs/tailwindcss",
     "@nuxt/image",
+    "nuxt-icon",
   ],
   css: ["~/assets/style/main.scss"],
   colorMode: {

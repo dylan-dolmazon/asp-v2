@@ -1,4 +1,4 @@
-export const playersColumns = [
+export const playersRankingColumns = [
   {
     key: "fullname",
     label: "Nom Prénom",
@@ -10,5 +10,20 @@ export const playersColumns = [
   {
     key: "positionLabel",
     label: "Poste",
+  },
+];
+
+export const playersAdminDashboardColumns = [
+  {
+    key: "firstname",
+    label: "Prénom",
+  },
+  {
+    key: "lastname",
+    label: "Nom",
+  },
+  {
+    key: "age",
+    label: "...",
   },
 ];

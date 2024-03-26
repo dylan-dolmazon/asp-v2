@@ -4,7 +4,7 @@ let initialTopPlayers: PlayerRanking[] | null = null;
 
 const { pending, data: players } = await getPlayersRanking(page);
 
-const columns = playersColumns;
+const columns = playersRankingColumns;
 
 const datas = computed<{ podium: PlayerRanking[]; tableData: PlayerRanking[] }>(
   () => {

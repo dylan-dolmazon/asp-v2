@@ -12,7 +12,6 @@ export const registerUser = async (
       lastname,
       firstname,
       password,
-      role: "user",
     },
   });
 };
