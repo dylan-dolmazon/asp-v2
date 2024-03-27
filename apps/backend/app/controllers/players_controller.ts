@@ -4,7 +4,6 @@ import { updatePlayerValidator } from '#validators/Player/update'
 import { updateManyPlayerValidator } from '#validators/Player/update_many'
 import type { HttpContext } from '@adonisjs/core/http'
 import { getCountry } from '#services/country/get_country'
-import { getPosition } from '../../../frontend/utils/functions/position/getPosition.ts'
 
 export default class PlayersController {
   async index({ request }: HttpContext) {
@@ -24,8 +23,6 @@ export default class PlayersController {
       players.serialize().data.map(async (player) => {
         return {
           ...player,
-          fullname: `${player.firstname} ${player.lastname}`,
-          positionLabel: getPosition(player.position),
           country: await getCountry(player.nationality),
         }
       })

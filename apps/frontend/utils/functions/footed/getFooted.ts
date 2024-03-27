@@ -2,9 +2,10 @@ import {
   FootedAbbFr,
   FootedFull,
   FootedFullFr,
-} from "../../enums/footed/footedEnums";
+} from "../../enums/footed/footedEnums.ts";
+
 export const getFooted = (
-  footed: FootedFull,
+  footed: string,
   useAbbrevation: Boolean = false
 ): string => {
   if (footed === FootedFull.LEFT) {

@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import { getPosition } from "~/utils/functions/position/getPosition";
-import type { FootedFull, PositionFull } from "../../.nuxt/imports";
-
 defineProps({
   players: Array<PlayerRanking>,
 });
@@ -28,7 +25,7 @@ defineProps({
             tag="p"
             className="PlayerPodium-player-top-infos-position"
           >
-            {{ getPosition(player.position as PositionFull, true) }}
+            {{ getPosition(player.position, true) }}
           </Typo>
           <NuxtImg
             :src="player.country?.flagUrl"
@@ -63,7 +60,7 @@ defineProps({
           <div class="PlayerPodium-player-bottom-stats-item">
             <Typo format="medium" tag="p">Pied</Typo>
             <Typo format="medium" tag="p">
-              {{ getFooted(player.footed as FootedFull, true) }}
+              {{ getFooted(player.footed, true) }}
             </Typo>
           </div>
           <div class="PlayerPodium-player-bottom-stats-item">

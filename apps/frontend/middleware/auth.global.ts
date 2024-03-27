@@ -1,6 +1,6 @@
 export default defineNuxtRouteMiddleware((to) => {
-  const allowedRoles = pages_config.find(
-    (page) => page.path === to.path
+  const allowedRoles = pages_config.find((page) =>
+    configPagePathIsSameAsTo(page.path, to.path)
   )?.allowedRoles;
   if (!allowedRoles) return navigateTo("/", { redirectCode: 302 });
   if (allowedRoles.includes("all")) return;

@@ -10,11 +10,12 @@ export interface Player {
   fullname?: string;
   age: number;
   position: Position;
-  positionLabel?: string;
+  positionLabel: string;
   nationality: string;
   height?: number;
   weight?: number;
-  footed?: Footed;
+  footed: Footed;
+  footedLabel: string;
   goalsscored?: number;
   assists?: number;
   yellowcards?: number;

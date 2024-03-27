@@ -33,6 +33,25 @@ export default defineAppConfig({
           variant: "ghost",
           class: "-m-1.5",
         },
+        prevButton: {
+          icon: "i-heroicons-arrow-small-left-20-solid",
+          label: "Prev",
+          color: "gray",
+        },
+        nextButton: {
+          icon: "i-heroicons-arrow-small-right-20-solid",
+          trailing: true,
+          label: "Next",
+          color: "gray",
+        },
+      },
+    },
+    dropdown: {
+      item: {
+        active: "text-default-400",
+        icon: {
+          active: "text-default-400",
+        },
       },
     },
   },

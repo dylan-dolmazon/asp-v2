@@ -46,4 +46,10 @@ export const pages_config: PageType[] = [
     path: "/admin/equipe",
     allowedRoles: ["admin", "moderator"],
   },
+  {
+    title: "Détail du joueur",
+    url: "Administration / Joueur",
+    path: "/admin/player/:id",
+    allowedRoles: ["admin", "moderator"],
+  },
 ];

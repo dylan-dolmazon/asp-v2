@@ -5,7 +5,7 @@ import {
 } from "../../enums/position/positionEnum.ts";
 
 export const getPosition = (
-  position: PositionFull,
+  position: string,
   useAbbrevation: Boolean = false
 ): string => {
   if (position === PositionFull.GOALKEEPER) {

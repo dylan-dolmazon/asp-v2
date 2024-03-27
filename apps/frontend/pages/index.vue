@@ -45,17 +45,6 @@ const datas = computed<{ podium: PlayerRanking[]; tableData: PlayerRanking[] }>(
           </template>
         </UTable>
         <UPagination
-          :prev-button="{
-            icon: 'i-heroicons-arrow-small-left-20-solid',
-            label: 'Prev',
-            color: 'gray',
-          }"
-          :next-button="{
-            icon: 'i-heroicons-arrow-small-right-20-solid',
-            trailing: true,
-            label: 'Next',
-            color: 'gray',
-          }"
           v-model="page"
           :total="players?.meta.total"
           :page-count="players?.meta.perPage"

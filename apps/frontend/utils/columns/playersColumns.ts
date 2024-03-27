@@ -13,6 +13,60 @@ export const playersRankingColumns = [
   },
 ];
 
+export const playersColumns = [
+  {
+    key: "firstname",
+    label: "Prénom",
+  },
+  {
+    key: "lastname",
+    label: "Nom",
+  },
+  {
+    key: "age",
+    label: "Age",
+  },
+  {
+    key: "positionLabel",
+    label: "Poste",
+  },
+  {
+    key: "nationality",
+    label: "Nationalité",
+  },
+  {
+    key: "footedLabel",
+    label: "Pied fort",
+  },
+  {
+    key: "pace",
+    label: "Vitesse",
+  },
+  {
+    key: "shooting",
+    label: "Tirs",
+  },
+  {
+    key: "passing",
+    label: "Passes",
+  },
+  {
+    key: "dribbling",
+    label: "Dribbles",
+  },
+  {
+    key: "defending",
+    label: "Défense",
+  },
+  {
+    key: "physical",
+    label: "Physique",
+  },
+  {
+    key: "actions",
+  },
+];
+
 export const playersAdminDashboardColumns = [
   {
     key: "firstname",

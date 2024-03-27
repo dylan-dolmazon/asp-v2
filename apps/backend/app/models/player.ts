@@ -1,5 +1,7 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column } from '@adonisjs/lucid/orm'
+import { BaseModel, column, computed } from '@adonisjs/lucid/orm'
+import { getPosition } from '../../../frontend/utils/functions/position/getPosition.ts'
+import { getFooted } from '../../../frontend/utils/functions/footed/getFooted.ts'
 
 export default class Player extends BaseModel {
   @column({ isPrimary: true })
@@ -58,6 +60,21 @@ export default class Player extends BaseModel {
 
   @column()
   declare physical: number | undefined
+
+  @computed()
+  get fullname() {
+    return `${this.firstname} ${this.lastname}`
+  }
+
+  @computed()
+  get positionLabel() {
+    return getPosition(this.position)
+  }
+
+  @computed()
+  get footedLabel() {
+    return getFooted(this.footed)
+  }
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
