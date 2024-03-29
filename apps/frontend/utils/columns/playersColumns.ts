@@ -107,3 +107,18 @@ export const playersStatsColumns = [
     label: "Age",
   },
 ];
+
+export const playerScorerRankingColumns = [
+  {
+    key: "fullname",
+    label: "Nom Prénom",
+  },
+  {
+    key: "goalsscored",
+    label: "Buts marqués",
+  },
+  {
+    key: "assists",
+    label: "Passes décisives",
+  },
+];

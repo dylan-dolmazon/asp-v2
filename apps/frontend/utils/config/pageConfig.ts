@@ -1,19 +1,19 @@
 export const pages_config: PageType[] = [
   {
     title: "",
-    url: "",
+
     path: "/auth/login",
     allowedRoles: ["all"],
   },
   {
     title: "",
-    url: "",
+
     path: "/auth/register",
     allowedRoles: ["all"],
   },
   {
     title: "Classement des buteurs",
-    url: "Accueil",
+
     path: "/",
     allowedRoles: ["all"],
     link: {
@@ -21,35 +21,48 @@ export const pages_config: PageType[] = [
       text: "Modifier le classement",
       linkAccessRoles: ["admin"],
     },
+    breadCrumb: [{ label: "Accueil" }],
   },
   {
     title: "Résultats des équipes",
-    url: "Accueil / Résultats",
+
     path: "/results",
     allowedRoles: ["all"],
+    breadCrumb: [{ label: "Résultats" }],
   },
   {
     title: "Administration menu",
-    url: "Administration",
     path: "/admin",
     allowedRoles: ["admin", "moderator"],
+    breadCrumb: [{ label: "Administration" }],
   },
   {
     title: "Classement des buteurs",
-    url: "Administration / Buteurs",
+    breadCrumb: [
+      { label: "Administration", to: "/admin" },
+      { label: "Classement des buteurs" },
+    ],
     path: "/admin/buteurs",
     allowedRoles: ["admin", "moderator"],
   },
   {
     title: "Gérer mon équipe",
-    url: "Administration / Equipe",
+
     path: "/admin/equipe",
     allowedRoles: ["admin", "moderator"],
+    breadCrumb: [
+      { label: "Administration", to: "/admin" },
+      { label: "Equipe" },
+    ],
   },
   {
     title: "Détail du joueur",
-    url: "Administration / Joueur",
     path: "/admin/player/:id",
     allowedRoles: ["admin", "moderator"],
+    breadCrumb: [
+      { label: "Administration", to: "/admin" },
+      { label: "Equipe", to: "/admin/equipe" },
+      { label: "Joueur" },
+    ],
   },
 ];

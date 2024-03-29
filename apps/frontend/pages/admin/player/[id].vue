@@ -1,13 +1,16 @@
 <script setup lang="ts">
 const isOpen = ref(false);
 const route = useRoute();
+const deleteLoading = ref(false);
 
 const columns = playersStatsColumns;
 
 const { pending, data } = await getPlayerStats(route.params.id as string);
 
 const suppPlayer = async (id: string) => {
+  deleteLoading.value = true;
   await deletePlayer(id);
+  deleteLoading.value = false;
   navigateTo("/admin/equipe");
 };
 </script>
@@ -17,7 +20,7 @@ const suppPlayer = async (id: string) => {
     <div v-if="pending" class="Loader">
       <ContentLoader />
     </div>
-    <div v-else-if="data" class="m-12">
+    <div v-else-if="data">
       <Modal v-model="isOpen">
         <template #header>
           <Typo tag="h3" format="normal" class="text-error w-full text-center">
@@ -38,6 +41,7 @@ const suppPlayer = async (id: string) => {
             <UButton
               color="red"
               label="Supprimer"
+              :loading="deleteLoading"
               @click="suppPlayer(data.player.id)"
             />
           </div>

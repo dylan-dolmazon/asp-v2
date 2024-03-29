@@ -2,7 +2,7 @@
 
 <template>
   <NuxtLayout name="default">
-    <div class="AdminDashboard grid gap-4 mx-8 mt-8">
+    <div class="AdminDashboard grid gap-4">
       <!-- Première colonne, deux lignes -->
       <div class="AdminDashboard-item row-span-2">
         Première colonne - Deux lignes

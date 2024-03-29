@@ -11,9 +11,7 @@ const currentPage: PageType = pages_config.find((page) =>
     class="RoutingTopBar text-primary bg-background-surface px-8 py-7 flex justify-between items-center"
   >
     <div class="w-1/2 px-4 flex justify-between items-center">
-      <Typo format="normal" tag="p">
-        {{ currentPage.url }}
-      </Typo>
+      <UBreadcrumb divider="/" :links="currentPage.breadCrumb" />
       <Typo format="normal" tag="h1" class="translate-x-1/2">
         {{ currentPage.title }}
       </Typo>

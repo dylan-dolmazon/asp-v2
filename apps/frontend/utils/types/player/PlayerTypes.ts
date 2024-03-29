@@ -16,8 +16,8 @@ export interface Player {
   weight?: number;
   footed: Footed;
   footedLabel: string;
-  goalsscored?: number;
-  assists?: number;
+  goalsscored: number;
+  assists: number;
   yellowcards?: number;
   redcards?: number;
   pace: number;

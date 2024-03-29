@@ -40,7 +40,7 @@ export default defineAppConfig({
         prevButton: {
           icon: "i-heroicons-arrow-small-left-20-solid",
           label: "Prev",
-          color: "white",
+          color: "gray",
         },
         nextButton: {
           icon: "i-heroicons-arrow-small-right-20-solid",

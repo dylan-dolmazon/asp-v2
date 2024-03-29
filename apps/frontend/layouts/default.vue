@@ -5,7 +5,10 @@
     </div>
     <div class="Container-content w-full">
       <RoutingTopBar />
-      <slot />
+
+      <div class="m-12">
+        <slot />
+      </div>
     </div>
   </div>
 </template>
