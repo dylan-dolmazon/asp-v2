@@ -22,6 +22,7 @@
     "yup": "^1.4.x"
   },
   "devDependencies": {
-    "@nuxtjs/tailwindcss": "^6.11.x"
+    "@nuxtjs/tailwindcss": "^6.11.x",
+    "dayjs-nuxt": "^2.1.x"
   }
 }

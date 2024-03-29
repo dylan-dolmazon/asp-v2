@@ -1,16 +1,12 @@
 <script setup lang="ts">
 defineProps({
   number: Number,
-  className: {
-    type: String,
-    default: "default",
-  },
 });
 </script>
 
 <template>
-  <div :class="`Ranking ${className ?? ''}`">
-    <Typo format="bold" tag="p" className="-rotate-45">{{ number }}</Typo>
+  <div :class="`Ranking`">
+    <Typo format="bold" tag="p" class="-rotate-45">{{ number }}</Typo>
   </div>
 </template>
 

@@ -16,11 +16,11 @@ export const createPlayerValidator = vine.compile(
     assists: vine.number().optional(),
     yellowcards: vine.number().positive().optional(),
     redcards: vine.number().positive().optional(),
-    pace: vine.number().positive().optional(),
-    shooting: vine.number().positive().optional(),
-    passing: vine.number().positive().optional(),
-    dribbling: vine.number().positive().optional(),
-    defending: vine.number().positive().optional(),
-    physical: vine.number().positive().optional(),
+    pace: vine.number().withoutDecimals().positive(),
+    shooting: vine.number().withoutDecimals().positive(),
+    passing: vine.number().withoutDecimals().positive(),
+    dribbling: vine.number().withoutDecimals().positive(),
+    defending: vine.number().withoutDecimals().positive(),
+    physical: vine.number().withoutDecimals().positive(),
   })
 )

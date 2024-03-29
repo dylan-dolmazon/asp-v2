@@ -27,6 +27,7 @@ router
 router.get('players/search', [PlayersController, 'search'])
 router.put('players/updates', [PlayersController, 'updateMany'])
 router.get('players/ranking', [PlayersController, 'getRanking'])
+router.get('players/:id/stats', [PlayersController, 'showWhitStats'])
 router.resource('/players', PlayersController)
 
 // ------------------- User routes ------------------- //

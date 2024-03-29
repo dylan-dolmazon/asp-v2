@@ -1,0 +1,18 @@
+.Loader {
+  margin: 50px auto 0 auto;
+  width: 1200px;
+  height: 800px;
+}
+
+.Stats {
+  position: relative;
+  width: 200px;
+  height: 100px;
+
+  &-number {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}

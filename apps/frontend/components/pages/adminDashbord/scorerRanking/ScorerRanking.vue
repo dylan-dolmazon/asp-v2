@@ -17,7 +17,7 @@ const { data: players } = await getPlayersRanking(page, 4);
         v-for="(player, index) in players?.data"
         class="flex flex-col items-center justify-evenly m-3"
       >
-        <Ranking :number="index + 1" :className="`classment-${index} m-5`" />
+        <Ranking :number="index + 1" :class="`classment-${index} m-5`" />
         <Typo tag="p" format="normal">
           {{ player.firstname }} {{ player.lastname }}
         </Typo>

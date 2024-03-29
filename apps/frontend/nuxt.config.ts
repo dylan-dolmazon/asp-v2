@@ -34,7 +34,7 @@ export default defineNuxtConfig({
     },
   ],
   imports: {
-    dirs: ["utils/*", "services/*", "composables/*"],
+    dirs: ["utils/**", "services/**", "composables/*"],
   },
   image: {
     dir: "assets/img",

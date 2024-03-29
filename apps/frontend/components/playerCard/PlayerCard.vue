@@ -1,0 +1,88 @@
+<script setup lang="ts">
+defineProps({
+  player: {
+    type: Object as PropType<Player | PlayerRanking>,
+    required: true,
+  },
+  rankingNumber: Number,
+  style: {
+    type: String as PropType<"gold" | "silver" | "special">,
+    default: "gold",
+  },
+});
+</script>
+
+<template>
+  <div class="PlayerCard" :class="`PlayerCard--${style}`">
+    <div class="PlayerCard-top">
+      <div class="PlayerCard-top-infos">
+        <Typo format="bold" tag="p" class="PlayerCard-top-infos-rating">
+          {{ player.goalsscored }} buts
+        </Typo>
+        <Typo format="medium" tag="p" class="PlayerCard-top-infos-position">
+          {{ getPosition(player.position, true) }}
+        </Typo>
+        <NuxtImg
+          :src="player.country?.flagUrl"
+          alt="nationalité du joueur"
+          class="PlayerCard-top-infos-nation"
+          width="25"
+          height="25"
+        />
+        <NuxtImg
+          src="/logo.png"
+          alt="logo du club"
+          class="PlayerCard-top-infos-club"
+          width="25"
+          height="25"
+        />
+      </div>
+      <div class="PlayerCard-picture">
+        <NuxtImg src="/avatar.png" alt="avatar du joueur" />
+      </div>
+    </div>
+    <div class="PlayerCard-bottom">
+      <Typo format="bold" tag="h3" class="PlayerPodium-name">
+        {{ player.firstname.charAt(0) }}. {{ player.lastname }}
+      </Typo>
+      <div class="PlayerCard-bottom-stats">
+        <div class="PlayerCard-bottom-stats-item">
+          <Typo format="medium" tag="p">Pass</Typo>
+          <Typo format="medium" tag="p">
+            {{ player.assists || 0 }}
+          </Typo>
+        </div>
+        <div class="PlayerCard-bottom-stats-item">
+          <Typo format="medium" tag="p">Pied</Typo>
+          <Typo format="medium" tag="p">
+            {{ getFooted(player.footed, true) }}
+          </Typo>
+        </div>
+        <div class="PlayerCard-bottom-stats-item">
+          <Typo format="medium" tag="p">Age</Typo>
+          <Typo format="medium" tag="p">
+            {{ player.age }}
+          </Typo>
+        </div>
+      </div>
+    </div>
+    <div class="PlayerCard-medals" v-if="rankingNumber != undefined">
+      <Ranking
+        :number="
+          rankingNumber === 0
+            ? 2
+            : rankingNumber === 1
+              ? 1
+              : rankingNumber === 2
+                ? 3
+                : undefined
+        "
+        :class="`classment-${rankingNumber}`"
+      />
+    </div>
+  </div>
+</template>
+
+<style>
+@import "./playerCard.scss";
+</style>

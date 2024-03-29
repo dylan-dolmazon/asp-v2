@@ -44,22 +44,22 @@ export default class Player extends BaseModel {
   declare redcards: number
 
   @column()
-  declare pace: number | undefined
+  declare pace: number
 
   @column()
-  declare shooting: number | undefined
+  declare shooting: number
 
   @column()
-  declare passing: number | undefined
+  declare passing: number
 
   @column()
-  declare dribbling: number | undefined
+  declare dribbling: number
 
   @column()
-  declare defending: number | undefined
+  declare defending: number
 
   @column()
-  declare physical: number | undefined
+  declare physical: number
 
   @computed()
   get fullname() {

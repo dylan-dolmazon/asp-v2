@@ -14,7 +14,7 @@ const currentPage: PageType = pages_config.find((page) =>
       <Typo format="normal" tag="p">
         {{ currentPage.url }}
       </Typo>
-      <Typo format="normal" tag="h1" className="translate-x-1/2">
+      <Typo format="normal" tag="h1" class="translate-x-1/2">
         {{ currentPage.title }}
       </Typo>
     </div>

@@ -6,31 +6,29 @@ const { pending, data: players } = await getPlayersRanking(page);
 
 const columns = playersRankingColumns;
 
-const datas = computed<{ podium: PlayerRanking[]; tableData: PlayerRanking[] }>(
-  () => {
-    if (!players?.value?.data) return { podium: [], tableData: [] };
+const datas = computed(() => {
+  if (!players?.value?.data) return { podium: [], tableData: [] };
 
-    const playersData = players.value.data;
+  const playersData = players.value.data;
 
-    let podium: PlayerRanking[] = [];
-    let tableData: PlayerRanking[] = [];
+  let podium: PlayerRanking[] = [];
+  let tableData: PlayerRanking[] = [];
 
-    if (page.value === 1 && playersData.length >= 3) {
-      initialTopPlayers = playersData.slice(0, 3);
-      const tmp = initialTopPlayers[0];
-      initialTopPlayers[0] = initialTopPlayers[1];
-      initialTopPlayers[1] = tmp;
+  if (page.value === 1 && playersData.length >= 3) {
+    initialTopPlayers = playersData.slice(0, 3);
+    const tmp = initialTopPlayers[0];
+    initialTopPlayers[0] = initialTopPlayers[1];
+    initialTopPlayers[1] = tmp;
 
-      podium = initialTopPlayers;
-      tableData = playersData.slice(3);
-    } else {
-      podium = initialTopPlayers || [];
-      tableData = playersData;
-    }
-
-    return { podium, tableData };
+    podium = initialTopPlayers;
+    tableData = playersData.slice(3);
+  } else {
+    podium = initialTopPlayers || [];
+    tableData = playersData;
   }
-);
+
+  return { podium, tableData };
+});
 </script>
 
 <template>

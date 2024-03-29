@@ -5,7 +5,7 @@ export default defineNuxtRouteMiddleware((to) => {
   if (!allowedRoles) return navigateTo("/", { redirectCode: 302 });
   if (allowedRoles.includes("all")) return;
   const user = useCookie<User>("user");
-  if (!user) {
+  if (!user.value) {
     addToast(
       "Acces refusé",
       ["Vous devez être connecté pour accéder à cette page"],

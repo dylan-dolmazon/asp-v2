@@ -1,0 +1,91 @@
+.PlayerCard {
+  position: relative;
+  background-position: center center;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+  height: 260px;
+
+  &-medals {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-34%, 100%);
+  }
+
+  &--gold {
+    background-image: url("../../assets/img/gold_card.png");
+    .PlayerCard-medals {
+      transform: translate(-35%, 120%);
+    }
+  }
+
+  &--special {
+    background-image: url("../../assets/img/special_card.png");
+    color: theme("colors.gold");
+
+    .PlayerCard-medals {
+      transform: translate(-35%, 80%);
+    }
+  }
+
+  &--silver {
+    background-image: url("../../assets/img/silver_card.png");
+  }
+
+  &-picture {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    transform: translateX(calc(100% - 5px));
+    width: 90px;
+    height: 90px;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+  }
+
+  &-top {
+    position: relative;
+    height: 55%;
+    padding: 20px 20px 5px 20px;
+
+    &-infos {
+      text-transform: uppercase;
+      display: flex;
+      flex-direction: column;
+      align-items: start;
+      position: absolute;
+      height: 70%;
+      justify-content: space-between;
+      top: 40px;
+      left: 30px;
+      &-nation,
+      &-club {
+        display: block;
+      }
+    }
+  }
+
+  &-bottom {
+    padding: 0 20px;
+    margin: 0 auto;
+    min-width: 200px;
+    text-align: center;
+    &-stats {
+      display: flex;
+      height: 60%;
+      justify-content: space-evenly;
+      &-item {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+      }
+    }
+  }
+}

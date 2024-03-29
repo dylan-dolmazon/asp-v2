@@ -20,13 +20,30 @@ export interface Player {
   assists?: number;
   yellowcards?: number;
   redcards?: number;
-  pace?: number;
-  shooting?: number;
-  passing?: number;
-  dribbling?: number;
-  defending?: number;
-  physical?: number;
+  pace: number;
+  shooting: number;
+  passing: number;
+  dribbling: number;
+  defending: number;
+  physical: number;
   country?: Country;
   createdAt: string;
   updatedAt: string;
 }
+
+export type PlayerStats = {
+  clubAverage: {
+    goalsscored: number;
+    assists: number;
+    yellowcards: number;
+    redcards: number;
+    age: number;
+  };
+  stats: {
+    goalsRank: number;
+    assistsRank: number;
+    yellowcardsRank: number;
+    redcardsRank: number;
+    totalPlayersCount: number;
+  };
+};

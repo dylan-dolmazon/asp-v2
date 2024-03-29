@@ -5,85 +5,24 @@ defineProps({
 </script>
 
 <template>
-  <div class="PlayerPodium flex justify-between mx-5">
-    <div
+  <div class="flex justify-between mx-5 mt-10">
+    <PlayerCard
       v-for="(player, index) in players"
-      :key="index"
-      class="PlayerPodium-player"
-    >
-      <div class="PlayerPodium-player-top">
-        <div class="PlayerPodium-player-top-infos">
-          <Typo
-            format="bold"
-            tag="p"
-            className="PlayerPodium-player-top-infos-rating"
-          >
-            {{ player.goalsscored }} buts
-          </Typo>
-          <Typo
-            format="medium"
-            tag="p"
-            className="PlayerPodium-player-top-infos-position"
-          >
-            {{ getPosition(player.position, true) }}
-          </Typo>
-          <NuxtImg
-            :src="player.country?.flagUrl"
-            alt="nationalité du joueur"
-            class="PlayerPodium-player-top-infos-nation"
-            width="25"
-            height="25"
-          />
-          <NuxtImg
-            src="/logo.png"
-            alt="logo du club"
-            class="PlayerPodium-player-top-infos-club"
-            width="25"
-            height="25"
-          />
-        </div>
-        <div class="PlayerPodium-player-picture">
-          <NuxtImg src="/avatar.png" alt="avatar du joueur" />
-        </div>
-      </div>
-      <div class="PlayerPodium-player-bottom">
-        <Typo format="bold" tag="h3" className="PlayerPodium-name">
-          {{ player.firstname.charAt(0) }}. {{ player.lastname }}
-        </Typo>
-        <div class="PlayerPodium-player-bottom-stats">
-          <div class="PlayerPodium-player-bottom-stats-item">
-            <Typo format="medium" tag="p">Pass</Typo>
-            <Typo format="medium" tag="p">
-              {{ player.assists || 0 }}
-            </Typo>
-          </div>
-          <div class="PlayerPodium-player-bottom-stats-item">
-            <Typo format="medium" tag="p">Pied</Typo>
-            <Typo format="medium" tag="p">
-              {{ getFooted(player.footed, true) }}
-            </Typo>
-          </div>
-          <div class="PlayerPodium-player-bottom-stats-item">
-            <Typo format="medium" tag="p">Age</Typo>
-            <Typo format="medium" tag="p">
-              {{ player.age }}
-            </Typo>
-          </div>
-        </div>
-      </div>
-      <div class="PlayerPodium-player-medals">
-        <Ranking
-          :number="
-            index === 0 ? 2 : index === 1 ? 1 : index === 2 ? 3 : undefined
-          "
-          :className="`classment-${index}`"
-        />
-      </div>
-    </div>
+      :key="player.id"
+      :player="player"
+      :rankingNumber="index"
+      :style="index === 0 ? 'gold' : index === 1 ? 'special' : 'silver'"
+    />
   </div>
 </template>
 
-<style>
-@import "./playerPodium.scss";
+<style lang="scss" scoped>
+.PlayerCard {
+  &:nth-child(1) {
+    margin-top: 40px;
+  }
+  &:nth-child(3) {
+    margin-top: 60px;
+  }
+}
 </style>
-../../utils/functions/Position

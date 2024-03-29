@@ -49,6 +49,7 @@ export default {
         info: "hsl(212, 100%, 45%)" ,
         black:  "#000" ,
         white:  "#fff" ,
+        gold: "#d4af37",
         logo: {
           yellow: "#e2d618",
         },

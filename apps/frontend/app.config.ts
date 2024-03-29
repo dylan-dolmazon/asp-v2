@@ -33,10 +33,14 @@ export default defineAppConfig({
           variant: "ghost",
           class: "-m-1.5",
         },
+      },
+    },
+    pagination: {
+      default: {
         prevButton: {
           icon: "i-heroicons-arrow-small-left-20-solid",
           label: "Prev",
-          color: "gray",
+          color: "white",
         },
         nextButton: {
           icon: "i-heroicons-arrow-small-right-20-solid",
@@ -53,6 +57,9 @@ export default defineAppConfig({
           active: "text-default-400",
         },
       },
+    },
+    card: {
+      divide: "divide-y divide-gray-200",
     },
   },
 });

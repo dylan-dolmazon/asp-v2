@@ -9,12 +9,12 @@ const actions = (row: any) => [
   [
     {
       label: "Détail",
-      icon: "i-heroicons-pencil-square-solid",
+      icon: "i-heroicons-magnifying-glass-circle-solid",
       click: () => navigateTo(`player/${row.id}`),
     },
     {
       label: "Modifier",
-      icon: "i-heroicons-magnifying-glass-circle-solid",
+      icon: "i-heroicons-pencil-square",
       click: () => console.log("Edit", row.id),
     },
   ],

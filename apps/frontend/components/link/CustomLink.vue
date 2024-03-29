@@ -3,13 +3,12 @@ defineProps<{
   href?: string;
   target?: string;
   variant?: string;
-  className?: string;
   typo: { format: TypoFormat; tag: TypoTag };
 }>();
 </script>
 
 <template>
-  <div class="Link" :class="[`Link--${variant}`, className || '']">
+  <div class="Link" :class="[`Link--${variant}`]">
     <a
       :href="href"
       :disbaled="!href"

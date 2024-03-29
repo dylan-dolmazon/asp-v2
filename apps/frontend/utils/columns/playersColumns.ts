@@ -81,3 +81,29 @@ export const playersAdminDashboardColumns = [
     label: "...",
   },
 ];
+
+export const playersStatsColumns = [
+  {
+    key: "item",
+  },
+  {
+    key: "goalsscored",
+    label: "Buts",
+  },
+  {
+    key: "assists",
+    label: "Passes décisives",
+  },
+  {
+    key: "yellowcards",
+    label: "Cartons jaunes",
+  },
+  {
+    key: "redcards",
+    label: "Cartons rouges",
+  },
+  {
+    key: "age",
+    label: "Age",
+  },
+];
