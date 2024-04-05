@@ -84,5 +84,5 @@ defineProps({
 </template>
 
 <style scoped>
-@import "./playerCard.scss";
+@import "./PlayerCard.scss";
 </style>

@@ -11,5 +11,5 @@ defineProps({
 </template>
 
 <style scoped>
-@import "./ranking.scss";
+@import "./Ranking.scss";
 </style>

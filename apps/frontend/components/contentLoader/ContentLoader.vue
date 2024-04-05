@@ -5,5 +5,5 @@
 </template>
 
 <style scoped>
-@import "./contentLoader.scss";
+@import "./ContentLoader.scss";
 </style>
