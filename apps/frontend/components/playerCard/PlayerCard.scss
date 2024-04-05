@@ -16,14 +16,14 @@
   }
 
   &--gold {
-    background-image: url("../../assets/img/gold_card.png");
+    background-image: url("../../gold_card.png");
     .PlayerCard-medals {
       transform: translate(-35%, 120%);
     }
   }
 
   &--special {
-    background-image: url("../../assets/img/special_card.png");
+    background-image: url("../../special_card.png");
     color: theme("colors.gold");
 
     .PlayerCard-medals {
@@ -32,7 +32,7 @@
   }
 
   &--silver {
-    background-image: url("../../assets/img/silver_card.png");
+    background-image: url("../../silver_card.png");
   }
 
   &-picture {
@@ -58,7 +58,7 @@
       text-transform: uppercase;
       display: flex;
       flex-direction: column;
-      align-items: start;
+      align-items: flex-start;
       position: absolute;
       height: 70%;
       justify-content: space-between;

@@ -1,6 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  ssr: true,
+  ssr: false,
   runtimeConfig: {
     API_URL: "http://localhost:3333",
     public: {
@@ -36,8 +36,5 @@ export default defineNuxtConfig({
   ],
   imports: {
     dirs: ["utils/**", "services/**", "composables/*"],
-  },
-  image: {
-    dir: "assets/img",
   },
 });

@@ -25,41 +25,41 @@ watch(compet, async (newValue) => {
   }
 });
 
-watch(page, () => {
+watch(page, async () => {
   isLoading.value = true;
   if (item.value === "calendar") {
-    fetchCalendar(compet.value, pool.value);
+    await fetchCalendar(compet.value, pool.value);
   }
   if (item.value === "results") {
-    fetchResults(compet.value, pool.value);
+    await fetchResults(compet.value, pool.value);
   }
 });
 
-watch(pool, (newValue) => {
+watch(pool, async (newValue) => {
   isLoading.value = true;
   page.value = 0;
   if (item.value === "classment" || !item.value) {
-    fetchClassment(compet.value, newValue);
+    await fetchClassment(compet.value, newValue);
   }
   if (item.value === "calendar") {
-    fetchCalendar(compet.value, newValue);
+    await fetchCalendar(compet.value, newValue);
   }
   if (item.value === "results") {
-    fetchResults(compet.value, newValue);
+    await fetchResults(compet.value, newValue);
   }
 });
 
-watch(item, (newValue) => {
+watch(item, async (newValue) => {
   isLoading.value = true;
   page.value = 0;
   if (newValue === "classment") {
-    fetchClassment(compet.value, pool.value);
+    await fetchClassment(compet.value, pool.value);
   }
   if (newValue === "calendar") {
-    fetchCalendar(compet.value, pool.value);
+    await fetchCalendar(compet.value, pool.value);
   }
   if (newValue === "results") {
-    fetchResults(compet.value, pool.value);
+    await fetchResults(compet.value, pool.value);
   }
 });
 
