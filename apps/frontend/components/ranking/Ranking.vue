@@ -10,6 +10,6 @@ defineProps({
   </div>
 </template>
 
-<style>
+<style scoped>
 @import "./ranking.scss";
 </style>

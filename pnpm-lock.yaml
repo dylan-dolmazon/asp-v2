@@ -104,6 +104,9 @@ importers:
       '@vee-validate/yup':
         specifier: ^4.12.x
         version: 4.12.6(vue@3.4.21)
+      dayjs:
+        specifier: ^1.11.x
+        version: 1.11.10
       nuxt:
         specifier: ^3.10.x
         version: 3.10.3(sass@1.71.1)(vite@5.1.6)
@@ -126,9 +129,6 @@ importers:
       '@nuxtjs/tailwindcss':
         specifier: ^6.11.x
         version: 6.11.4
-      dayjs-nuxt:
-        specifier: ^2.1.x
-        version: 2.1.9
 
 packages:
 
@@ -2030,6 +2030,7 @@ packages:
     transitivePeerDependencies:
       - rollup
       - supports-color
+    dev: false
 
   /@nuxt/schema@3.10.3:
     resolution: {integrity: sha512-a4cYbeskEVBPazgAhvUGkL/j7ho/iPWMK3vCEm6dRMjSqHVEITRosrj0aMfLbRrDpTrMjlRs0ZitxiaUfE/p5Q==}
@@ -2068,6 +2069,7 @@ packages:
     transitivePeerDependencies:
       - rollup
       - supports-color
+    dev: false
 
   /@nuxt/telemetry@2.5.3:
     resolution: {integrity: sha512-Ghv2MgWbJcUM9G5Dy3oQP0cJkUwEgaiuQxEF61FXJdn0a69Q4StZEP/hLF0MWPM9m6EvAwI7orxkJHM7MrmtVg==}
@@ -4704,16 +4706,6 @@ packages:
 
   /dateformat@4.6.3:
     resolution: {integrity: sha512-2P0p0pFGzHS5EMnhdxQi7aJN+iMheud0UhG4dlE1DLAlvL8JHjJJTX/CSm4JXwV0Ka5nGk3zC5mcb5bUQUxxMA==}
-    dev: true
-
-  /dayjs-nuxt@2.1.9:
-    resolution: {integrity: sha512-7L1X8Wm+O2s2o+YK8RH1GK0SUUsh7l0lnIzsjaLGvyu64asLs2KVNoh25J4tQurdILp2TyrFaTo/k3k/ZPub9Q==}
-    dependencies:
-      '@nuxt/kit': 3.11.1
-      dayjs: 1.11.10
-    transitivePeerDependencies:
-      - rollup
-      - supports-color
     dev: true
 
   /dayjs@1.11.10:
@@ -9996,6 +9988,7 @@ packages:
 
   /ufo@1.5.3:
     resolution: {integrity: sha512-Y7HYmWaFwPUmkoQCUIAYpKqkOf+SbVj/2fJJZ4RJMCfZp0rTGwRbzQD+HghfnhKOjL9E01okqz+ncJskGYfBNw==}
+    dev: false
 
   /uid-safe@2.1.5:
     resolution: {integrity: sha512-KPHm4VL5dDXKz01UuEd88Df+KzynaohSL9fBh096KWAxSKZQDI2uBrVqtvRM4rwrIrRRKsdLNML/lnaaVSRioA==}

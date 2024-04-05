@@ -3,8 +3,6 @@ const isOpen = ref(false);
 const route = useRoute();
 const deleteLoading = ref(false);
 
-const columns = playersStatsColumns;
-
 const { pending, data } = await getPlayerStats(route.params.id as string);
 
 const suppPlayer = async (id: string) => {
@@ -49,9 +47,10 @@ const suppPlayer = async (id: string) => {
       </Modal>
       <div class="flex">
         <div
-          class="flex flex-col items-center bg-background-header p-10 justify-evenly"
+          class="relative flex flex-col items-center bg-background-header p-10 justify-evenly"
         >
-          <div class="flex gap-1">
+          <PlayerCard :player="data.player" :style="'special'" />
+          <div class="Actions flex gap-1">
             <UButton
               icon="i-heroicons-pencil-square"
               size="sm"
@@ -68,7 +67,6 @@ const suppPlayer = async (id: string) => {
               @click="isOpen = true"
             />
           </div>
-          <PlayerCard :player="data.player" :style="'special'" />
         </div>
         <div class="w-full">
           <Typo tag="h3" format="bold" class="w-full text-center mb-10">
@@ -86,7 +84,7 @@ const suppPlayer = async (id: string) => {
 
           <UTable
             :rows="[data.player, data.stats.clubAverage, data.stats.stats]"
-            :columns="columns"
+            :columns="playersStatsColumns"
           >
             <template #item-data="{ row, index }">
               <div v-if="index === 0" class="flex items-center gap-4">
@@ -213,13 +211,13 @@ const suppPlayer = async (id: string) => {
         <div class="flex flex-col items-center gap-4">
           <Typo tag="h3" format="bold" class="text-default">Créé le</Typo>
           <Typo tag="p" format="normal">
-            {{ data.player.createdAt }}
+            {{ getDateformated(data.player.createdAt) }}
           </Typo>
         </div>
         <div class="flex flex-col items-center gap-4">
           <Typo tag="h3" format="bold" class="text-default">Modifié le</Typo>
           <Typo tag="p" format="normal">
-            {{ data.player.updatedAt }}
+            {{ getDateformated(data.player.updatedAt) }}
           </Typo>
         </div>
       </div>

@@ -1,5 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  ssr: true,
   runtimeConfig: {
     API_URL: "http://localhost:3333",
     public: {

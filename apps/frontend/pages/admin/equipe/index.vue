@@ -5,8 +5,6 @@ const deleteLoading = ref(false);
 
 const selectedPlayer = ref<Player | undefined>(undefined);
 
-const columns = playersColumns;
-
 const { pending, data: players, refresh } = await getPlayers(page, 10);
 
 const suppPlayer = async (id: string) => {
@@ -73,7 +71,7 @@ const actions = (row: any) => [
         </div>
       </template>
     </Modal>
-    <UTable :loading="pending" :columns="columns" :rows="players?.data">
+    <UTable :loading="pending" :columns="playersColumns" :rows="players?.data">
       <template #actions-data="{ row }">
         <UDropdown :items="actions(row)">
           <UButton

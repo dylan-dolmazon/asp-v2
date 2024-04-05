@@ -61,5 +61,16 @@ export default defineAppConfig({
     card: {
       divide: "divide-y divide-gray-200",
     },
+    select: {
+      base: "h-10 ps-2",
+    },
+    tabs: {
+      list: {
+        tab: {
+          active: "bg-primary text-white",
+          inactive: "bg-white",
+        },
+      },
+    },
   },
 });

@@ -83,6 +83,6 @@ defineProps({
   </div>
 </template>
 
-<style>
+<style scoped>
 @import "./playerCard.scss";
 </style>

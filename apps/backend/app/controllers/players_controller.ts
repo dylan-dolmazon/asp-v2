@@ -8,15 +8,14 @@ import db from '@adonisjs/lucid/services/db'
 
 export default class PlayersController {
   async index({ request }: HttpContext) {
-    const { page = 1 } = request.qs()
-    const { limit = 10 } = request.qs()
+    const { page = 1, limit = 10 } = request.qs()
 
     return await Player.query().orderBy('createdAt', 'desc').paginate(page, limit)
   }
 
   async getRanking({ request }: HttpContext) {
-    const { page = 1 } = request.qs()
-    const { limit = 10 } = request.qs()
+    const { page = 1, limit = 10 } = request.qs()
+
     const players = await Player.query().orderBy('goalsscored', 'desc').paginate(page, limit)
 
     // Utilisez Promise.all pour attendre que toutes les promesses se résolvent
@@ -82,10 +81,10 @@ export default class PlayersController {
           age: Number.parseInt(playerStats['ageaverage']),
         },
         stats: {
-          goalsscored: Number.parseInt(playerStats['goalsrank'] + 1),
-          assists: Number.parseInt(playerStats['assistsrank'] + 1),
-          yellowcards: Number.parseInt(playerStats['yellowcardsrank'] + 1),
-          redcards: Number.parseInt(playerStats['redcardsrank'] + 1),
+          goalsscored: Number.parseInt(playerStats['goalsrank']) + 1,
+          assists: Number.parseInt(playerStats['assistsrank']) + 1,
+          yellowcards: Number.parseInt(playerStats['yellowcardsrank']) + 1,
+          redcards: Number.parseInt(playerStats['redcardsrank']) + 1,
           totalPlayersCount: Number.parseInt(playerStats['totalplayerscount']),
         },
       },

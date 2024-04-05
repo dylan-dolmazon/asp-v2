@@ -4,6 +4,6 @@
   <div class="ContentLoader" />
 </template>
 
-<style>
+<style scoped>
 @import "./contentLoader.scss";
 </style>

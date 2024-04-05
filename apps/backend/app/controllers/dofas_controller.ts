@@ -1,7 +1,7 @@
 import { HttpContext } from '@adonisjs/core/http'
 import axios from 'axios'
 import dayjs from 'dayjs'
-import { Championnats, ClubInfo, Game } from '../../../frontend/utils/types/club/ClubTypes.ts'
+import { Championnat, ClubInfo, Game } from '../../../frontend/utils/types/club/ClubTypes.ts'
 
 const apiUrl = 'https://api-dofa.fff.fr'
 
@@ -14,50 +14,36 @@ export default class DofasController {
     return transformClassment(clubRank.data['hydra:member'])
   }
 
-  async getClubResults({ request, params }: HttpContext) {
-    const { result, page = 0 } = request.qs()
+  async getClubCalendar({ request, params }: HttpContext) {
+    const { page = 0 } = request.qs()
     const { competId, poolId } = params
 
-    const transformToSlug = (input: string): string => {
-      const withoutTrailingDot = input.replace(/\.$/, '') // Supprimer le point en fin de chaîne
-      const replacedSpacesAndDots = withoutTrailingDot.replace(/[\s.]+/g, '-')
-      return replacedSpacesAndDots.toLowerCase()
-    }
+    const dates = getXthSunday(page)
 
-    const dates = result === 'false' ? getXthSunday(page) : getXthSunday(page, false)
-
-    const endpoint =
-      result === 'false'
-        ? `calendrier?ma_dat%5Bbefore%5D=${dates[1]}&ma_dat%5Bafter%5D=${dates[0]}`
-        : `resultat?ma_dat%5Bbefore%5D=${dates[1]}&ma_dat%5Bafter%5D=${dates[0]}`
+    const endpoint = `calendrier?ma_dat%5Bbefore%5D=${dates[1]}&ma_dat%5Bafter%5D=${dates[0]}`
 
     const response = await axios.get(
       `${apiUrl}/api/compets/${competId}/phases/1/poules/${poolId}/${endpoint}`
     )
 
-    const transformedClubs = await Promise.all(
-      response.data['hydra:member'].map(async (club: any) => {
-        if (!club.home || !club.away) {
-          return {
-            ...club,
-            matchSheet: null,
-          }
-        }
+    const transformedClubs = await Promise.all(await transformClubs(response.data['hydra:member']))
 
-        const homeClubName = await axios.get(`${apiUrl}${club.home.club['@id']}`)
+    return transformCalendar(transformedClubs)
+  }
 
-        const awayClubName = await axios.get(`${apiUrl}${club.away.club['@id']}`)
+  async getClubResults({ request, params }: HttpContext) {
+    const { page = 0 } = request.qs()
+    const { competId, poolId } = params
 
-        return {
-          ...club,
-          matchSheet: `https://www.fff.fr/competition/match/${
-            club.ma_no
-          }-${transformToSlug(homeClubName.data.name)}-${transformToSlug(
-            awayClubName.data.name
-          )}.html`,
-        }
-      })
+    const dates = getXthSunday(page, false)
+
+    const endpoint = `resultat?ma_dat%5Bbefore%5D=${dates[1]}&ma_dat%5Bafter%5D=${dates[0]}`
+
+    const response = await axios.get(
+      `${apiUrl}/api/compets/${competId}/phases/1/poules/${poolId}/${endpoint}`
     )
+
+    const transformedClubs = await Promise.all(await transformClubs(response.data['hydra:member']))
 
     return transformCalendar(transformedClubs)
   }
@@ -69,7 +55,35 @@ export default class DofasController {
   }
 }
 
-const transformChampionnat = (data: any): Championnats => {
+const transformClubs = async (data: any): Promise<ClubInfo[]> => {
+  return await data.map(async (club: any) => {
+    if (!club.home || !club.away) {
+      return {
+        ...club,
+        matchSheet: null,
+      }
+    }
+
+    const homeClubName = await axios.get(`${apiUrl}${club.home.club['@id']}`)
+
+    const awayClubName = await axios.get(`${apiUrl}${club.away.club['@id']}`)
+
+    return {
+      ...club,
+      matchSheet: `https://www.fff.fr/competition/match/${
+        club.ma_no
+      }-${transformToSlug(homeClubName.data.name)}-${transformToSlug(awayClubName.data.name)}.html`,
+    }
+  })
+}
+
+const transformToSlug = (input: string): string => {
+  const withoutTrailingDot = input.replace(/\.$/, '') // Supprimer le point en fin de chaîne
+  const replacedSpacesAndDots = withoutTrailingDot.replace(/[\s.]+/g, '-')
+  return replacedSpacesAndDots.toLowerCase()
+}
+
+const transformChampionnat = (data: any): Championnat => {
   const pools = data.phases[0].groups.map((pool: any) => ({
     name: pool.name,
     number: pool.stage_number,

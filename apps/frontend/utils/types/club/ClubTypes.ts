@@ -1,9 +1,9 @@
-type Compet = {
+export type Compet = {
   name: string;
-  pool: string;
+  number: number;
 };
 
-export type Championnats = {
+export type Championnat = {
   label: string;
   code: number;
   pools: {
@@ -59,10 +59,16 @@ export type Game = {
 
 export type CompetRanking = {
   ranking: ClubInfo[];
-  compet: Compet;
+  compet: {
+    name: string;
+    pool: string;
+  };
 };
 
 export type Calendar = {
-  compet: Compet;
+  compet: {
+    name: string;
+    pool: string;
+  };
   games: Game[];
 };

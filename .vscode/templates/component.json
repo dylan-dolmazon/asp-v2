@@ -19,7 +19,7 @@
           "</div>",
           "</template>",
           "",
-          "<style>",
+          "<style scoped>",
           "@import \"./{{camel name}}.scss\";",
           "</style>"
         ]

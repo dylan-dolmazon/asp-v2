@@ -1,8 +1,6 @@
 <script setup lang="ts">
 const page = ref(1);
 
-const columns = playersAdminDashboardColumns;
-
 const { pending, data: players } = await getPlayers(page, 4);
 </script>
 
@@ -13,7 +11,11 @@ const { pending, data: players } = await getPlayers(page, 4);
       <Icon name="ri:team-fill" width="45" height="35"></Icon>
     </div>
     <div class="mx-8 mt-12">
-      <UTable :loading="pending" :columns="columns" :rows="players?.data" />
+      <UTable
+        :loading="pending"
+        :columns="playersAdminDashboardColumns"
+        :rows="players?.data"
+      />
     </div>
   </div>
 </template>

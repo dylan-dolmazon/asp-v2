@@ -25,7 +25,6 @@ export const pages_config: PageType[] = [
   },
   {
     title: "Résultats des équipes",
-
     path: "/results",
     allowedRoles: ["all"],
     breadCrumb: [{ label: "Résultats" }],

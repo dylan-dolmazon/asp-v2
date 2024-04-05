@@ -1,6 +1,5 @@
 <script setup lang="ts">
 const page = ref(1);
-const columns = playerScorerRankingColumns;
 const playersToUpdate = ref<
   { id: string; goalsscored: number; assists: number }[]
 >([]);
@@ -54,7 +53,11 @@ const updatePlayer = async () => {
 
 <template>
   <NuxtLayout name="default">
-    <UTable :loading="pending" :columns="columns" :rows="players?.data">
+    <UTable
+      :loading="pending"
+      :columns="playerScorerRankingColumns"
+      :rows="players?.data"
+    >
       <template #goalsscored-data="{ row }">
         <UInput
           v-model="row.goalsscored"

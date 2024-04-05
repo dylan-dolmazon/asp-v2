@@ -1,0 +1,20 @@
+.GameResults {
+  &-infos {
+    flex: 1;
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-evenly;
+
+    &::before {
+      position: absolute;
+      content: "";
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 2px;
+      background-color: theme("colors.default.DEFAULT");
+    }
+  }
+}

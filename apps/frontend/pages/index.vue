@@ -4,8 +4,6 @@ let initialTopPlayers: PlayerRanking[] | null = null;
 
 const { pending, data: players } = await getPlayersRanking(page);
 
-const columns = playersRankingColumns;
-
 const datas = computed(() => {
   if (!players?.value?.data) return { podium: [], tableData: [] };
 
@@ -36,7 +34,11 @@ const datas = computed(() => {
     <div class="w-2/3 m-auto">
       <PlayerPodium :players="datas.podium" />
       <div class="mt-12">
-        <UTable :loading="pending" :columns="columns" :rows="datas.tableData">
+        <UTable
+          :loading="pending"
+          :columns="playersRankingColumns"
+          :rows="datas.tableData"
+        >
           <template #fullname-data="{ row }">
             <Ranking :number="row.id" />
             {{ row.fullname }}
@@ -52,5 +54,3 @@ const datas = computed(() => {
     </div>
   </NuxtLayout>
 </template>
-
-<style lang="scss"></style>
