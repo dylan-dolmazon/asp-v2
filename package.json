@@ -6,7 +6,8 @@
     "main": "index.js",
         "scripts": {
       "dev": "pnpm -r run dev",
-      "build": "pnpm -r run build"
+      "build": "pnpm -r run build",
+      "start": "pnpm -r run start"
     },
     "keywords": [],
     "author": "DOLMAZON Dylan",

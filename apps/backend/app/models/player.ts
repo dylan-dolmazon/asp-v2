@@ -1,7 +1,7 @@
 import { DateTime } from 'luxon'
 import { BaseModel, column, computed } from '@adonisjs/lucid/orm'
-import { getPosition } from '../../../frontend/utils/functions/position/getPosition.ts'
-import { getFooted } from '../../../frontend/utils/functions/footed/getFooted.ts'
+import { getPosition } from '../utils/functions/get_position.js'
+import { getFooted } from '../utils/functions/get_footed.js'
 
 export default class Player extends BaseModel {
   @column({ isPrimary: true })

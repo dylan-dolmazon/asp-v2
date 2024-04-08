@@ -1,9 +1,7 @@
 {
   "extends": "@adonisjs/tsconfig/tsconfig.app.json",
   "compilerOptions": {
-    "noEmit": true,
-    "allowImportingTsExtensions": true,
-    "rootDir": "../../../",
+    "rootDir": "./",
     "outDir": "./build",
     "paths": {
       "#controllers/*": ["./app/controllers/*.js"],
@@ -22,6 +20,9 @@
       "#tests/*": ["./tests/*.js"],
       "#start/*": ["./start/*.js"],
       "#config/*": ["./config/*.js"],
+      "#types/*": ["./app/utils/types/*.js"],
+      "#functions/*": ["./app/utils/functions/*.js"],
+      "#enums/*": ["./app/utils/enums/*.js"],
     },
   },
 }
