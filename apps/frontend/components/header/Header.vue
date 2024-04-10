@@ -13,6 +13,7 @@ const logout = () => {
   const tokenCookie = useCookie("token");
   userCookie.value = null;
   tokenCookie.value = null;
+  navigateTo("/auth/login");
 };
 </script>
 

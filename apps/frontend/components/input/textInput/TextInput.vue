@@ -23,6 +23,7 @@ const props = defineProps({
 });
 
 const name = toRef(props, "name");
+const visible = ref(false);
 
 const {
   value: inputValue,
@@ -32,6 +33,14 @@ const {
 } = useField(name, undefined, {
   initialValue: props.value,
 });
+
+const togglePasswordVisibility = () => {
+  const input = document.getElementsByName(name.value)[0] as HTMLInputElement;
+  if (input) {
+    input.type = visible.value === false ? "text" : "password";
+    visible.value = !visible.value;
+  }
+};
 </script>
 
 <template>
@@ -46,8 +55,18 @@ const {
       @input="handleChange"
       @blur="handleBlur"
     />
-
-    <p class="help-message" v-show="errorMessage">
+    <UButton
+      v-if="type === 'password'"
+      :icon="visible ? 'i-heroicons-eye-slash-solid' : 'i-heroicons-eye-solid'"
+      class="TextInput-togglePassword"
+      size="lg"
+      color="primary"
+      square
+      type="button"
+      variant="solid"
+      @click="togglePasswordVisibility"
+    />
+    <p class="TextInput-help-message" v-show="errorMessage">
       {{ errorMessage }}
     </p>
   </div>

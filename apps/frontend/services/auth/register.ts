@@ -1,8 +1,8 @@
 export const registerUser = async (
   email: string,
   username: string,
-  firstname: string,
   lastname: string,
+  firstname: string,
   password: string
 ) => {
   return await useCustomFetch<User>(`user/register`, "POST", {

@@ -61,12 +61,20 @@ const onSubmit = async (values: any, { resetForm }: any) => {
             label="Prénom"
             placeholder="Votre prénom"
           />
-          <TextInput
-            name="password"
-            type="password"
-            label="Mot de passe"
-            placeholder="Votre mot de passe"
-          />
+          <div>
+            <TextInput
+              name="password"
+              type="password"
+              label="Mot de passe"
+              placeholder="Votre mot de passe"
+            />
+            <div class="grid grid-cols-2 grid-rows-2 text-default">
+              <Typo format="medium" tag="p4"> 8 caractéres minimum </Typo>
+              <Typo format="medium" tag="p4"> 1 majuscule </Typo>
+              <Typo format="medium" tag="p4"> 1 caractére spécial </Typo>
+              <Typo format="medium" tag="p4"> Pas d'espace </Typo>
+            </div>
+          </div>
           <UButton
             icon="i-heroicons-check"
             size="sm"
