@@ -20,9 +20,10 @@ export default class PlayersController {
 
     // Utilisez Promise.all pour attendre que toutes les promesses se résolvent
     const modifiedPlayers = await Promise.all(
-      players.serialize().data.map(async (player) => {
+      players.serialize().data.map(async (player, index) => {
         return {
           ...player,
+          rank: (page - 1) * 10 + (index + 1),
           country: await getCountry(player.nationality),
         }
       })
