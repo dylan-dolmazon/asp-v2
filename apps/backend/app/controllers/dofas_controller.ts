@@ -28,7 +28,7 @@ export default class DofasController {
 
     const transformedClubs = await Promise.all(await transformClubs(response.data['hydra:member']))
 
-    return transformCalendar(transformedClubs)
+    return { clubs: transformCalendar(transformedClubs), dates: { from: dates[0], to: dates[1] } }
   }
 
   async getClubResults({ request, params }: HttpContext) {
@@ -45,7 +45,7 @@ export default class DofasController {
 
     const transformedClubs = await Promise.all(await transformClubs(response.data['hydra:member']))
 
-    return transformCalendar(transformedClubs)
+    return { clubs: transformCalendar(transformedClubs), dates: { from: dates[0], to: dates[1] } }
   }
 
   async getCompetInfos({ params }: HttpContext) {

@@ -4,9 +4,9 @@ export const getCalendar = async (
   id: number,
   pool: number,
   page: number,
-  options: UseFetchOptions<Calendar> = {}
+  options: UseFetchOptions<any> = {}
 ) => {
-  return await useCustomFetch<Calendar>(
+  return await useCustomFetch<Results>(
     `/dofa/compet/${id}/calendar/${pool}`,
     "GET",
     { ...options, params: { page } }
