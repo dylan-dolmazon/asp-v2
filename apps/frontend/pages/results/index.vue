@@ -10,6 +10,8 @@ const calendar = ref<Game[]>([]);
 const results = ref<Game[]>([]);
 const isLoading = ref<boolean>(true);
 
+const date = ref<{ from: string; to: string }>();
+
 watch(compet, async (newValue) => {
   isLoading.value = true;
   page.value = 1;
@@ -87,6 +89,7 @@ const fetchClassment = async (competId: number, poolId: number) => {
     onResponse: (response: any) => {
       const data: ClubInfo[] = response.response["_data"];
       classment.value = data;
+      date.value = undefined;
     },
   });
   isLoading.value = false;
@@ -95,8 +98,9 @@ const fetchClassment = async (competId: number, poolId: number) => {
 const fetchCalendar = async (competId: number, poolId: number) => {
   await getCalendar(competId, poolId, page.value, {
     onResponse: (response: any) => {
-      const data: Game[] = response.response["_data"];
-      calendar.value = data;
+      const data: Results = response.response["_data"];
+      calendar.value = data.clubs;
+      date.value = data.dates;
     },
   });
   isLoading.value = false;
@@ -105,8 +109,9 @@ const fetchCalendar = async (competId: number, poolId: number) => {
 const fetchResults = async (competId: number, poolId: number) => {
   await getResults(competId, poolId, page.value, {
     onResponse: (response: any) => {
-      const data: Game[] = response.response["_data"];
-      results.value = data;
+      const data: Results = response.response["_data"];
+      results.value = data.clubs;
+      date.value = data.dates;
     },
   });
   isLoading.value = false;
@@ -137,38 +142,51 @@ const onChange = (tab: number) => {
 <template>
   <NuxtLayout name="default">
     <div class="flex gap-2 items-start">
-      <div class="flex gap-2 flex-col">
-        <USelect
-          :loading="compet === 0"
-          v-model="compet"
-          class="w-40"
-          :options="
-            competitions?.map((compet) => ({
-              value: compet.number,
-              name: compet.name,
-            }))
-          "
-          option-attribute="name"
-        />
-        <USelect
-          :loading="pool === 0"
-          v-model="pool"
-          class="w-40"
-          :options="
-            championnatInfos?.pools.map((pool) => ({
-              value: pool.number,
-              name: pool.name,
-            }))
-          "
-          option-attribute="name"
-        />
-        <Icon
-          v-if="isLoading"
-          class="m-auto"
-          name="svg-spinners:3-dots-fade"
-          width="60"
-          height="60"
-        ></Icon>
+      <div class="flex gap-8 flex-col">
+        <div class="flex gap-2 flex-col">
+          <USelect
+            :loading="compet === 0"
+            v-model="compet"
+            class="w-40"
+            :options="
+              competitions?.map((compet) => ({
+                value: compet.number,
+                name: compet.name,
+              }))
+            "
+            option-attribute="name"
+          />
+          <USelect
+            :loading="pool === 0"
+            v-model="pool"
+            class="w-40"
+            :options="
+              championnatInfos?.pools.map((pool) => ({
+                value: pool.number,
+                name: pool.name,
+              }))
+            "
+            option-attribute="name"
+          />
+        </div>
+        <div class="w-16 h-16 m-auto">
+          <Icon
+            v-if="isLoading"
+            name="svg-spinners:3-dots-fade"
+            width="64"
+            height="64"
+          />
+        </div>
+        <div v-if="date">
+          <div>
+            <Typo tag="p" format="bold" class="text-center mr-2"> Du </Typo>
+            <UBadge>{{ getDateformated(date.from, "DD-MM-YYYY") }}</UBadge>
+          </div>
+          <div>
+            <Typo tag="p" format="bold" class="text-center mr-2"> Au </Typo>
+            <UBadge>{{ getDateformated(date.to, "DD-MM-YYYY") }}</UBadge>
+          </div>
+        </div>
       </div>
       <UTabs :items="items" class="w-full" @change="onChange">
         <template #classment="{ item }">

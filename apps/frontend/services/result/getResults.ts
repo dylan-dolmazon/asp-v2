@@ -4,11 +4,14 @@ export const getResults = async (
   id: number,
   pool: number,
   page: number,
-  options: UseFetchOptions<Game[]> = {}
+  options: UseFetchOptions<any> = {}
 ) => {
-  return await useCustomFetch<Game[]>(
+  return await useCustomFetch<Results>(
     `/dofa/compet/${id}/results/${pool}`,
     "GET",
-    { ...options, params: { page } }
+    {
+      ...options,
+      params: { page },
+    }
   );
 };

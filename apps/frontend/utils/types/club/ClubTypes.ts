@@ -65,10 +65,10 @@ export type CompetRanking = {
   };
 };
 
-export type Calendar = {
-  compet: {
-    name: string;
-    pool: string;
+export type Results = {
+  clubs: Game[];
+  dates: {
+    from: string;
+    to: string;
   };
-  games: Game[];
 };
