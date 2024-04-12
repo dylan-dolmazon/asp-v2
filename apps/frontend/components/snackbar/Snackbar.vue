@@ -2,7 +2,7 @@
 defineProps({
   title: String,
   type: {
-    type: Object as PropType<"Information" | "Succes" | "Erreur" | "Attention">,
+    type: String as PropType<"Information" | "Succes" | "Erreur" | "Attention">,
     required: true,
   },
 });

@@ -1,4 +1,7 @@
 <script setup lang="ts">
+useHead({
+  title: "Mon équipe",
+});
 const page = ref(1);
 const isOpen = ref(false);
 const deleteLoading = ref(false);
@@ -83,9 +86,10 @@ const actions = (row: any) => [
       </template>
     </UTable>
     <UPagination
+      v-if="players?.meta"
       v-model="page"
-      :total="players?.meta.total"
-      :page-count="players?.meta.perPage"
+      :total="players.meta.total"
+      :page-count="players.meta.perPage"
       class="justify-center mt-8"
     />
   </NuxtLayout>

@@ -1,4 +1,8 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+useHead({
+  title: "Menu Administration",
+});
+</script>
 
 <template>
   <NuxtLayout name="default">
