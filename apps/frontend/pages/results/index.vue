@@ -1,4 +1,8 @@
 <script setup lang="ts">
+useHead({
+  title: "Championnat",
+});
+
 const page = ref<number>(1);
 const item = ref<string>();
 const pool = ref<number>(0);

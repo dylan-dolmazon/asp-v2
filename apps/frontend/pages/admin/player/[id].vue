@@ -1,4 +1,7 @@
 <script setup lang="ts">
+useHead({
+  title: "Détail joueur",
+});
 const isOpen = ref(false);
 const route = useRoute();
 const deleteLoading = ref(false);

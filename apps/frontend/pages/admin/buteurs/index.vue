@@ -1,4 +1,7 @@
 <script setup lang="ts">
+useHead({
+  title: "Modification buteurs",
+});
 const page = ref(1);
 const playersToUpdate = ref<
   { id: string; goalsscored: number; assists: number }[]
@@ -83,9 +86,10 @@ const updatePlayer = async () => {
     <div class="flex items-center justify-center gap-10 mt-5">
       <UButton @click="updatePlayer()" label="Mettre à jours" />
       <UPagination
+        v-if="players?.meta"
         v-model="page"
-        :total="players?.meta.total"
-        :page-count="players?.meta.perPage"
+        :total="players.meta.total"
+        :page-count="players.meta.perPage"
       />
     </div>
   </NuxtLayout>
