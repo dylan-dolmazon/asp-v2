@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const page = ref<number>(0);
+const page = ref<number>(1);
 const item = ref<string>();
 const pool = ref<number>(0);
 const championnatInfos = ref<Championnat | null>();
@@ -12,7 +12,7 @@ const isLoading = ref<boolean>(true);
 
 watch(compet, async (newValue) => {
   isLoading.value = true;
-  page.value = 0;
+  page.value = 1;
   await fetchCompetInfos(newValue);
   if (item.value === "classment") {
     fetchClassment(newValue, pool.value);
@@ -37,7 +37,7 @@ watch(page, async () => {
 
 watch(pool, async (newValue) => {
   isLoading.value = true;
-  page.value = 0;
+  page.value = 1;
   if (item.value === "classment" || !item.value) {
     await fetchClassment(compet.value, newValue);
   }
@@ -51,7 +51,7 @@ watch(pool, async (newValue) => {
 
 watch(item, async (newValue) => {
   isLoading.value = true;
-  page.value = 0;
+  page.value = 1;
   if (newValue === "classment") {
     await fetchClassment(compet.value, pool.value);
   }
@@ -127,10 +127,6 @@ const items = [
     slot: "calendar",
     label: "Calendrier",
   },
-  {
-    slot: "calendar",
-    label: "Calendrier",
-  },
 ];
 
 const onChange = (tab: number) => {
@@ -176,7 +172,30 @@ const onChange = (tab: number) => {
       </div>
       <UTabs :items="items" class="w-full" @change="onChange">
         <template #classment="{ item }">
-          <Classment v-if="classment" :classment="classment" />
+          <Snackbar
+            v-if="classment.length === 0 && !isLoading"
+            type="Erreur"
+            class="mt-10 mx-20"
+          >
+            <div>
+              <Typo tag="p" format="normal" class="pr-1">
+                Le classement n'est pas disponible en se moment pour le
+                championnat
+              </Typo>
+              <Typo tag="p" format="bold">
+                {{
+                  competitions?.find(
+                    (competition) => competition.number === compet
+                  )?.name
+                }}
+                {{
+                  championnatInfos?.pools.find((info) => info.number === pool)
+                    ?.name
+                }}.
+              </Typo>
+            </div>
+          </Snackbar>
+          <Classment v-else :classment="classment" />
         </template>
 
         <template #calendar="{ item }">
@@ -185,7 +204,7 @@ const onChange = (tab: number) => {
               icon="i-heroicons-arrow-long-left-16-solid"
               size="lg"
               label="Match précédent"
-              :disabled="page === 0"
+              :disabled="page === 1"
               @click="() => (page -= 1)"
             />
             <UButton
@@ -196,7 +215,30 @@ const onChange = (tab: number) => {
               @click="() => (page += 1)"
             />
           </div>
-          <Results :results="calendar" />
+          <Snackbar
+            v-if="calendar.length === 0 && !isLoading"
+            title="Aucun match trouvé"
+            type="Attention"
+            class="mt-10 mx-20"
+          >
+            <div>
+              <Typo tag="p" format="normal" class="pr-1">
+                Pas de matchs prévue durant cette semaine pour le championnat
+              </Typo>
+              <Typo tag="p" format="bold">
+                {{
+                  competitions?.find(
+                    (competition) => competition.number === compet
+                  )?.name
+                }}
+                {{
+                  championnatInfos?.pools.find((info) => info.number === pool)
+                    ?.name
+                }}.
+              </Typo>
+            </div>
+          </Snackbar>
+          <Results v-else :results="calendar" />
         </template>
 
         <template #results="{ item }">
@@ -205,18 +247,42 @@ const onChange = (tab: number) => {
               icon="i-heroicons-arrow-long-left-16-solid"
               size="lg"
               label="Match précédent"
-              @click="() => (page -= 1)"
+              @click="() => (page += 1)"
             />
             <UButton
               icon="i-heroicons-arrow-long-right-16-solid"
               size="lg"
               label="Match suivant"
               trailing
-              :disabled="page === 0"
-              @click="() => (page += 1)"
+              :disabled="page === 1"
+              @click="() => (page -= 1)"
             />
           </div>
-          <Results :results="results" />
+          <Snackbar
+            v-if="results.length === 0 && !isLoading"
+            title="Aucun match trouvé"
+            type="Attention"
+            class="mt-10 mx-20"
+          >
+            <div>
+              <Typo tag="p" format="normal" class="pr-1">
+                Pas de résultat disponible durant cette semaine pour le
+                championnat
+              </Typo>
+              <Typo tag="p" format="bold">
+                {{
+                  competitions?.find(
+                    (competition) => competition.number === compet
+                  )?.name
+                }}
+                {{
+                  championnatInfos?.pools.find((info) => info.number === pool)
+                    ?.name
+                }}.
+              </Typo>
+            </div>
+          </Snackbar>
+          <Results v-else :results="results" />
         </template>
       </UTabs>
     </div>

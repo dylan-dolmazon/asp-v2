@@ -15,10 +15,10 @@ export default class DofasController {
   }
 
   async getClubCalendar({ request, params }: HttpContext) {
-    const { page = 0 } = request.qs()
+    const { page = 1 } = request.qs()
     const { competId, poolId } = params
 
-    const dates = getXthSunday(page)
+    const dates = getXthSunday(page - 1)
 
     const endpoint = `calendrier?ma_dat%5Bbefore%5D=${dates[1]}&ma_dat%5Bafter%5D=${dates[0]}`
 
