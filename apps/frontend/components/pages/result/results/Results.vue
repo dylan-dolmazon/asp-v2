@@ -26,9 +26,11 @@ defineProps({
             />
             <Typo tag="p" format="bold">{{ result.home?.name }}</Typo>
           </div>
-          <Typo tag="p" format="bold">
-            {{ result.score?.home }} - {{ result.score?.away }}
-          </Typo>
+          <div class="flex gap-1">
+            <Typo tag="p" format="bold">{{ result.score?.home }}</Typo>
+            <Typo tag="p" format="bold">-</Typo>
+            <Typo tag="p" format="bold">{{ result.score?.away }}</Typo>
+          </div>
           <div
             class="flex items-center gap-4 flex-row-reverse w-40 overflow-visible whitespace-nowrap"
           >

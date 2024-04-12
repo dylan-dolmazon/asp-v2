@@ -1,0 +1,52 @@
+.Snackbar {
+  display: flex;
+  gap: 20px;
+  padding: 20px 20px;
+
+  &__succes {
+    background-color: theme("colors.background.success");
+    .Snackbar-icon::after {
+      background-color: theme("colors.success");
+    }
+  }
+
+  &__erreur {
+    background-color: theme("colors.background.error");
+    .Snackbar-icon::after {
+      background-color: theme("colors.error");
+    }
+  }
+
+  &__attention {
+    background-color: theme("colors.background.warning");
+    .Snackbar-icon::after {
+      background-color: theme("colors.warning");
+    }
+  }
+
+  &__information {
+    background-color: theme("colors.background.info");
+    .Snackbar-icon::after {
+      background-color: theme("colors.info");
+    }
+  }
+
+  &-icon {
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding-right: 20px;
+    &::after {
+      position: absolute;
+      content: "";
+      width: 2px;
+      height: 100%;
+      right: 0;
+    }
+  }
+
+  &-content {
+    display: flex;
+    flex-direction: column;
+  }
+}
