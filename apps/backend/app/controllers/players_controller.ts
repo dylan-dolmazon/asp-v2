@@ -8,15 +8,29 @@ import db from '@adonisjs/lucid/services/db'
 
 export default class PlayersController {
   async index({ request }: HttpContext) {
-    const { page = 1, limit = 10 } = request.qs()
+    const { page = 1, limit = 10, name } = request.qs()
+    const query = Player.query().orderBy('createdAt', 'desc')
 
-    return await Player.query().orderBy('createdAt', 'desc').paginate(page, limit)
+    if (name) {
+      query.where((builder) => {
+        builder.where('firstname', 'ilike', `%${name}%`).orWhere('lastname', 'ilike', `%${name}%`)
+      })
+    }
+
+    return await query.paginate(page, limit)
   }
 
   async getRanking({ request }: HttpContext) {
-    const { page = 1, limit = 10 } = request.qs()
+    const { page = 1, limit = 10, name } = request.qs()
+    const query = Player.query().orderBy('goalsscored', 'desc')
 
-    const players = await Player.query().orderBy('goalsscored', 'desc').paginate(page, limit)
+    if (name) {
+      query.where((builder) => {
+        builder.where('firstname', 'ilike', `%${name}%`).orWhere('lastname', 'ilike', `%${name}%`)
+      })
+    }
+
+    const players = await query.paginate(page, limit)
 
     // Utilisez Promise.all pour attendre que toutes les promesses se résolvent
     const modifiedPlayers = await Promise.all(

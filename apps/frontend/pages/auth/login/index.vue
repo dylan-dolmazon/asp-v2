@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import * as yup from "yup";
+const router = useRouter();
 
 const schema = yup.object({
   email: yup.string().email().required(),
@@ -20,7 +21,7 @@ const onSubmit = async (values: any, { resetForm }: any) => {
     const tokenCookie = useCookie<Token>("token");
     userCookie.value = JSON.parse(JSON.stringify(userValue));
     tokenCookie.value = JSON.parse(JSON.stringify(token));
-    navigateTo("/");
+    router.back();
   }
 };
 </script>

@@ -5,10 +5,15 @@ useHead({
 const page = ref(1);
 const isOpen = ref(false);
 const deleteLoading = ref(false);
+const search = ref("");
+
+const searchName = useDebounceFn((newVal) => {
+  search.value = newVal;
+}, 500);
 
 const selectedPlayer = ref<Player | undefined>(undefined);
 
-const { pending, data: players, refresh } = await getPlayers(page, 10);
+const { pending, data: players, refresh } = await getPlayers(page, 10, search);
 
 const suppPlayer = async (id: string) => {
   deleteLoading.value = true;
@@ -18,32 +23,46 @@ const suppPlayer = async (id: string) => {
   deleteLoading.value = false;
 };
 
-const actions = (row: any) => [
-  [
-    {
-      label: "Détail",
-      icon: "i-heroicons-magnifying-glass-circle-solid",
-      click: () => navigateTo(`player/${row.id}`),
-    },
-    {
-      label: "Modifier",
-      icon: "i-heroicons-pencil-square",
-      click: () => console.log("Edit", row.id),
-    },
-  ],
-  [
-    {
-      label: "Delete",
-      icon: "i-heroicons-trash-20-solid",
-      click: () => {
-        selectedPlayer.value = players.value?.data.find(
-          (player) => player.id === row.id
-        );
-        isOpen.value = true;
-      },
-    },
-  ],
-];
+const user = useCookie<User>("user");
+
+const actions = user.value?.role?.includes("admin" || "moderator")
+  ? (row: any) => [
+      [
+        {
+          label: "Détail",
+          icon: "i-heroicons-magnifying-glass-circle-solid",
+          disable: true,
+          click: () => navigateTo(`/equipe/player/${row.id}`),
+        },
+        {
+          label: "Modifier",
+          icon: "i-heroicons-pencil-square",
+          click: () => console.log("Edit", row.id),
+        },
+      ],
+      [
+        {
+          label: "Supprimer",
+          icon: "i-heroicons-trash-20-solid",
+          click: () => {
+            selectedPlayer.value = players.value?.data.find(
+              (player) => player.id === row.id
+            );
+            isOpen.value = true;
+          },
+        },
+      ],
+    ]
+  : (row: any) => [
+      [
+        {
+          label: "Détail",
+          icon: "i-heroicons-magnifying-glass-circle-solid",
+          disable: true,
+          click: () => navigateTo(`/equipe/player/${row.id}`),
+        },
+      ],
+    ];
 </script>
 
 <template>
@@ -74,6 +93,15 @@ const actions = (row: any) => [
         </div>
       </template>
     </Modal>
+    <UInput
+      icon="i-heroicons-magnifying-glass-20-solid"
+      size="sm"
+      color="white"
+      trailing
+      placeholder="Search..."
+      class="w-2/6 mx-auto my-8"
+      @input="(event: any) => searchName(event.target.value)"
+    />
     <UTable :loading="pending" :columns="playersColumns" :rows="players?.data">
       <template #actions-data="{ row }">
         <UDropdown :items="actions(row)">
@@ -94,5 +122,3 @@ const actions = (row: any) => [
     />
   </NuxtLayout>
 </template>
-
-<style scoped></style>
