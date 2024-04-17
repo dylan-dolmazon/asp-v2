@@ -12,7 +12,7 @@ const suppPlayer = async (id: string) => {
   deleteLoading.value = true;
   await deletePlayer(id);
   deleteLoading.value = false;
-  navigateTo("/admin/equipe");
+  navigateTo("/equipe");
 };
 </script>
 

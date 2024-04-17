@@ -46,22 +46,14 @@ export const pages_config: PageType[] = [
   },
   {
     title: "Gérer mon équipe",
-
-    path: "/admin/equipe",
-    allowedRoles: ["admin", "moderator"],
-    breadCrumb: [
-      { label: "Administration", to: "/admin" },
-      { label: "Equipe" },
-    ],
+    path: "/equipe",
+    allowedRoles: ["all"],
+    breadCrumb: [{ label: "Equipe" }],
   },
   {
     title: "Détail du joueur",
-    path: "/admin/player/:id",
-    allowedRoles: ["admin", "moderator"],
-    breadCrumb: [
-      { label: "Administration", to: "/admin" },
-      { label: "Equipe", to: "/admin/equipe" },
-      { label: "Joueur" },
-    ],
+    path: "/equipe/player/:id",
+    allowedRoles: ["all"],
+    breadCrumb: [{ label: "Equipe", to: "/equipe" }, { label: "Joueur" }],
   },
 ];

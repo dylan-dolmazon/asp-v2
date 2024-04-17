@@ -87,6 +87,26 @@ const logout = () => {
             />
           </UTooltip>
         </ULink>
+        <ULink to="/equipe" class="Header-navbar-item w-full">
+          <UTooltip
+            text="Mon équipe"
+            class="w-full"
+            :class="{
+              'Header-navbar-item--active': route.path.match(/^\/equipe/),
+            }"
+          >
+            <UButton
+              variant="link"
+              icon="i-heroicons-user-group-solid"
+              size="xl"
+              class="w-12 m-auto"
+              :class="{
+                'text-primary': route.path.match(/^\/equipe/),
+                'text-white': !route.path.match(/^\/equipe/),
+              }"
+            />
+          </UTooltip>
+        </ULink>
       </nav>
     </div>
     <div class="Header-user">

@@ -24,6 +24,8 @@
     "yup": "^1.4.x"
   },
   "devDependencies": {
-    "@nuxtjs/tailwindcss": "^6.11.x"
+    "@nuxtjs/tailwindcss": "^6.11.x",
+    "@vueuse/core": "^10.9.0",
+    "@vueuse/nuxt": "^10.9.0"
   }
 }

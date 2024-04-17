@@ -3,11 +3,20 @@ useHead({
   title: "Modification buteurs",
 });
 const page = ref(1);
+const search = ref("");
 const playersToUpdate = ref<
   { id: string; goalsscored: number; assists: number }[]
 >([]);
 
-const { pending, data: players, refresh } = await getPlayersRanking(page, 15);
+const {
+  pending,
+  data: players,
+  refresh,
+} = await getPlayersRanking(page, 15, search);
+
+const searchName = useDebounceFn((newVal) => {
+  search.value = newVal;
+}, 500);
 
 const handleChange = (
   score: number,
@@ -56,6 +65,15 @@ const updatePlayer = async () => {
 
 <template>
   <NuxtLayout name="default">
+    <UInput
+      icon="i-heroicons-magnifying-glass-20-solid"
+      size="sm"
+      color="white"
+      trailing
+      placeholder="Search..."
+      class="w-2/6 mx-auto my-8"
+      @input="(event: any) => searchName(event.target.value)"
+    />
     <UTable
       :loading="pending"
       :columns="playerScorerRankingColumns"
