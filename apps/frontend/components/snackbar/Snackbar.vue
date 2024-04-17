@@ -50,5 +50,5 @@ defineProps({
 </template>
 
 <style scoped>
-@import "./snackbar.scss";
+@import "./Snackbar.scss";
 </style>

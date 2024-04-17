@@ -37,5 +37,5 @@ const { value: inputValue } = useField(name, undefined, {
 </template>
 
 <style scoped>
-@import "./checkbox.scss";
+@import "./Checkbox.scss";
 </style>
