@@ -130,10 +130,10 @@ importers:
         specifier: ^6.11.x
         version: 6.11.4
       '@vueuse/core':
-        specifier: ^10.9.0
+        specifier: ^10.9.x
         version: 10.9.0(vue@3.4.21)
       '@vueuse/nuxt':
-        specifier: ^10.9.0
+        specifier: ^10.9.x
         version: 10.9.0(nuxt@3.10.3)(vue@3.4.21)
 
 packages:
@@ -1778,7 +1778,7 @@ packages:
       nuxt: ^3.9.0
       vite: '*'
     dependencies:
-      '@nuxt/kit': 3.10.3
+      '@nuxt/kit': 3.11.1
       '@nuxt/schema': 3.10.3
       execa: 7.2.0
       nuxt: 3.10.3(sass@1.71.1)(vite@5.1.6)

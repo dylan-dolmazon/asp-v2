@@ -25,7 +25,7 @@
   },
   "devDependencies": {
     "@nuxtjs/tailwindcss": "^6.11.x",
-    "@vueuse/core": "^10.9.0",
-    "@vueuse/nuxt": "^10.9.0"
+    "@vueuse/core": "^10.9.x",
+    "@vueuse/nuxt": "^10.9.x"
   }
 }
