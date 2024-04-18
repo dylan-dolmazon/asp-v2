@@ -3,7 +3,7 @@ import axios from 'axios'
 import dayjs from 'dayjs'
 import { Championnat, ClubInfo, Game } from '#types/club_types.js'
 
-const apiUrl = 'https://api-dofa.fff.fr'
+const apiUrl = 'https://api-dofa.prd-aws.fff.fr/'
 
 export default class DofasController {
   async getClubRank({ params }: HttpContext) {

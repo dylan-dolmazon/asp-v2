@@ -72,28 +72,39 @@ watch(item, async (newValue) => {
 const fetchCompets = async () => {
   await getCompets({
     onResponse: (response: any) => {
-      const data: Compet[] = response.response["_data"];
-      competitions.value = data;
-      compet.value = data[0].number;
+      if (
+        "_data" in response.response &&
+        response.response["_data"][0].number
+      ) {
+        const data: Compet[] = response.response["_data"];
+        competitions.value = data;
+        compet.value = data[0].number;
+      }
     },
   });
+  isLoading.value = false;
 };
 const fetchCompetInfos = async (competId: number) => {
   await getCompetInfos(competId, {
     onResponse: (response: any) => {
-      const data: Championnat = response.response["_data"];
-      championnatInfos.value = data;
-      pool.value = data.pools[0].number;
+      if ("_data" in response.response && response.response["_data"].pools) {
+        const data: Championnat = response.response["_data"];
+        championnatInfos.value = data;
+        pool.value = data.pools[0].number;
+      }
     },
   });
+  isLoading.value = false;
 };
 
 const fetchClassment = async (competId: number, poolId: number) => {
   await getClassment(competId, poolId, {
     onResponse: (response: any) => {
-      const data: ClubInfo[] = response.response["_data"];
-      classment.value = data;
-      date.value = undefined;
+      if ("_data" in response.response && response.response["_data"][0].club) {
+        const data: ClubInfo[] = response.response["_data"];
+        classment.value = data;
+        date.value = undefined;
+      }
     },
   });
   isLoading.value = false;
@@ -102,9 +113,11 @@ const fetchClassment = async (competId: number, poolId: number) => {
 const fetchCalendar = async (competId: number, poolId: number) => {
   await getCalendar(competId, poolId, page.value, {
     onResponse: (response: any) => {
-      const data: Results = response.response["_data"];
-      calendar.value = data.clubs;
-      date.value = data.dates;
+      if ("_data" in response.response && response.response["_data"].clubs) {
+        const data: Results = response.response["_data"];
+        calendar.value = data.clubs;
+        date.value = data.dates;
+      }
     },
   });
   isLoading.value = false;
@@ -113,9 +126,11 @@ const fetchCalendar = async (competId: number, poolId: number) => {
 const fetchResults = async (competId: number, poolId: number) => {
   await getResults(competId, poolId, page.value, {
     onResponse: (response: any) => {
-      const data: Results = response.response["_data"];
-      results.value = data.clubs;
-      date.value = data.dates;
+      if ("_data" in response.response && response.response["_data"].clubs) {
+        const data: Results = response.response["_data"];
+        results.value = data.clubs;
+        date.value = data.dates;
+      }
     },
   });
   isLoading.value = false;
@@ -195,7 +210,7 @@ const onChange = (tab: number) => {
       <UTabs :items="items" class="w-full" @change="onChange">
         <template #classment="{ item }">
           <Snackbar
-            v-if="classment.length === 0 && !isLoading"
+            v-if="classment?.length === 0 && !isLoading"
             type="Erreur"
             class="mt-10 mx-20"
           >
@@ -238,7 +253,7 @@ const onChange = (tab: number) => {
             />
           </div>
           <Snackbar
-            v-if="calendar.length === 0 && !isLoading"
+            v-if="calendar?.length === 0 && !isLoading"
             title="Aucun match trouvé"
             type="Attention"
             class="mt-10 mx-20"
@@ -281,7 +296,7 @@ const onChange = (tab: number) => {
             />
           </div>
           <Snackbar
-            v-if="results.length === 0 && !isLoading"
+            v-if="results?.length === 0 && !isLoading"
             title="Aucun match trouvé"
             type="Attention"
             class="mt-10 mx-20"
