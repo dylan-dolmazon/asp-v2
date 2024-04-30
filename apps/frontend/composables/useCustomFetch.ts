@@ -20,6 +20,10 @@ export const useCustomFetch = async <T>(
     ...options,
     method,
     baseURL: "http://localhost:3333",
+    headers: {
+      Authorization: `Bearer ${getToken()?.token}`,
+      Abilities: getToken()?.abilities.join(",") || "",
+    },
   });
   if (error.value?.data.errors) {
     addToast(

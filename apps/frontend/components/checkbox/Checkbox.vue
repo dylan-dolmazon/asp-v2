@@ -32,7 +32,7 @@ const { value: inputValue } = useField(name, undefined, {
       v-model="inputValue"
     />
     <label class="tgl-btn" :for="name" data-tg-off="NON" data-tg-on="OUI" />
-    <Typo format="normal" tag="p"> {{ label }}</Typo>
+    <Typo> {{ label }}</Typo>
   </div>
 </template>
 

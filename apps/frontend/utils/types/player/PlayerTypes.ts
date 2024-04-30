@@ -10,16 +10,16 @@ export interface Player {
   fullname?: string;
   age: number;
   position: Position;
-  positionLabel: string;
+  positionLabel?: string;
   nationality: string;
   height?: number;
   weight?: number;
   footed: Footed;
-  footedLabel: string;
+  footedLabel?: string;
   goalsscored: number;
   assists: number;
-  yellowcards?: number;
-  redcards?: number;
+  yellowcards: number;
+  redcards: number;
   pace: number;
   shooting: number;
   passing: number;
@@ -30,6 +30,11 @@ export interface Player {
   createdAt: string;
   updatedAt: string;
 }
+
+export type CreatePlayerType = Omit<
+  Player,
+  "id" | "country" | "updatedAt" | "createdAt"
+>;
 
 export type PlayerStats = {
   clubAverage: {

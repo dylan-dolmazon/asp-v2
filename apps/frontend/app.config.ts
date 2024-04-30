@@ -59,9 +59,8 @@ export default defineAppConfig({
     },
     card: {
       divide: "divide-y divide-gray-200",
-    },
-    select: {
-      base: "h-10 ps-2",
+      body: { base: "flex-1" },
+      ring: "",
     },
     tabs: {
       list: {
@@ -69,6 +68,16 @@ export default defineAppConfig({
           active: "bg-primary text-white",
           inactive: "bg-white",
         },
+      },
+    },
+    slideover: {
+      width: "w-screen max-w-2xl",
+    },
+    select: {
+      base: "h-10 ps-2",
+      variant: {
+        primary: "bg-primary-100 text-black",
+        error: "bg-background-error border-error",
       },
     },
   },

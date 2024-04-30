@@ -41,7 +41,7 @@ defineProps({
       ></Icon>
     </div>
     <div class="Snackbar-content">
-      <Typo tag="p" format="bold" class="Snackbar-title mb-4">
+      <Typo format="bold" class="Snackbar-title mb-4">
         {{ title || (type === "Succes" ? "Succés" : type) }}
       </Typo>
       <slot />

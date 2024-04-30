@@ -24,13 +24,13 @@ const suppPlayer = async (id: string) => {
     <div v-else-if="data">
       <Modal v-model="isOpen">
         <template #header>
-          <Typo tag="h3" format="normal" class="text-error w-full text-center">
+          <Typo tag="h3" class="text-error w-full text-center">
             Supprimer {{ data.player.fullname }}
           </Typo>
         </template>
 
         <template #body>
-          <Typo tag="p" format="normal">
+          <Typo>
             Êtes-vous sûr de vouloir supprimer ce joueur il ne sera plus
             disponible dans votre club ?
           </Typo>
@@ -126,7 +126,7 @@ const suppPlayer = async (id: string) => {
                   :class="`classment-${row.goalsscored}`"
                 />
               </Typo>
-              <Typo v-else tag="p" format="bold">
+              <Typo v-else format="bold">
                 {{ row.goalsscored }}
               </Typo>
             </template>
@@ -137,7 +137,7 @@ const suppPlayer = async (id: string) => {
                   :class="`classment-${row.assists}`"
                 />
               </Typo>
-              <Typo v-else tag="p" format="bold">
+              <Typo v-else format="bold">
                 {{ row.assists }}
               </Typo>
             </template>
@@ -148,7 +148,7 @@ const suppPlayer = async (id: string) => {
                   :class="`classment-${row.yellowcards}`"
                 />
               </Typo>
-              <Typo v-else tag="p" format="bold">
+              <Typo v-else format="bold">
                 {{ row.yellowcards }}
               </Typo>
             </template>
@@ -159,7 +159,7 @@ const suppPlayer = async (id: string) => {
                   :class="`classment-${row.redcards}`"
                 />
               </Typo>
-              <Typo v-else tag="p" format="bold">
+              <Typo v-else format="bold">
                 {{ row.redcards }}
               </Typo>
             </template>
@@ -172,7 +172,7 @@ const suppPlayer = async (id: string) => {
         <div class="flex flex-col items-center gap-4">
           <Typo tag="h3" format="bold" class="text-default">Nationalité</Typo>
           <div class="flex items-center gap-4">
-            <Typo tag="p" format="normal">{{ data.player.country?.name }}</Typo>
+            <Typo>{{ data.player.country?.name }}</Typo>
             <NuxtImg
               :src="data.player.country?.flagUrl"
               alt="nationalité du joueur"
@@ -184,7 +184,7 @@ const suppPlayer = async (id: string) => {
         <div class="flex flex-col items-center gap-4">
           <Typo tag="h3" format="bold" class="text-default">Club</Typo>
           <div class="flex items-center gap-4">
-            <Typo tag="p" format="normal">A.S Pertuis</Typo>
+            <Typo>A.S Pertuis</Typo>
             <NuxtImg
               src="/logo.png"
               alt="Logo du club"
@@ -195,31 +195,31 @@ const suppPlayer = async (id: string) => {
         </div>
         <div class="flex flex-col items-center gap-4">
           <Typo tag="h3" format="bold" class="text-default">Pied fort</Typo>
-          <Typo tag="p" format="normal">
+          <Typo>
             {{ data.player.footedLabel }}
           </Typo>
         </div>
         <div class="flex flex-col items-center gap-4">
           <Typo tag="h3" format="bold" class="text-default">Poids</Typo>
-          <Typo tag="p" format="normal">
+          <Typo>
             {{ data.player.weight ?? "Non renseigné" }}
           </Typo>
         </div>
         <div class="flex flex-col items-center gap-4">
           <Typo tag="h3" format="bold" class="text-default">Taille</Typo>
-          <Typo tag="p" format="normal">
+          <Typo>
             {{ data.player.height ?? "Non renseigné" }}
           </Typo>
         </div>
         <div class="flex flex-col items-center gap-4">
           <Typo tag="h3" format="bold" class="text-default">Créé le</Typo>
-          <Typo tag="p" format="normal">
+          <Typo>
             {{ getDateformated(data.player.createdAt) }}
           </Typo>
         </div>
         <div class="flex flex-col items-center gap-4">
           <Typo tag="h3" format="bold" class="text-default">Modifié le</Typo>
-          <Typo tag="p" format="normal">
+          <Typo>
             {{ getDateformated(data.player.updatedAt) }}
           </Typo>
         </div>

@@ -16,10 +16,10 @@ defineProps({
   <div class="PlayerCard" :class="`PlayerCard--${style}`">
     <div class="PlayerCard-top">
       <div class="PlayerCard-top-infos">
-        <Typo format="bold" tag="p" class="PlayerCard-top-infos-rating">
+        <Typo format="bold" class="PlayerCard-top-infos-rating">
           {{ player.goalsscored }} buts
         </Typo>
-        <Typo format="medium" tag="p" class="PlayerCard-top-infos-position">
+        <Typo format="medium" class="PlayerCard-top-infos-position">
           {{ getPosition(player.position, true) }}
         </Typo>
         <NuxtImg
@@ -47,20 +47,20 @@ defineProps({
       </Typo>
       <div class="PlayerCard-bottom-stats">
         <div class="PlayerCard-bottom-stats-item">
-          <Typo format="medium" tag="p">Pass</Typo>
-          <Typo format="medium" tag="p">
+          <Typo format="medium">Pass</Typo>
+          <Typo format="medium">
             {{ player.assists || 0 }}
           </Typo>
         </div>
         <div class="PlayerCard-bottom-stats-item">
-          <Typo format="medium" tag="p">Pied</Typo>
-          <Typo format="medium" tag="p">
+          <Typo format="medium">Pied</Typo>
+          <Typo format="medium">
             {{ getFooted(player.footed, true) }}
           </Typo>
         </div>
         <div class="PlayerCard-bottom-stats-item">
-          <Typo format="medium" tag="p">Age</Typo>
-          <Typo format="medium" tag="p">
+          <Typo format="medium">Age</Typo>
+          <Typo format="medium">
             {{ player.age }}
           </Typo>
         </div>

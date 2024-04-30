@@ -18,9 +18,7 @@ const { data: players } = await getPlayersRanking(page, 4);
         class="flex flex-col items-center justify-evenly m-3"
       >
         <Ranking :number="index + 1" :class="`classment-${index} m-5`" />
-        <Typo tag="p" format="normal">
-          {{ player.firstname }} {{ player.lastname }}
-        </Typo>
+        <Typo> {{ player.firstname }} {{ player.lastname }} </Typo>
       </div>
     </div>
   </div>
