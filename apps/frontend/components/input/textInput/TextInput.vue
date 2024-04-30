@@ -1,4 +1,6 @@
 <script setup lang="ts">
+const model = defineModel({ required: true });
+
 const props = defineProps({
   type: {
     type: String,
@@ -20,22 +22,26 @@ const props = defineProps({
     type: String,
     default: "",
   },
+  required: {
+    type: Boolean,
+    default: false,
+  },
+  errorMessage: {
+    type: String,
+    default: "",
+  },
+  min: {
+    type: Number,
+  },
+  max: {
+    type: Number,
+  },
 });
 
-const name = toRef(props, "name");
 const visible = ref(false);
 
-const {
-  value: inputValue,
-  errorMessage,
-  handleBlur,
-  handleChange,
-} = useField(name, undefined, {
-  initialValue: props.value,
-});
-
 const togglePasswordVisibility = () => {
-  const input = document.getElementsByName(name.value)[0] as HTMLInputElement;
+  const input = document.getElementById(props.name) as HTMLInputElement;
   if (input) {
     input.type = visible.value === false ? "text" : "password";
     visible.value = !visible.value;
@@ -45,15 +51,24 @@ const togglePasswordVisibility = () => {
 
 <template>
   <div class="TextInput" :class="{ 'has-error': !!errorMessage }">
-    <label :for="name">{{ label }}</label>
+    <label :for="name" :class="{ 'TextInput--required': required }">{{
+      label
+    }}</label>
     <input
       :name="name"
       :id="name"
       :type="type"
-      :value="inputValue"
+      :min="min"
+      :max="max"
+      @input="
+        (e: any) => {
+          if (!e.target.value) {
+            type === 'number' ? (model = 0) : (model = '');
+          }
+        }
+      "
       :placeholder="placeholder"
-      @input="handleChange"
-      @blur="handleBlur"
+      v-model="model"
     />
     <UButton
       v-if="type === 'password'"

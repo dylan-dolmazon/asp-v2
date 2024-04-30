@@ -107,11 +107,21 @@ export default class PlayersController {
   }
 
   async store({ request, response }: HttpContext) {
+    const roles = request.header('Abilities')?.split(',')
+
+    if (!roles?.includes('admin')) {
+      return response.status(401).send({ errors: [{ message: 'Accés refusé' }] })
+    }
     const payload = await request.validateUsing(createPlayerValidator)
     return response.status(201).send(Player.create(payload))
   }
 
-  async update({ request, params }: HttpContext) {
+  async update({ request, params, response }: HttpContext) {
+    const roles = request.header('Abilities')?.split(',')
+
+    if (!roles?.includes('admin')) {
+      return response.status(401).send({ errors: [{ message: 'Accés refusé' }] })
+    }
     const payload = await request.validateUsing(updatePlayerValidator)
     const entry = await Player.findOrFail(params.id)
     entry.merge(payload)
@@ -131,7 +141,12 @@ export default class PlayersController {
     return { players: updatedPlayers }
   }
 
-  async destroy({ params, response }: HttpContext) {
+  async destroy({ params, response, request }: HttpContext) {
+    const roles = request.header('Abilities')?.split(',')
+
+    if (!roles?.includes('admin')) {
+      return response.status(401).send({ errors: [{ message: 'Accés refusé' }] })
+    }
     const entry = await Player.findOrFail(params.id)
     entry.delete()
     return response.status(204)
@@ -142,5 +157,18 @@ export default class PlayersController {
     return Player.query()
       .where('firstname', 'ilike', `%${name}%`)
       .orWhere('lastname', 'ilike', `%${name}%`)
+  }
+
+  async alreadyExists({ request, response }: HttpContext) {
+    const roles = request.header('Abilities')?.split(',')
+
+    if (!roles?.includes('admin')) {
+      return response.status(401).send({ errors: [{ message: 'Accés refusé' }] })
+    }
+    const { firstname, lastname } = request.body()
+
+    return Player.query()
+      .whereRaw('LOWER(firstname) = ?', firstname.toLowerCase())
+      .andWhereRaw('LOWER(lastname) = ?', lastname.toLowerCase())
   }
 }

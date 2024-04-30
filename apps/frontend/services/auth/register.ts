@@ -1,17 +1,5 @@
-export const registerUser = async (
-  email: string,
-  username: string,
-  lastname: string,
-  firstname: string,
-  password: string
-) => {
+export const registerUser = async (credentials: User) => {
   return await useCustomFetch<User>(`user/register`, "POST", {
-    body: {
-      email,
-      username,
-      lastname,
-      firstname,
-      password,
-    },
+    body: { ...credentials },
   });
 };

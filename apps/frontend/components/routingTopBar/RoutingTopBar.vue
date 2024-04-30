@@ -12,7 +12,7 @@ const currentPage: PageType = pages_config.find((page) =>
   >
     <div class="w-1/2 px-4 flex justify-between items-center">
       <UBreadcrumb divider="/" :links="currentPage.breadCrumb" />
-      <Typo format="normal" tag="h1" class="translate-x-1/2">
+      <Typo tag="h1" class="translate-x-1/2">
         {{ currentPage.title }}
       </Typo>
     </div>

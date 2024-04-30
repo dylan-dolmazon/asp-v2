@@ -6,7 +6,6 @@ const stat = defineProps({
   },
   title: {
     type: String,
-    required: true,
   },
 });
 
@@ -19,7 +18,7 @@ const color = computed(() => {
 
 <template>
   <div class="flex items-center flex-col gap-4">
-    <Typo format="bold" tag="p" class="Stat-title">{{ title }}</Typo>
+    <Typo v-if="title" format="bold" class="Stat-title">{{ title }}</Typo>
     <div class="Stat" :style="`--percentage: ${stat.stat}; --fill: ${color}`">
       {{ stat.stat }}
     </div>

@@ -28,8 +28,25 @@ router
 router.get('players/search', [PlayersController, 'search'])
 router.put('players/updates', [PlayersController, 'updateMany'])
 router.get('players/ranking', [PlayersController, 'getRanking'])
+router.post('players/check', [PlayersController, 'alreadyExists'])
 router.get('players/:id/stats', [PlayersController, 'showWhitStats'])
-router.resource('/players', PlayersController)
+router.post('players', [PlayersController, 'store']).use(
+  middleware.auth({
+    guards: ['api'],
+  })
+)
+router.get('players', [PlayersController, 'index'])
+router.get('players/:id', [PlayersController, 'show'])
+router.put('players/:id', [PlayersController, 'update']).use(
+  middleware.auth({
+    guards: ['api'],
+  })
+)
+router.delete('players/:id', [PlayersController, 'destroy']).use(
+  middleware.auth({
+    guards: ['api'],
+  })
+)
 
 // ------------------- User routes ------------------- //
 router

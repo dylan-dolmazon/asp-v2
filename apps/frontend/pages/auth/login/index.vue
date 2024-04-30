@@ -7,10 +7,17 @@ const schema = yup.object({
   password: yup.string().required(),
 });
 
-const onSubmit = async (values: any, { resetForm }: any) => {
-  const { error, data } = await loginUser(values.email, values.password);
+const { handleSubmit, defineField, errors } = useForm<UserLogin>({
+  validationSchema: schema,
+  validateOnMount: false,
+});
+
+const [email] = defineField("email");
+const [password] = defineField("password");
+
+const onSubmit = handleSubmit(async (values) => {
+  const { error, data } = await loginUser(values);
   if (!error.value && data?.value) {
-    resetForm();
     addToast(
       "Connexion réussie",
       [`Content de vous revoir ${data.value?.username}`],
@@ -23,7 +30,7 @@ const onSubmit = async (values: any, { resetForm }: any) => {
     tokenCookie.value = JSON.parse(JSON.stringify(token));
     router.back();
   }
-};
+});
 </script>
 
 <template>
@@ -33,18 +40,24 @@ const onSubmit = async (values: any, { resetForm }: any) => {
         <Typo tag="h2" format="bold" class="text-center mb-6">
           Bienvenue sur l'application de l'AS Pertuis
         </Typo>
-        <Form :validation-schema="schema" @submit="onSubmit">
+        <Form @submit="onSubmit">
           <TextInput
             name="email"
             type="email"
             label="Mail"
             placeholder="Votre mail"
+            v-model="email"
+            :errorMessage="getYupFieldErrorMessage('email', errors)"
+            required
           />
           <TextInput
             name="password"
             type="password"
             label="Mot de passe"
             placeholder="Votre mot de passe"
+            v-model="password"
+            :errorMessage="getYupFieldErrorMessage('password', errors)"
+            required
           />
           <UButton
             icon="i-heroicons-check"

@@ -3,7 +3,8 @@ useHead({
   title: "Mon équipe",
 });
 const page = ref(1);
-const isOpen = ref(false);
+const modalModifyIsOpen = ref(false);
+const slideOverCreateIsOpen = ref(false);
 const deleteLoading = ref(false);
 const search = ref("");
 
@@ -19,13 +20,11 @@ const suppPlayer = async (id: string) => {
   deleteLoading.value = true;
   await deletePlayer(id);
   refresh();
-  isOpen.value = false;
+  modalModifyIsOpen.value = false;
   deleteLoading.value = false;
 };
 
-const user = useCookie<User>("user");
-
-const actions = user.value?.role?.includes("admin" || "moderator")
+const actions = isAdmin()
   ? (row: any) => [
       [
         {
@@ -48,7 +47,7 @@ const actions = user.value?.role?.includes("admin" || "moderator")
             selectedPlayer.value = players.value?.data.find(
               (player) => player.id === row.id
             );
-            isOpen.value = true;
+            modalModifyIsOpen.value = true;
           },
         },
       ],
@@ -67,15 +66,16 @@ const actions = user.value?.role?.includes("admin" || "moderator")
 
 <template>
   <NuxtLayout name="default">
-    <Modal v-model="isOpen">
+    <CreatePlayer v-model="slideOverCreateIsOpen" />
+    <Modal v-model="modalModifyIsOpen">
       <template #header>
-        <Typo tag="h3" format="normal" class="text-error w-full text-center">
+        <Typo tag="h3" class="text-error w-full text-center">
           Supprimer {{ selectedPlayer?.fullname }}
         </Typo>
       </template>
 
       <template #body>
-        <Typo tag="p" format="normal">
+        <Typo>
           Êtes-vous sûr de vouloir supprimer ce joueur il ne sera plus
           disponible dans votre club ?
         </Typo>
@@ -83,7 +83,11 @@ const actions = user.value?.role?.includes("admin" || "moderator")
 
       <template #footer>
         <div class="flex justify-between">
-          <UButton color="primary" label="Annuler" @click="isOpen = false" />
+          <UButton
+            color="primary"
+            label="Annuler"
+            @click="modalModifyIsOpen = false"
+          />
           <UButton
             color="red"
             label="Supprimer"
@@ -93,15 +97,28 @@ const actions = user.value?.role?.includes("admin" || "moderator")
         </div>
       </template>
     </Modal>
-    <UInput
-      icon="i-heroicons-magnifying-glass-20-solid"
-      size="sm"
-      color="white"
-      trailing
-      placeholder="Search..."
-      class="w-2/6 mx-auto my-8"
-      @input="(event: any) => searchName(event.target.value)"
-    />
+    <div class="relative">
+      <UInput
+        icon="i-heroicons-magnifying-glass-20-solid"
+        size="lg"
+        color="white"
+        trailing
+        placeholder="Search..."
+        class="w-2/6 mx-auto my-8"
+        @input="(event: any) => searchName(event.target.value)"
+      />
+      <UButton
+        v-if="isAdmin()"
+        icon="i-heroicons-user-plus-solid"
+        size="lg"
+        color="primary"
+        variant="solid"
+        label="Ajouter un joueur"
+        trailing
+        @click="slideOverCreateIsOpen = true"
+        class="absolute right-8 top-0"
+      />
+    </div>
     <UTable :loading="pending" :columns="playersColumns" :rows="players?.data">
       <template #actions-data="{ row }">
         <UDropdown :items="actions(row)">

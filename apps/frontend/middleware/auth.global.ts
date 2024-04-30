@@ -4,8 +4,7 @@ export default defineNuxtRouteMiddleware((to) => {
   )?.allowedRoles;
   if (!allowedRoles) return navigateTo("/", { redirectCode: 302 });
   if (allowedRoles.includes("all")) return;
-  const user = useCookie<User>("user");
-  if (!user.value) {
+  if (!isLoggin()) {
     addToast(
       "Acces refusé",
       ["Vous devez être connecté pour accéder à cette page"],
@@ -13,6 +12,7 @@ export default defineNuxtRouteMiddleware((to) => {
     );
     return navigateTo("/auth/login", { redirectCode: 302 });
   }
+  const user = useCookie<User>("user");
   if (!allowedRoles.includes(user.value.role)) {
     addToast(
       "Acces refusé",

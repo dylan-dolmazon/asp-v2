@@ -198,11 +198,11 @@ const onChange = (tab: number) => {
         </div>
         <div v-if="date">
           <div>
-            <Typo tag="p" format="bold" class="text-center mr-2"> Du </Typo>
+            <Typo format="bold" class="text-center mr-2"> Du </Typo>
             <UBadge>{{ getDateformated(date.from, "DD-MM-YYYY") }}</UBadge>
           </div>
           <div>
-            <Typo tag="p" format="bold" class="text-center mr-2"> Au </Typo>
+            <Typo format="bold" class="text-center mr-2"> Au </Typo>
             <UBadge>{{ getDateformated(date.to, "DD-MM-YYYY") }}</UBadge>
           </div>
         </div>
@@ -215,11 +215,11 @@ const onChange = (tab: number) => {
             class="mt-10 mx-20"
           >
             <div>
-              <Typo tag="p" format="normal" class="pr-1">
+              <Typo class="pr-1">
                 Le classement n'est pas disponible en se moment pour le
                 championnat
               </Typo>
-              <Typo tag="p" format="bold">
+              <Typo format="bold">
                 {{
                   competitions?.find(
                     (competition) => competition.number === compet
@@ -259,10 +259,10 @@ const onChange = (tab: number) => {
             class="mt-10 mx-20"
           >
             <div>
-              <Typo tag="p" format="normal" class="pr-1">
+              <Typo class="pr-1">
                 Pas de matchs prévue durant cette semaine pour le championnat
               </Typo>
-              <Typo tag="p" format="bold">
+              <Typo format="bold">
                 {{
                   competitions?.find(
                     (competition) => competition.number === compet
@@ -302,11 +302,11 @@ const onChange = (tab: number) => {
             class="mt-10 mx-20"
           >
             <div>
-              <Typo tag="p" format="normal" class="pr-1">
+              <Typo class="pr-1">
                 Pas de résultat disponible durant cette semaine pour le
                 championnat
               </Typo>
-              <Typo tag="p" format="bold">
+              <Typo format="bold">
                 {{
                   competitions?.find(
                     (competition) => competition.number === compet

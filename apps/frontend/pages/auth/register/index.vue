@@ -9,16 +9,20 @@ const schema = yup.object({
   password: passwordValidation,
 });
 
-const onSubmit = async (values: any, { resetForm }: any) => {
-  const { error } = await registerUser(
-    values.email,
-    values.username,
-    values.lastname,
-    values.firstname,
-    values.password
-  );
+const { handleSubmit, defineField, errors } = useForm<User>({
+  validationSchema: schema,
+  validateOnMount: false,
+});
+
+const [email] = defineField("email");
+const [username] = defineField("username");
+const [lastname] = defineField("lastname");
+const [firstname] = defineField("firstname");
+const [password] = defineField("password");
+
+const onSubmit = handleSubmit(async (values) => {
+  const { error } = await registerUser(values);
   if (!error.value) {
-    resetForm();
     addToast(
       "Inscription réussie",
       [`Merci de vous être inscrit veuillez vous connecter`],
@@ -26,7 +30,7 @@ const onSubmit = async (values: any, { resetForm }: any) => {
     );
     navigateTo("/auth/login");
   }
-};
+});
 </script>
 
 <template>
@@ -42,24 +46,36 @@ const onSubmit = async (values: any, { resetForm }: any) => {
             type="email"
             label="Mail"
             placeholder="Votre mail"
+            v-model="email"
+            :errorMessage="getYupFieldErrorMessage('email', errors)"
+            required
           />
           <TextInput
             name="username"
             type="text"
             label="Nom d'utilisateur"
             placeholder="Votre nom d'utilisateur"
+            v-model="username"
+            :errorMessage="getYupFieldErrorMessage('username', errors)"
+            required
           />
           <TextInput
             name="lastname"
             type="text"
             label="Nom"
             placeholder="Votre nom"
+            v-model="lastname"
+            :errorMessage="getYupFieldErrorMessage('lastname', errors)"
+            required
           />
           <TextInput
             name="firstname"
             type="text"
             label="Prénom"
             placeholder="Votre prénom"
+            v-model="firstname"
+            :errorMessage="getYupFieldErrorMessage('firstname', errors)"
+            required
           />
           <div>
             <TextInput
@@ -67,6 +83,9 @@ const onSubmit = async (values: any, { resetForm }: any) => {
               type="password"
               label="Mot de passe"
               placeholder="Votre mot de passe"
+              v-model="password"
+              :errorMessage="getYupFieldErrorMessage('password', errors)"
+              required
             />
             <div class="grid grid-cols-2 grid-rows-2 text-default">
               <Typo format="medium" tag="p4"> 8 caractéres minimum </Typo>

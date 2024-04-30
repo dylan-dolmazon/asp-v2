@@ -11,7 +11,7 @@ defineProps({
   <div class="GameResults">
     <div v-for="result in results" class="my-10 flex">
       <div class="GameResults-match w-3/5 text-center my-12 pr-32">
-        <Typo tag="p" format="bold" class="text-primary">
+        <Typo format="bold" class="text-primary">
           {{ getDateformated(result.date, "dddd DD MMMM YYYY") }} -
           {{ result.time }}
         </Typo>
@@ -24,12 +24,12 @@ defineProps({
               alt="logo équipe"
               width="40"
             />
-            <Typo tag="p" format="bold">{{ result.home?.name }}</Typo>
+            <Typo format="bold">{{ result.home?.name }}</Typo>
           </div>
           <div class="flex gap-1">
-            <Typo tag="p" format="bold">{{ result.score?.home }}</Typo>
-            <Typo tag="p" format="bold">-</Typo>
-            <Typo tag="p" format="bold">{{ result.score?.away }}</Typo>
+            <Typo format="bold">{{ result.score?.home }}</Typo>
+            <Typo format="bold">-</Typo>
+            <Typo format="bold">{{ result.score?.away }}</Typo>
           </div>
           <div
             class="flex items-center gap-4 flex-row-reverse w-40 overflow-visible whitespace-nowrap"
@@ -39,27 +39,27 @@ defineProps({
               alt="logo équipe"
               width="40"
             />
-            <Typo tag="p" format="bold">{{ result.away?.name }}</Typo>
+            <Typo format="bold">{{ result.away?.name }}</Typo>
           </div>
         </div>
-        <Typo tag="p" format="normal">
+        <Typo>
           {{ result.stade?.name }} {{ result.stade?.street }}
           {{ result.stade?.postalCode }} -
           {{ result.stade?.city }}
         </Typo>
       </div>
       <div class="GameResults-infos w-2/5 pl-32">
-        <Typo tag="p" format="normal"> journée: {{ result.journee }} </Typo>
+        <Typo> journée: {{ result.journee }} </Typo>
         <div class="flex justify-evenly w-full">
           <div class="flex flex-col">
-            <Typo tag="p" format="bold"> Sufrace de jeu: </Typo>
-            <Typo tag="p" format="normal">
+            <Typo format="bold"> Sufrace de jeu: </Typo>
+            <Typo>
               {{ result.stade?.surface ?? "Non renseigné" }}
             </Typo>
           </div>
           <div class="flex flex-col">
-            <Typo tag="p" format="bold"> Arbitre officiels: </Typo>
-            <Typo tag="p" format="normal">
+            <Typo format="bold"> Arbitre officiels: </Typo>
+            <Typo>
               {{
                 result.referer
                   ? `${result.referer.lastname}

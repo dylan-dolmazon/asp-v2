@@ -1,8 +1,18 @@
 <script setup lang="ts">
-defineProps<{
-  tag: "span" | "p" | "h1" | "h2" | "h3" | "h4" | "p1" | "p2" | "p3" | "p4";
-  format: "bold" | "medium" | "normal";
-}>();
+import type { PropType } from "vue";
+
+defineProps({
+  tag: {
+    type: String as PropType<
+      "span" | "p" | "h1" | "h2" | "h3" | "h4" | "p1" | "p2" | "p3" | "p4"
+    >,
+    default: "p",
+  },
+  format: {
+    type: String as PropType<"bold" | "medium" | "normal">,
+    default: "normal",
+  },
+});
 </script>
 
 <template>

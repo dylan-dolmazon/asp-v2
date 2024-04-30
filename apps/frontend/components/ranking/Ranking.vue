@@ -6,7 +6,7 @@ defineProps({
 
 <template>
   <div :class="`Ranking`">
-    <Typo format="bold" tag="p" class="-rotate-45">{{ number }}</Typo>
+    <Typo format="bold" class="-rotate-45">{{ number }}</Typo>
   </div>
 </template>
 
