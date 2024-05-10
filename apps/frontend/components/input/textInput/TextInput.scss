@@ -47,6 +47,16 @@
     margin: 0;
     font-size: 14px;
   }
+
+  &--disabled {
+    label,
+    input {
+      color: theme("colors.gris.600");
+    }
+    input {
+      cursor: not-allowed;
+    }
+  }
 }
 
 .TextInput.has-error input {

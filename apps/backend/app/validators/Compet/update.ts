@@ -1,8 +1,8 @@
 import vine from '@vinejs/vine'
 /**
- * Validates the compet's create action
+ * Validates the compet's update action
  */
-export const createCompetValidator = vine.compile(
+export const updateCompetValidator = vine.compile(
   vine.object({
     name: vine
       .string()
@@ -11,14 +11,15 @@ export const createCompetValidator = vine.compile(
       .unique(async (db, value) => {
         const compet = await db.from('compets').where('name', value).first()
         return !compet
-      }),
+      })
+      .optional(),
     number: vine
       .number()
       .positive()
       .unique(async (db, value) => {
         const compet = await db.from('compets').where('number', value).first()
         return !compet
-      }),
-    order: vine.number().positive().optional(),
+      })
+      .optional(),
   })
 )

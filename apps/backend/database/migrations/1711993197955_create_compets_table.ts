@@ -9,6 +9,7 @@ export default class extends BaseSchema {
 
       table.string('name').notNullable().unique()
       table.integer('number').notNullable().unique()
+      table.integer('order').notNullable().unique()
       table.timestamp('created_at')
       table.timestamp('updated_at')
     })

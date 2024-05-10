@@ -13,7 +13,7 @@ const schema = yup.object({
   weight: yup.number().optional(),
 });
 
-const { handleSubmit, defineField, errors, resetField } = useForm({
+const { handleSubmit, defineField, errors, resetForm } = useForm({
   validationSchema: schema,
   initialValues: {
     firstname: getPersonalsInfos().firstname,
@@ -45,8 +45,7 @@ const onSubmit = handleSubmit(async (values) => {
       ["Un joueur avec ce nom et prénom existe déjà"],
       "error"
     );
-    resetField("firstname");
-    resetField("lastname");
+    resetForm();
   } else {
     setPersonalsInfos(values);
     step.value++;

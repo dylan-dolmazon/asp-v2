@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import * as yup from "yup";
+
 useHead({
   title: "Championnat",
 });
@@ -74,15 +76,14 @@ const fetchCompets = async () => {
     onResponse: (response: any) => {
       if (
         "_data" in response.response &&
-        response.response["_data"][0].number
+        response.response["_data"].data[0].number
       ) {
-        const data: Compet[] = response.response["_data"];
+        const data: Compet[] = response.response["_data"].data;
         competitions.value = data;
         compet.value = data[0].number;
       }
     },
   });
-  isLoading.value = false;
 };
 const fetchCompetInfos = async (competId: number) => {
   await getCompetInfos(competId, {
@@ -94,7 +95,6 @@ const fetchCompetInfos = async (competId: number) => {
       }
     },
   });
-  isLoading.value = false;
 };
 
 const fetchClassment = async (competId: number, poolId: number) => {
@@ -156,10 +156,81 @@ const items = [
 const onChange = (tab: number) => {
   item.value = items[tab].slot;
 };
+
+const modalCreateCompet = ref(false);
+const createCompetIsLoading = ref(false);
+const schema = yup.object({
+  name: yup.string().required(),
+  number: yup.number().required(),
+});
+
+const { handleSubmit, defineField, errors, resetForm } = useForm<Compet>({
+  validationSchema: schema,
+  validateOnMount: false,
+});
+
+const [name] = defineField("name");
+const [number] = defineField("number");
+
+const onSubmit = handleSubmit(async (values) => {
+  createCompetIsLoading.value = true;
+  await createCompet(values);
+  resetForm();
+  createCompetIsLoading.value = false;
+  modalCreateCompet.value = false;
+  await fetchCompets();
+});
 </script>
 
 <template>
   <NuxtLayout name="default">
+    <Modal v-model="modalCreateCompet" v-if="isAdmin()">
+      <template #header>
+        <Typo tag="h3" class="w-full text-center">
+          Création d'un championnat
+        </Typo>
+      </template>
+
+      <template #body>
+        <Form @submit="onSubmit">
+          <Typo>
+            <TextInput
+              label="Nom"
+              name="name"
+              id="name"
+              type="text"
+              placeholder="Nom du championnat"
+              v-model="name"
+              :errorMessage="getYupFieldErrorMessage('name', errors)"
+              required
+            />
+            <TextInput
+              label="Numéro"
+              name="number"
+              id="number"
+              type="number"
+              placeholder="Numéro du championnat"
+              v-model="number"
+              :errorMessage="getYupFieldErrorMessage('number', errors)"
+              required
+            />
+          </Typo>
+          <div class="flex justify-between mt-2">
+            <UButton
+              color="primary"
+              label="Annuler"
+              @click="modalCreateCompet = false"
+            />
+            <UButton
+              color="green"
+              label="Ajouter"
+              type="submit"
+              :loading="createCompetIsLoading"
+            />
+          </div>
+        </Form>
+      </template>
+    </Modal>
     <div class="flex gap-2 items-start">
       <div class="flex gap-8 flex-col">
         <div class="flex gap-2 flex-col">
@@ -187,6 +258,16 @@ const onChange = (tab: number) => {
             "
             option-attribute="name"
           />
+          <UButton
+            icon="i-heroicons-plus-circle-solid"
+            size="sm"
+            color="primary"
+            variant="solid"
+            label="Nouveau"
+            :trailing="false"
+            @click="modalCreateCompet = true"
+            v-if="isAdmin()"
+          />
         </div>
         <div class="w-16 h-16 m-auto">
           <Icon
@@ -198,11 +279,11 @@ const onChange = (tab: number) => {
         </div>
         <div v-if="date">
           <div>
-            <Typo format="bold" class="text-center mr-2"> Du </Typo>
+            <Typo tag="p" format="bold" class="text-center mr-2"> Du </Typo>
             <UBadge>{{ getDateformated(date.from, "DD-MM-YYYY") }}</UBadge>
           </div>
           <div>
-            <Typo format="bold" class="text-center mr-2"> Au </Typo>
+            <Typo tag="p" format="bold" class="text-center mr-2"> Au </Typo>
             <UBadge>{{ getDateformated(date.to, "DD-MM-YYYY") }}</UBadge>
           </div>
         </div>
@@ -210,16 +291,16 @@ const onChange = (tab: number) => {
       <UTabs :items="items" class="w-full" @change="onChange">
         <template #classment="{ item }">
           <Snackbar
-            v-if="classment?.length === 0 && !isLoading"
+            v-if="!isLoading && classment?.length === 0"
             type="Erreur"
             class="mt-10 mx-20"
           >
             <div>
-              <Typo class="pr-1">
+              <Typo tag="p" format="normal" class="pr-1">
                 Le classement n'est pas disponible en se moment pour le
                 championnat
               </Typo>
-              <Typo format="bold">
+              <Typo tag="p" format="bold">
                 {{
                   competitions?.find(
                     (competition) => competition.number === compet
@@ -259,10 +340,10 @@ const onChange = (tab: number) => {
             class="mt-10 mx-20"
           >
             <div>
-              <Typo class="pr-1">
+              <Typo tag="p" format="normal" class="pr-1">
                 Pas de matchs prévue durant cette semaine pour le championnat
               </Typo>
-              <Typo format="bold">
+              <Typo tag="p" format="bold">
                 {{
                   competitions?.find(
                     (competition) => competition.number === compet
@@ -302,11 +383,11 @@ const onChange = (tab: number) => {
             class="mt-10 mx-20"
           >
             <div>
-              <Typo class="pr-1">
+              <Typo tag="p" format="normal" class="pr-1">
                 Pas de résultat disponible durant cette semaine pour le
                 championnat
               </Typo>
-              <Typo format="bold">
+              <Typo tag="p" format="bold">
                 {{
                   competitions?.find(
                     (competition) => competition.number === compet

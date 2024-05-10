@@ -4,10 +4,7 @@ const { data: players } = await getPlayersRanking(page, 4);
 </script>
 
 <template>
-  <div
-    class="ScorerRanking h-full"
-    :onClick="() => navigateTo('/admin/buteurs')"
-  >
+  <div class="ScorerRanking h-full">
     <div class="flex items-center justify-evenly">
       <Typo tag="h2" format="bold">Classement des buteurs</Typo>
       <Icon name="fa6-solid:ranking-star" width="45" height="35"></Icon>
@@ -26,9 +23,6 @@ const { data: players } = await getPlayersRanking(page, 4);
 
 <style scoped lang="scss">
 .ScorerRanking {
-  &:hover {
-    cursor: pointer;
-  }
   .ScorerRanking-content {
     height: 85%;
   }

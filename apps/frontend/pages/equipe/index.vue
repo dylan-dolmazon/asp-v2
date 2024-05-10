@@ -62,6 +62,10 @@ const actions = isAdmin()
         },
       ],
     ];
+
+watch(slideOverCreateIsOpen, () => {
+  refresh();
+});
 </script>
 
 <template>

@@ -1,6 +1,8 @@
 export type Compet = {
+  id: number;
   name: string;
   number: number;
+  order: number;
 };
 
 export type Championnat = {
@@ -37,10 +39,10 @@ export type Game = {
   time: string;
   home?: ClubInfo;
   away?: ClubInfo;
-  referer?: {
+  referers?: {
     lastname: string;
     firstname: string;
-  };
+  }[];
   stade?: {
     name: string;
     street: string;
