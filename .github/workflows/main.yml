@@ -19,6 +19,9 @@ jobs:
         with:
           node-version: 14.x
 
+      - name: Install pnpm
+        run: npm install -g pnpm
+
       - name: Install Dependencies
         run: cd apps/frontend && pnpm install
 
@@ -48,6 +51,9 @@ jobs:
         with:
           node-version: 14.x
 
+      - name: Install pnpm
+        run: npm install -g pnpm
+        
       - name: Install Dependencies
         run: cd apps/backend && pnpm install
 
