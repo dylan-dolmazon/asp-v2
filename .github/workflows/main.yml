@@ -17,7 +17,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: 14.x
+          node-version: 20.x
 
       - name: Install pnpm
         run: npm install -g pnpm
@@ -49,11 +49,11 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: 14.x
+          node-version: 20.x
 
       - name: Install pnpm
         run: npm install -g pnpm
-        
+
       - name: Install Dependencies
         run: cd apps/backend && pnpm install
 
