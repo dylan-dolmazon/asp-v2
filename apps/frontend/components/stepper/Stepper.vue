@@ -37,5 +37,5 @@ defineProps({
 </template>
 
 <style scoped>
-@import "./stepper.scss";
+@import "./Stepper.scss";
 </style>

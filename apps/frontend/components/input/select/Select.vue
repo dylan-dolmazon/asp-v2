@@ -59,5 +59,5 @@ defineProps({
 </template>
 
 <style scoped>
-@import "./select.scss";
+@import "./Select.scss";
 </style>
