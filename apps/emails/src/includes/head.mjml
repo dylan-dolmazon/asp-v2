@@ -1,0 +1,26 @@
+<mj-head>
+  <mj-preview>{{email_title}}</mj-preview>
+  <mj-title>{{email_title}}</mj-title>
+  <mj-font href="https://fonts.googleapis.com/css2?family=Inter&family=Lato:wght@400;700&display=swap" name="Lato"></mj-font>
+
+  <mj-attributes>
+    <mj-all font-family="Inter, sans-serif" />
+    <mj-body width="640px" background-color="#e4e4e4" />
+    <mj-spacer height="10px" container-background-color="#f3f6ff" />
+    <mj-text padding="10px 0" font-size="14px" line-height="22px" />
+    <mj-section padding="0" />
+    <mj-image padding="0" />
+    <mj-section padding="0" />
+    <mj-column padding="0" />
+
+    <!-- Typo -->
+    <mj-class name="Title" css-class="Title" font-size="20px" font-weight="bold" line-height="30px" />
+    <mj-class name="SubTitle" css-class="SubTitle" font-size="16px" font-weight="bold" line-height="26px" />
+    <mj-class name="Subtext" css-class="Subtext" font-size="11px" />    
+
+    <!-- Padding -->
+    <mj-class name="Content" css-class="Content" padding="20px" background-color="#f3f6ff" />
+
+  </mj-attributes>
+  <mj-include path="../assets/css/style.css" type="css" css-inline="inline" />
+</mj-head>

@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+  <head>
+    <title>ASP application emails</title>
+    <link rel="stylesheet" href="./assets/css/index.css" />
+  </head>
+  <body>
+    <main>
+      <h1>Templates emails ASP application V2</h1>
+      <div id="emails"></div>
+    </main>
+
+    <script type="module">
+      import { emailList, createEmailTable } from "./assets/js/emailList.js";
+
+      // Obtenez la div par son ID
+      const emailsDiv = document.getElementById("emails");
+
+      // Injectez le contenu HTML généré dans la div
+      emailsDiv.innerHTML = createEmailTable(emailList);
+    </script>
+  </body>
+</html>

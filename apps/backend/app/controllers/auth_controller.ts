@@ -1,4 +1,5 @@
 import User from '#models/user'
+import { sendEmail } from '#services/email/send'
 import { loginUserValidator } from '#validators/Auth/login_user'
 import { storeAdminValidator, storeUserValidator } from '#validators/Auth/store_user'
 import type { HttpContext } from '@adonisjs/core/http'
@@ -6,6 +7,16 @@ import type { HttpContext } from '@adonisjs/core/http'
 export default class AuthController {
   async register({ request, response }: HttpContext) {
     const payload = await request.validateUsing(storeUserValidator)
+
+    sendEmail(
+      'inscription',
+      'Bienvenue sur ASP !',
+      [payload.email],
+      [
+        { key: 'user_name', value: payload.firstname },
+        { key: 'user_role', value: 'Utilisateur' },
+      ]
+    )
 
     return response.status(201).send(User.create({ ...payload, role: 'user' }))
   }
@@ -15,6 +26,7 @@ export default class AuthController {
 
     const user = await User.verifyCredentials(email, password)
     const token = await User.accessTokens.create(user, [user.role])
+
     return response.ok({
       token: token,
       ...user.serialize(),

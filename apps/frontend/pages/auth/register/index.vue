@@ -13,6 +13,7 @@ const { handleSubmit, defineField, errors } = useForm<User>({
   validationSchema: schema,
   validateOnMount: false,
 });
+console.log("✌️errors --->", errors);
 
 const [email] = defineField("email");
 const [username] = defineField("username");
@@ -21,6 +22,7 @@ const [firstname] = defineField("firstname");
 const [password] = defineField("password");
 
 const onSubmit = handleSubmit(async (values) => {
+  console.log("✌️values --->", values);
   const { error } = await registerUser(values);
   if (!error.value) {
     addToast(
@@ -40,7 +42,7 @@ const onSubmit = handleSubmit(async (values) => {
         <Typo tag="h2" format="bold" class="text-center mb-6">
           Bienvenue sur l'application de l'AS Pertuis
         </Typo>
-        <Form :validation-schema="schema" @submit="onSubmit">
+        <Form @submit="onSubmit">
           <TextInput
             name="email"
             type="email"

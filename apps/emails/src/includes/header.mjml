@@ -1,0 +1,15 @@
+<mj-section background-color="#282c32" mj-class="Content">
+  <mj-column vertical-align="middle">
+    <mj-text align="left" color="white">
+      <p class="no-margin">{{email_title}}</p>
+    </mj-text>
+  </mj-column>
+  <mj-column vertical-align="middle">
+    <mj-image align="right" src="../assets/img/logo.png" height="auto" width="70px" alt="Logo AS Pertuis" align="center" />
+  </mj-column>
+</mj-section>
+<mj-section>
+  <mj-column>
+    <mj-spacer/>
+  </mj-column>
+</mj-section>
