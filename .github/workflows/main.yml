@@ -1,31 +1,65 @@
-#FRONTEND 
-name: Build Nuxt 3 Files & Deploy to Ubuntu server
+name: Deploy Apps on Push to Prod
 
 on:
   push:
-    branches: [ prod ]
-  pull_request:
-    branches: [ prod ]
+    branches:
+      - prod
 
 jobs:
-  build-and-deploy:
+  deploy-frontend:
+    name: Deploy Frontend
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/prod' && contains(github.event.head_commit.message, 'apps/frontend')
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js 14.x to Build
-      uses: actions/setup-node@v2
-      with:
-        node-version: 14.x
-        #cache: 'npm'
-    - run: npm install
-    - run: NUXT_APP_STAGE=production
-    - run: CI=false npm run build
-    - name: ssh deploy on aws ec2
-      uses: easingthemes/ssh-deploy@v2.1.4
-      env:
-        SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_KEY }}
-        REMOTE_HOST: ${{ secrets.DEPLOY_HOST }}
-        REMOTE_USER: ${{ secrets.DEPLOY_USER }}
-        REMOTE_PORT: ${{ secrets.DEPLOY_PORT }}
-        SOURCE: "build/"
-        TARGET: ${{ secrets.DEPLOY_TARGET }}
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14.x
+
+      - name: Install Dependencies
+        run: cd apps/frontend && pnpm install
+
+      - name: Build Nuxt Application
+        run: cd apps/frontend && NUXT_APP_STAGE=production pnpm run build
+
+      - name: SSH Deploy to Frontend Server
+        uses: easingthemes/ssh-deploy@v2.1.4
+        with:
+          SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_KEY }}
+          REMOTE_HOST: ${{ secrets.DEPLOY_HOST }}
+          REMOTE_USER: ${{ secrets.DEPLOY_USER }}
+          REMOTE_PORT: ${{ secrets.DEPLOY_PORT }}
+          SOURCE: "apps/frontend/dist/"
+          TARGET: ${{ secrets.DEPLOY_TARGET }}
+
+  deploy-backend:
+    name: Deploy Backend
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/prod' && contains(github.event.head_commit.message, 'apps/backend')
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14.x
+
+      - name: Install Dependencies
+        run: cd apps/backend && pnpm install
+
+      - name: Build Backend Application
+        run: cd apps/backend && pnpm run build
+
+      - name: SSH Deploy to Backend Server
+        uses: easingthemes/ssh-deploy@v2.1.4
+        with:
+          SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_KEY }}
+          REMOTE_HOST: ${{ secrets.DEPLOY_HOST }}
+          REMOTE_USER: ${{ secrets.DEPLOY_USER }}
+          REMOTE_PORT: ${{ secrets.DEPLOY_PORT }}
+          SOURCE: "apps/backend/build/"
+          TARGET: ${{ secrets.DEPLOY_TARGET }}
