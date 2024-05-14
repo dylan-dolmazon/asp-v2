@@ -36,6 +36,10 @@ const props = defineProps({
   max: {
     type: Number,
   },
+  disabled: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const visible = ref(false);
@@ -50,7 +54,10 @@ const togglePasswordVisibility = () => {
 </script>
 
 <template>
-  <div class="TextInput" :class="{ 'has-error': !!errorMessage }">
+  <div
+    class="TextInput"
+    :class="{ 'has-error': !!errorMessage, 'TextInput--disabled': disabled }"
+  >
     <label :for="name" :class="{ 'TextInput--required': required }">{{
       label
     }}</label>
@@ -68,6 +75,7 @@ const togglePasswordVisibility = () => {
         }
       "
       :placeholder="placeholder"
+      :disabled="disabled"
       v-model="model"
     />
     <UButton

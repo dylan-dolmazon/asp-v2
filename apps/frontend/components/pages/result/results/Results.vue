@@ -49,7 +49,9 @@ defineProps({
         </Typo>
       </div>
       <div class="GameResults-infos w-2/5 pl-32">
-        <Typo> journée: {{ result.journee }} </Typo>
+        <Typo class="text-primary" format="bold">
+          journée: {{ result.journee }}
+        </Typo>
         <div class="flex justify-evenly w-full">
           <div class="flex flex-col">
             <Typo format="bold"> Sufrace de jeu: </Typo>
@@ -59,14 +61,10 @@ defineProps({
           </div>
           <div class="flex flex-col">
             <Typo format="bold"> Arbitre officiels: </Typo>
-            <Typo>
-              {{
-                result.referer
-                  ? `${result.referer.lastname}
-              ${result.referer.firstname}`
-                  : "Non désigné"
-              }}
+            <Typo v-if="result.referers" v-for="referer in result.referers">
+              {{ referer.lastname }} {{ referer.firstname }}
             </Typo>
+            <Typo v-else>Non désigné</Typo>
           </div>
         </div>
         <UButton

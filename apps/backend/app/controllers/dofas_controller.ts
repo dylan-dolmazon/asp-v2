@@ -125,11 +125,12 @@ const transformCalendar = (data: any): Game[] => {
         }
       : null
 
-    const referer = game.match_membres[0]
-      ? {
-          lastname: game.match_membres[0].prenom,
-          firstname: game.match_membres[0].nom,
-        }
+    const referers = game.match_membres
+      ? game.match_membres.map((referer: any) => ({
+          lastname: referer.nom,
+          firstname: referer.prenom,
+          position: referer.label_position,
+        }))
       : null
 
     const stade = game.terrain
@@ -157,7 +158,7 @@ const transformCalendar = (data: any): Game[] => {
       score,
       home,
       away,
-      referer,
+      referers,
       stade,
       journee: game.poule_journee.number,
       matchSheet: game.matchSheet,

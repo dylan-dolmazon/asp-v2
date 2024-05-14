@@ -1,5 +1,7 @@
 <script setup lang="ts">
-const step = defineModel<number>({ required: true });
+const step = defineModel<number>("step", { required: true });
+const isOpen = defineModel<boolean>("isOpen", { required: true });
+
 const { getPersonalsInfos, getPerformance, getStats, reset } =
   useStepperState();
 
@@ -9,9 +11,11 @@ const onSubmit = async () => {
     ...getStats(),
     ...getPerformance(),
   });
-  if (!error) {
+
+  if (!error.value) {
     reset();
     step.value = 0;
+    isOpen.value = false;
   }
 };
 </script>

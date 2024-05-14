@@ -11,6 +11,9 @@ export default class Compet extends BaseModel {
   @column()
   declare number: number
 
+  @column()
+  declare order: number
+
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
 

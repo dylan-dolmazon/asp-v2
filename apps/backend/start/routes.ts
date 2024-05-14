@@ -76,4 +76,19 @@ router.post('compets/create', [CompetsController, 'store']).use(
     guards: ['api'],
   })
 )
+router.delete('compets/:id', [CompetsController, 'destroy']).use(
+  middleware.auth({
+    guards: ['api'],
+  })
+)
+router.put('compets/new-favorite/:id', [CompetsController, 'newFavorite']).use(
+  middleware.auth({
+    guards: ['api'],
+  })
+)
+router.put('compets/:id', [CompetsController, 'update']).use(
+  middleware.auth({
+    guards: ['api'],
+  })
+)
 router.get('compets', [CompetsController, 'index'])

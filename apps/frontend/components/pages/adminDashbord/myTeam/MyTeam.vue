@@ -5,7 +5,7 @@ const { pending, data: players } = await getPlayers(page, 4);
 </script>
 
 <template>
-  <div class="MyTeam h-full" :onClick="() => navigateTo('/equipe')">
+  <div class="h-full">
     <div class="flex items-center justify-evenly">
       <Typo tag="h2" format="bold">Mon équipe</Typo>
       <Icon name="ri:team-fill" width="45" height="35"></Icon>
@@ -19,11 +19,3 @@ const { pending, data: players } = await getPlayers(page, 4);
     </div>
   </div>
 </template>
-
-<style scoped lang="scss">
-.MyTeam {
-  &:hover {
-    cursor: pointer;
-  }
-}
-</style>

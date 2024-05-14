@@ -16,6 +16,7 @@ export const useCustomFetch = async <T>(
   method: HttpMethod = "GET",
   options: UseFetchOptions<T> = {}
 ) => {
+  console.log("useCustomFetch", url, method);
   const { data, pending, error, refresh } = await useLazyFetch(url, {
     ...options,
     method,

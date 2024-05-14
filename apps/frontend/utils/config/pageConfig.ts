@@ -13,7 +13,6 @@ export const pages_config: PageType[] = [
   },
   {
     title: "Classement des buteurs",
-
     path: "/",
     allowedRoles: ["all"],
     link: {
@@ -27,6 +26,11 @@ export const pages_config: PageType[] = [
     title: "Résultats des équipes",
     path: "/results",
     allowedRoles: ["all"],
+    link: {
+      href: "/admin/results",
+      text: "Gérer les championnats",
+      linkAccessRoles: ["admin", "moderator"],
+    },
     breadCrumb: [{ label: "Résultats" }],
   },
   {
@@ -39,9 +43,18 @@ export const pages_config: PageType[] = [
     title: "Classement des buteurs",
     breadCrumb: [
       { label: "Administration", to: "/admin" },
-      { label: "Classement des buteurs" },
+      { label: "Classement" },
     ],
     path: "/admin/buteurs",
+    allowedRoles: ["admin", "moderator"],
+  },
+  {
+    title: "Gestion des championnats",
+    breadCrumb: [
+      { label: "Administration", to: "/admin" },
+      { label: "championnats" },
+    ],
+    path: "/admin/results",
     allowedRoles: ["admin", "moderator"],
   },
   {
