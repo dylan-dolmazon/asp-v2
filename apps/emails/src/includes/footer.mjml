@@ -1,0 +1,21 @@
+<mj-section background-color="#3c93d0" mj-class="Content">
+  <mj-column>
+    <mj-text color="#fff" mj-class="SubTitle">
+      <p>Sportivement, </p>
+      <p>L'équipe du Club de Football Association Sportive du Pertuis</p>
+    </mj-text>
+  </mj-column>
+</mj-section>
+<mj-section>
+  <mj-column>
+    <mj-spacer/>
+  </mj-column>
+</mj-section>
+<mj-section background-color="#282c32" mj-class="Content">
+  <mj-column>
+    <mj-text color="#fff" mj-class="SubText">
+      <p>Ceci est un email envoyé automatiquement merci de ne pas répondre.</p>
+      <p>Pour toute question contacter-nous par email à {{contact_email}}</p>
+    </mj-text>
+  </mj-column>
+</mj-section>

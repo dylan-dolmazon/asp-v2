@@ -36,6 +36,7 @@ Créé par Dylan Dolmazon - [dylan.dolmazon@icloud.com](mailto:dylan.dolmazon@ic
 
 - Backend lancé sur `http://localhost:3333`
 - Frontend lancé sur `http://localhost:3000`
+- Emails lancé sur `http://localhost:3010`
 
 ## Technologies utilisées
 
@@ -93,3 +94,25 @@ Créé par Dylan Dolmazon - [dylan.dolmazon@icloud.com](mailto:dylan.dolmazon@ic
 | vue-router          | ^4.3.x  |
 | yup                 | ^1.4.x  |
 | @nuxtjs/tailwindcss | ^6.11.x |
+
+### Emails
+
+- **Framework**: MJML
+- **Langage**: mjml
+- **Gestionnaire de paquets**: pnpm v8.15.4
+
+#### Bibliothèques Frontend
+
+| Bibliothèque        | Version        |
+| ------------------- | -------------- |
+| gulp                | ^4.0.x         |
+| gulp-htmlmin        | ^4.12.x        |
+| gulp-mail           | ^0.4.x         |
+| gulp-mjml           | ^3.0.x         |
+| gulp-string-replace | ^1.1.x         |
+| babel-preset-env    | ^1.6.x         |
+| babel-register      | ^6.26.x        |
+| del                 | ^3.0.x         |
+| fancy-log           | ^2.0.x         |
+| fs                  | 0.0.1-security |
+| @aws-sdk/client-s3  | ^3.511.x       |

@@ -57,12 +57,15 @@
     "@adonisjs/core": "^6.2.x",
     "@adonisjs/cors": "^2.2.x",
     "@adonisjs/lucid": "^20.1.x",
+    "@adonisjs/mail": "^9.2.x",
     "@vinejs/vine": "^1.7.x",
     "axios": "^1.6.x",
     "dayjs": "^1.11.x",
     "luxon": "^3.4.x",
     "pg": "^8.11.x",
-    "reflect-metadata": "^0.2.x"
+    "reflect-metadata": "^0.2.x",
+    "@aws-sdk/client-s3": "^3.511.x",
+    "@aws-sdk/s3-request-presigner": "^3.511.x"
   },
   "eslintConfig": {
     "extends": "@adonisjs/eslint-config/app"

@@ -1,0 +1,46 @@
+<mjml>
+  <mj-include path="../includes/head.mjml" />
+  <mj-body>
+    <mj-wrapper>
+      <mj-include path="../includes/header.mjml" />
+      <mj-section>
+        <mj-column>
+          <mj-image
+            src="../assets/img/banner.png"
+            alt="Banniére de l'application"
+          />
+        </mj-column>
+      </mj-section>
+      <mj-section mj-class="Content">
+        <mj-column>
+          <mj-text mj-class="Title" css-class="mt-4">
+            <p>
+              Bienvenue au Club de Football Association Sportive du
+              Pertuis&nbsp;!
+            </p>
+            <p>Cher {{user_name}},</p>
+          </mj-text>
+          <mj-text>
+            <p>
+              Nous sommes ravis de vous accueillir dans notre communauté du Club
+              <b>Association Sportive du Pertuis</b>. En tant que
+              "<b>{{user_role}}</b>".
+            </p>
+          </mj-text>
+          <mj-text>
+            <p><b>🎉 Les fonctionnalités disponibles :</b></p>
+          </mj-text>
+          <mj-text>
+            <ul>
+              <li>Classement des buteurs du club</li>
+              <li>
+                Classement / Résultats / Calendrier de différents championnats
+              </li>
+            </ul>
+          </mj-text>
+        </mj-column>
+      </mj-section>
+      <mj-include path="../includes/footer.mjml" />
+    </mj-wrapper>
+  </mj-body>
+</mjml>
