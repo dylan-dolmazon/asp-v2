@@ -101,7 +101,7 @@ Créé par Dylan Dolmazon - [dylan.dolmazon@icloud.com](mailto:dylan.dolmazon@ic
 - **Langage**: mjml
 - **Gestionnaire de paquets**: pnpm v8.15.4
 
-#### Bibliothèques Frontend
+#### Bibliothèques Emails
 
 | Bibliothèque        | Version        |
 | ------------------- | -------------- |
