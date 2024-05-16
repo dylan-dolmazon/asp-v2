@@ -16,16 +16,19 @@ export const useCustomFetch = async <T>(
   method: HttpMethod = "GET",
   options: UseFetchOptions<T> = {}
 ) => {
-  console.log("useCustomFetch", url, method);
+  const config = useRuntimeConfig();
+  const baseURL = config.public.API_URL;
+
   const { data, pending, error, refresh } = await useLazyFetch(url, {
     ...options,
     method,
-    baseURL: "http://localhost:3333",
+    baseURL: baseURL,
     headers: {
       Authorization: `Bearer ${getToken()?.token}`,
       Abilities: getToken()?.abilities.join(",") || "",
     },
   });
+
   if (error.value?.data.errors) {
     addToast(
       `Erreur: ${error.value.statusCode} - ${error.value.statusMessage}`,
