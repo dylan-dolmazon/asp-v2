@@ -35,6 +35,7 @@ router.post('players', [PlayersController, 'store']).use(
     guards: ['api'],
   })
 )
+
 router.get('players', [PlayersController, 'index'])
 router.get('players/:id', [PlayersController, 'show'])
 router.put('players/:id', [PlayersController, 'update']).use(
