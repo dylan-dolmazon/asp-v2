@@ -6,7 +6,7 @@ on:
       - prod
 
 jobs:
-  deploy-frontend:
+  frontend:
     name: Deploy Frontend
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/prod' && contains(github.event.head_commit.message, 'apps/frontend')
@@ -38,7 +38,7 @@ jobs:
           SOURCE: "apps/frontend/.output/"
           TARGET: ${{ secrets.DEPLOY_TARGET_frontend }}
 
-  deploy-backend:
+  backend:
     name: Deploy Backend
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/prod' && contains(github.event.head_commit.message, 'apps/backend')
@@ -70,9 +70,9 @@ jobs:
           SOURCE: "apps/backend/build/"
           TARGET: ${{ secrets.DEPLOY_TARGET_back }}
 
-  deploy:
+  deploy-backend:
     runs-on: ubuntu-latest
-    needs: [deploy-backend, deploy-frontend]
+    needs: [backend]
 
     steps:
       - name: Configure SSH
@@ -94,6 +94,28 @@ jobs:
 
       - name: Build and Run Backend
         run: ssh staging 'cd backend;pnpm i; pm2 stop asp-app-api ; pm2 delete asp-app-api ; pm2 start npm --name "asp-app-api" -- start'
+
+  deploy-frontend:
+    runs-on: ubuntu-latest
+    needs: [frontend]
+
+    steps:
+      - name: Configure SSH
+        run: |
+          mkdir -p ~/.ssh/
+          echo "$SSH_KEY" > ~/.ssh/staging.key
+          chmod 600 ~/.ssh/staging.key
+          cat >>~/.ssh/config <<END
+          Host staging
+            HostName $SSH_HOST
+            User $SSH_USER
+            IdentityFile ~/.ssh/staging.key
+            StrictHostKeyChecking no
+          END
+        env:
+          SSH_USER: ${{ secrets.DEPLOY_USER }}
+          SSH_KEY: ${{ secrets.DEPLOY_KEY }}
+          SSH_HOST: ${{ secrets.DEPLOY_HOST }}
 
       - name: Build and Run Frontend
         run: ssh staging 'cd frontend; pm2 stop asp-app-frontend ; pm2 delete asp-app-frontend ; pm2 start server/index.mjs --name "asp-app-frontend"'

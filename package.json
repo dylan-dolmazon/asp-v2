@@ -1,6 +1,6 @@
 {
     "name": "asp_application",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "description": "Application for ASP football team",
     "type": "module",
     "main": "index.js",
