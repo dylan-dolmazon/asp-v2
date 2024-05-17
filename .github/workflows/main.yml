@@ -70,5 +70,27 @@ jobs:
           SOURCE: "apps/backend/build/"
           TARGET: ${{ secrets.DEPLOY_TARGET_back }}
 
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [deploy-backend, deploy-frontend]
+
+    steps:
+      - name: Configure SSH
+        run: |
+          mkdir -p ~/.ssh/
+          echo "$SSH_KEY" > ~/.ssh/staging.key
+          chmod 600 ~/.ssh/staging.key
+          cat >>~/.ssh/config <<END
+          Host staging
+            HostName $SSH_HOST
+            User $SSH_USER
+            IdentityFile ~/.ssh/staging.key
+            StrictHostKeyChecking no
+          END
+        env:
+          SSH_USER: ${{ secrets.DEPLOY_USER }}
+          SSH_KEY: ${{ secrets.DEPLOY_KEY }}
+          SSH_HOST: ${{ secrets.DEPLOY_HOST }}
+
       - name: Build and Run App
         run: ssh staging 'cd backend; pm2 stop asp-app-api ; pm2 delete asp-app-api ; pm2 start npm --name "asp-app-api" -- start'
