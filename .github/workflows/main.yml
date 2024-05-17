@@ -36,7 +36,7 @@ jobs:
           REMOTE_USER: ${{ secrets.DEPLOY_USER }}
           REMOTE_PORT: ${{ secrets.DEPLOY_PORT }}
           SOURCE: "apps/frontend/dist/"
-          TARGET: ${{ secrets.DEPLOY_TARGET }}
+          TARGET: ${{ secrets.DEPLOY_TARGET_frontend }}
 
   deploy-backend:
     name: Deploy Backend
@@ -68,4 +68,4 @@ jobs:
           REMOTE_USER: ${{ secrets.DEPLOY_USER }}
           REMOTE_PORT: ${{ secrets.DEPLOY_PORT }}
           SOURCE: "apps/backend/build/"
-          TARGET: ${{ secrets.DEPLOY_TARGET }}
+          TARGET: ${{ secrets.DEPLOY_TARGET_backend }}
