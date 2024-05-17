@@ -23,7 +23,7 @@ jobs:
         run: npm install -g pnpm
 
       - name: Install Dependencies
-        run: cd apps/frontend && pnpm install
+        run: cd apps/frontend && pnpm install && pnpm postinstall
 
       - name: Build Nuxt Application
         run: cd apps/frontend && NUXT_APP_STAGE=production pnpm run build
