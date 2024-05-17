@@ -69,3 +69,6 @@ jobs:
           REMOTE_PORT: ${{ secrets.DEPLOY_PORT }}
           SOURCE: "apps/backend/build/"
           TARGET: ${{ secrets.DEPLOY_TARGET_back }}
+
+      - name: Build and Run App
+        run: ssh staging 'cd backend; pm2 stop asp-app-api ; pm2 delete asp-app-api ; pm2 start npm --name "asp-app-api" -- start'
