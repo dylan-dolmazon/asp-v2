@@ -23,7 +23,7 @@ jobs:
         run: npm install -g pnpm
 
       - name: Install Dependencies
-        run: cd apps/frontend && pnpm install && pnpm postinstall
+        run: cd apps/frontend && cp .env.prod ./.env && pnpm install && pnpm postinstall
 
       - name: Build Nuxt Application
         run: cd apps/frontend && NUXT_APP_STAGE=production pnpm run build
@@ -58,7 +58,7 @@ jobs:
         run: cd apps/backend && pnpm install
 
       - name: Build Backend Application
-        run: cd apps/backend && pnpm run build && cd build && cp ../.env.example ./.env
+        run: cd apps/backend && pnpm run build && cd build && cp ../.env.prod ./.env
 
       - name: SSH Deploy to Backend Server
         uses: easingthemes/ssh-deploy@v2.1.4
@@ -96,4 +96,4 @@ jobs:
         run: ssh staging 'cd backend;pnpm i; pm2 stop asp-app-api ; pm2 delete asp-app-api ; pm2 start npm --name "asp-app-api" -- start'
 
       - name: Build and Run Frontend
-        run: ssh staging 'cd backend; pm2 stop asp-app-api ; pm2 delete asp-app-api ; pm2 start npm --name "asp-app-api" -- start'
+        run: ssh staging 'cd frontend; pm2 stop asp-app-frontend ; pm2 delete asp-app-frontend ; pm2 start npm --name "asp-app-frontend" -- start'
