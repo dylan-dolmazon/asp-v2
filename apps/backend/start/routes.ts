@@ -27,7 +27,7 @@ router
 // ------------------- Players routes ------------------- //
 router.get('players/search', [PlayersController, 'search'])
 router.put('players/updates', [PlayersController, 'updateMany'])
-router.get('players/ranking', [PlayersController, 'getRanking'])
+router.get('player/ranking', [PlayersController, 'getRanking'])
 router.post('players/check', [PlayersController, 'alreadyExists'])
 router.get('players/:id/stats', [PlayersController, 'showWhitStats'])
 router.post('players', [PlayersController, 'store']).use(
