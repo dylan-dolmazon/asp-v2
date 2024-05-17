@@ -96,4 +96,4 @@ jobs:
         run: ssh staging 'cd backend;pnpm i; pm2 stop asp-app-api ; pm2 delete asp-app-api ; pm2 start npm --name "asp-app-api" -- start'
 
       - name: Build and Run Frontend
-        run: ssh staging 'cd frontend; pm2 stop asp-app-frontend ; pm2 delete asp-app-frontend ; pm2 start npm --name "asp-app-frontend" -- "my-node-app"'
+        run: ssh staging 'cd frontend; pm2 stop asp-app-frontend ; pm2 delete asp-app-frontend ; pm2 start server/index.mjs --name "asp-app-frontend"'
