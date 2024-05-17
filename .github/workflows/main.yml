@@ -72,7 +72,7 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    needs: [deploy-backend]
+    needs: [deploy-backend, deploy-frontend]
 
     steps:
       - name: Configure SSH
@@ -92,5 +92,5 @@ jobs:
           SSH_KEY: ${{ secrets.DEPLOY_KEY }}
           SSH_HOST: ${{ secrets.DEPLOY_HOST }}
 
-      - name: Build and Run App
+      - name: Build and Run Backend
         run: ssh staging 'cd backend;pnpm i; pm2 stop asp-app-api ; pm2 delete asp-app-api ; pm2 start npm --name "asp-app-api" -- start'
