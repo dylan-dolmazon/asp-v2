@@ -68,4 +68,4 @@ jobs:
           REMOTE_USER: ${{ secrets.DEPLOY_USER }}
           REMOTE_PORT: ${{ secrets.DEPLOY_PORT }}
           SOURCE: "apps/backend/build/"
-          TARGET: ${{ secrets.DEPLOY_TARGET_backend }}
+          TARGET: ${{ secrets.DEPLOY_TARGET_back }}
