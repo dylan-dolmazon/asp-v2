@@ -58,7 +58,7 @@ jobs:
         run: cd apps/backend && pnpm install
 
       - name: Build Backend Application
-        run: cd apps/backend && pnpm run build && cd build && pnpm i --prod && cp ../.env.example ./env
+        run: cd apps/backend && pnpm run build && cd build && pnpm i --prod && cp ../.env.example ./.env
 
       - name: SSH Deploy to Backend Server
         uses: easingthemes/ssh-deploy@v2.1.4
