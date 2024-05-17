@@ -72,7 +72,7 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    needs: [deploy-backend, deploy-frontend]
+    needs: [deploy-backend]
 
     steps:
       - name: Configure SSH
