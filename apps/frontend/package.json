@@ -25,8 +25,13 @@
     "yup": "^1.4.x"
   },
   "devDependencies": {
+    "@nuxt/test-utils": "^3.13.1",
     "@nuxtjs/tailwindcss": "^6.11.x",
+    "@vue/test-utils": "^2.4.6",
     "@vueuse/core": "^10.9.x",
-    "@vueuse/nuxt": "^10.9.x"
+    "@vueuse/nuxt": "^10.9.x",
+    "happy-dom": "^14.11.0",
+    "playwright-core": "^1.44.0",
+    "vitest": "^1.6.0"
   }
 }

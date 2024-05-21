@@ -31,6 +31,21 @@
           "  // styles for {{camel name}}",
           "}"
         ]
+      },
+      {
+        "name": "{{pascal name}}.test.ts",
+        "content": [
+          "import { mount } from \"@vue/test-utils\";",
+          "import { it, expect, describe } from \"vitest\";",
+          "import {{pascal name}} from \"./{{pascal name}}.vue\";",
+          "",
+          "describe(\"{{pascal name}}\", () => {",
+          "  it(\"Should render label\", () => {",
+          "    const wrapper = mount({{pascal name}});",
+          "    expect(wrapper.text()).toBe(\"{{camel name}}\");",
+          "  });",
+          "});"
+        ]
       }
     ]
   }

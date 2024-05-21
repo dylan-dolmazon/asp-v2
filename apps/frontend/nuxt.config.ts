@@ -15,6 +15,7 @@ export default defineNuxtConfig({
     "@nuxt/image",
     "nuxt-icon",
     "@vueuse/nuxt",
+    "@nuxt/test-utils/module",
   ],
   css: ["~/assets/style/main.scss"],
   colorMode: {

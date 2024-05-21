@@ -1,6 +1,6 @@
 # Projet Boilerplate Fullstack
 
-Ce projet est un boilerplate pour une application Fullstack, comprenant à la fois une application Frontend et une application Backend.
+Ce projet est une application permettant de gérer son équipe/club de Football
 
 Créé par Dylan Dolmazon - [dylan.dolmazon@icloud.com](mailto:dylan.dolmazon@icloud.com)
 
