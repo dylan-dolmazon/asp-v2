@@ -1,6 +1,6 @@
-import axios from 'axios'
+//import axios from 'axios'
 
-const apiUrl = 'https://restcountries.com/v3.1'
+//const apiUrl = 'https://restcountries.com/v3.1'
 
 export const getCountry = async (_code: string) => {
   //const country = await axios.get(`${apiUrl}/alpha/${code}`)
