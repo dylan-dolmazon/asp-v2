@@ -29,6 +29,11 @@ export default await Env.create(new URL('../', import.meta.url), {
   DB_PASSWORD: Env.schema.string.optional(),
   DB_DATABASE: Env.schema.string(),
   ADMIN_SECRET_KEY: Env.schema.string(),
+  /*
+  |----------------------------------------------------------
+  | Variables for configuring the tebi storage
+  |----------------------------------------------------------
+  */
   TEBI_EMAIL_SECRET: Env.schema.string(),
   TEBI_EMAIL_KEY: Env.schema.string(),
   /*
