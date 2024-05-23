@@ -9,6 +9,7 @@ jobs:
   frontend:
     name: Deploy Frontend
     runs-on: ubuntu-latest
+    environment: prod
     if: github.ref == 'refs/heads/prod' && contains(github.event.head_commit.message, 'apps/frontend')
     steps:
       - name: Checkout
@@ -21,6 +22,10 @@ jobs:
 
       - name: Install pnpm
         run: npm install -g pnpm
+
+      - name: Create .env.prod file from secret
+        run: |
+          echo "${{ secrets.PROD_FRONTEND_ENV_FILE }}" > apps/backend/.env.prod
 
       - name: Install Dependencies
         run: cd apps/frontend && cp .env.prod ./.env && pnpm install && pnpm postinstall
@@ -58,7 +63,7 @@ jobs:
       - name: Install Dependencies
         run: cd apps/backend && pnpm install
 
-      - name: Create .env file from secret
+      - name: Create .env.prod file from secret
         run: |
           echo "${{ secrets.PROD_BACKEND_ENV_FILE }}" > apps/backend/.env.prod
 
