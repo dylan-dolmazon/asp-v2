@@ -65,7 +65,7 @@ jobs:
 
       - name: Create .env.prod file from secret
         run: |
-          echo "${{ secrets.PROD_BACKEND_ENV_FILE }}" > apps/backend/.env.prod
+          echo "${{ secrets.PROD_BACKEND_ENV_FILE }}" > apps/frontend/.env.prod
 
       - name: Build Backend Application
         run: cd apps/backend && pnpm run build && cd build && cp ../.env.prod ./.env
