@@ -10,7 +10,7 @@ const search = ref("");
 
 const searchName = useDebounceFn((newVal) => {
   search.value = newVal;
-}, 500);
+}, 600);
 
 const selectedPlayer = ref<Player | undefined>(undefined);
 

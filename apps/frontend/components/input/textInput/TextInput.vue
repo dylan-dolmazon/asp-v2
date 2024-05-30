@@ -39,6 +39,10 @@ const props = defineProps({
     type: String as PropType<"2xs" | "xs" | "sm" | "md" | "lg" | "xl">,
     default: "lg",
   },
+  readOnly: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const visible = ref(false);
@@ -64,11 +68,13 @@ const togglePasswordVisibility = () => {
       :size="size"
       :id="name"
       class="relative"
+      :class="{ 'input--readOnly': readOnly }"
       :min="min"
       :max="max"
+      :readOnly="readOnly"
     />
     <UButton
-      v-if="type === 'password'"
+      v-if="type === 'password' && !readOnly && !disabled"
       :icon="visible ? 'i-heroicons-eye-slash-solid' : 'i-heroicons-eye-solid'"
       class="TogglePassword"
       :size="size"
@@ -86,5 +92,10 @@ const togglePasswordVisibility = () => {
   position: absolute;
   right: 0;
   top: 0;
+}
+.input--readOnly {
+  input {
+    cursor: default;
+  }
 }
 </style>

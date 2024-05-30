@@ -69,4 +69,10 @@ export const pages_config: PageType[] = [
     allowedRoles: ["all"],
     breadCrumb: [{ label: "Equipe", to: "/equipe" }, { label: "Joueur" }],
   },
+  {
+    title: "Paramétres",
+    path: "/settings",
+    allowedRoles: ["user","admin", "moderator"],
+    breadCrumb: [{ label: "Paramétre" }],
+  },
 ];
