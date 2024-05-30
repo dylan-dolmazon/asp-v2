@@ -5,6 +5,7 @@ export default defineNuxtConfig({
     API_URL: process.env.API_URL,
     public: {
       API_URL: process.env.API_URL,
+      MODERATOR_KEY: process.env.MODERATOR_SECRET_KEY,
     },
   },
   devtools: { enabled: true },

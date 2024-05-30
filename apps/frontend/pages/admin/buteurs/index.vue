@@ -16,7 +16,7 @@ const {
 
 const searchName = useDebounceFn((newVal) => {
   search.value = newVal;
-}, 500);
+}, 600);
 
 const handleChange = (
   score: number,
@@ -102,7 +102,11 @@ const updatePlayer = async () => {
       </template>
     </UTable>
     <div class="flex items-center justify-center gap-10 mt-5">
-      <UButton @click="updatePlayer()" label="Mettre à jours" />
+      <UButton
+        @click="updatePlayer()"
+        label="Mettre à jours"
+        :disabled="playersToUpdate.length === 0"
+      />
       <UPagination
         v-if="players?.meta"
         v-model="page"

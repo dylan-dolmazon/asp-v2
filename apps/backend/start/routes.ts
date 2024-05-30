@@ -53,8 +53,22 @@ router.delete('players/:id', [PlayersController, 'destroy']).use(
 router
   .group(() => {
     router.post('register', [AuthController, 'register'])
-    router.post('register/admin', [AuthController, 'registerAdmin'])
     router.post('login', [AuthController, 'login'])
+    router.put('update', [AuthController, 'updateToAdmin']).use(
+      middleware.auth({
+        guards: ['api'],
+      })
+    )
+    router.put('update/:id', [AuthController, 'update']).use(
+      middleware.auth({
+        guards: ['api'],
+      })
+    )
+    router.get('', [AuthController, 'index']).use(
+      middleware.auth({
+        guards: ['api'],
+      })
+    )
   })
   .prefix('user')
 
