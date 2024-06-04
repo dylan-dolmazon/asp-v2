@@ -6,7 +6,7 @@
       <mj-section>
         <mj-column>
           <mj-image
-            src="../assets/img/banner_welcome.png"
+            src="../assets/img/banner-welcome.png"
             alt="Banniére de l'application"
           />
         </mj-column>

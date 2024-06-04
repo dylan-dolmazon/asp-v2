@@ -9,6 +9,7 @@
 const AuthController = () => import('#controllers/auth_controller')
 import router from '@adonisjs/core/services/router'
 import { middleware } from '#start/kernel'
+const ResetPasswordController = () => import('#controllers/reset_password_controller')
 const CompetsController = () => import('#controllers/compets_controller')
 const DofasController = () => import('#controllers/dofas_controller')
 const CountriesController = () => import('#controllers/countries_controller')
@@ -71,6 +72,11 @@ router
     )
   })
   .prefix('user')
+
+// ------------------- Password routes ------------------- //
+router.post('/forgot-password', [ResetPasswordController, 'forgotPassword'])
+router.post('/check-link', [ResetPasswordController, 'checkLink'])
+router.post('/reset-password', [ResetPasswordController, 'resetPassword'])
 
 // ------------------- Countries routes ------------------- //
 router.get('/countries', [CountriesController, 'index'])
