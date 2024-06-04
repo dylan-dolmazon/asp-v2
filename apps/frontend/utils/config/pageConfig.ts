@@ -12,6 +12,18 @@ export const pages_config: PageType[] = [
     allowedRoles: ["all"],
   },
   {
+    title: "",
+
+    path: "/password/forgot",
+    allowedRoles: ["all"],
+  },
+  {
+    title: "",
+
+    path: "/password/reset",
+    allowedRoles: ["all"],
+  },
+  {
     title: "Classement des buteurs",
     path: "/",
     allowedRoles: ["all"],

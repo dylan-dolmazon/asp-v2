@@ -89,7 +89,7 @@ const onSubmit = async (
       </CustomLink>
       <span class="h-full w-0.5 bg-white" />
       <CustomLink
-        href=""
+        href="/password/forgot"
         variant="white"
         :typo="{ format: 'normal', tag: 'p' }"
       >

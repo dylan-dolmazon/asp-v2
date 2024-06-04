@@ -1,0 +1,34 @@
+<mjml>
+  <mj-include path="../includes/head.mjml" />
+  <mj-body>
+    <mj-wrapper>
+      <mj-include path="../includes/header.mjml" />
+      <mj-section>
+        <mj-column>
+          <mj-image
+            src="../assets/img/banner-forgot-password.png"
+            alt="Banniére de l'application"
+          />
+        </mj-column>
+      </mj-section>
+      <mj-section mj-class="Content">
+        <mj-column>
+          <mj-text mj-class="Title" css-class="mt-4">
+            <p>
+              Vous avez fait une demande de réinitialisation de mot de passe.
+            </p>
+          </mj-text>
+          <mj-text>
+            <p>Voici le lien qui vous permettra de modifier votre mot de passe:</p>
+            <a href="{{link}}" target="_blank">{{link}}</a>
+          </mj-text>
+          <mj-text>
+            <p>Si vous n'êtes pas à l'origine de cette demande veuiller supprimer cet e-mail et modifier votre mot de passe.</p>
+          </mj-text>
+        </mj-column>
+        </mj-column>
+      </mj-section>
+      <mj-include path="../includes/footer.mjml" />
+    </mj-wrapper>
+  </mj-body>
+</mjml>

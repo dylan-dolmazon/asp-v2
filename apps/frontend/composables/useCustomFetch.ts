@@ -35,6 +35,8 @@ export const useCustomFetch = async <T>(
       error?.value?.data.errors.map((e: any) => e.message),
       "error"
     );
+  } else if (error.value) {
+    addToast(`Erreur`, ["Une erreur est survenue."], "error");
   }
   return { data, pending, error, refresh };
 };
