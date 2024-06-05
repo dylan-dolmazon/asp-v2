@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import * as yup from "yup";
+import type { FormSubmitEvent } from "#ui/types";
 
 const schema = yup.object({
   email: yup.string().email().required(),
@@ -9,21 +10,18 @@ const schema = yup.object({
   password: passwordValidation,
 });
 
-const { handleSubmit, defineField, errors } = useForm<User>({
-  validationSchema: schema,
-  validateOnMount: false,
+const state = reactive({
+  email: undefined,
+  password: undefined,
+  username: undefined,
+  lastname: undefined,
+  firstname: undefined,
 });
-console.log("✌️errors --->", errors);
 
-const [email] = defineField("email");
-const [username] = defineField("username");
-const [lastname] = defineField("lastname");
-const [firstname] = defineField("firstname");
-const [password] = defineField("password");
-
-const onSubmit = handleSubmit(async (values) => {
-  console.log("✌️values --->", values);
-  const { error } = await registerUser(values);
+const onSubmit = async (
+  event: FormSubmitEvent<yup.InferType<typeof schema>>
+) => {
+  const { error } = await registerUser(event.data);
   if (!error.value) {
     addToast(
       "Inscription réussie",
@@ -32,7 +30,7 @@ const onSubmit = handleSubmit(async (values) => {
     );
     navigateTo("/auth/login");
   }
-});
+};
 </script>
 
 <template>
@@ -42,14 +40,18 @@ const onSubmit = handleSubmit(async (values) => {
         <Typo tag="h2" format="bold" class="text-center mb-6">
           Bienvenue sur l'application de l'AS Pertuis
         </Typo>
-        <Form @submit="onSubmit">
+        <UForm
+          :schema="schema"
+          :state="state"
+          @submit="onSubmit"
+          class="space-y-4"
+        >
           <TextInput
             name="email"
             type="email"
             label="Mail"
             placeholder="Votre mail"
-            v-model="email"
-            :errorMessage="getYupFieldErrorMessage('email', errors)"
+            v-model="state.email"
             required
           />
           <TextInput
@@ -57,8 +59,7 @@ const onSubmit = handleSubmit(async (values) => {
             type="text"
             label="Nom d'utilisateur"
             placeholder="Votre nom d'utilisateur"
-            v-model="username"
-            :errorMessage="getYupFieldErrorMessage('username', errors)"
+            v-model="state.username"
             required
           />
           <TextInput
@@ -66,8 +67,7 @@ const onSubmit = handleSubmit(async (values) => {
             type="text"
             label="Nom"
             placeholder="Votre nom"
-            v-model="lastname"
-            :errorMessage="getYupFieldErrorMessage('lastname', errors)"
+            v-model="state.lastname"
             required
           />
           <TextInput
@@ -75,8 +75,7 @@ const onSubmit = handleSubmit(async (values) => {
             type="text"
             label="Prénom"
             placeholder="Votre prénom"
-            v-model="firstname"
-            :errorMessage="getYupFieldErrorMessage('firstname', errors)"
+            v-model="state.firstname"
             required
           />
           <div>
@@ -85,11 +84,10 @@ const onSubmit = handleSubmit(async (values) => {
               type="password"
               label="Mot de passe"
               placeholder="Votre mot de passe"
-              v-model="password"
-              :errorMessage="getYupFieldErrorMessage('password', errors)"
+              v-model="state.password"
               required
             />
-            <div class="grid grid-cols-2 grid-rows-2 text-default">
+            <div class="grid grid-cols-2 grid-rows-2 text-default mt-2">
               <Typo format="medium" tag="p4"> 8 caractéres minimum </Typo>
               <Typo format="medium" tag="p4"> 1 majuscule </Typo>
               <Typo format="medium" tag="p4"> 1 caractére spécial </Typo>
@@ -107,7 +105,7 @@ const onSubmit = handleSubmit(async (values) => {
             label="S'inscrire"
             :trailing="false"
           />
-        </Form>
+        </UForm>
       </div>
     </div>
     <div class="mt-10">

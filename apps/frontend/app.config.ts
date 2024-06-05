@@ -72,12 +72,28 @@ export default defineAppConfig({
     },
     slideover: {
       width: "w-screen max-w-2xl",
+      wrapper: "overflow-y-scroll",
     },
     select: {
       base: "h-10 ps-2",
       variant: {
         primary: "bg-primary-100 text-black",
         error: "bg-background-error border-error",
+      },
+    },
+    input: {
+      color: {
+        white: {
+          outline: "bg-default-100",
+        },
+      },
+      variant: {
+        outline: "bg-background-error",
+      },
+    },
+    formGroup: {
+      label: {
+        required: "after:text-default-default",
       },
     },
   },

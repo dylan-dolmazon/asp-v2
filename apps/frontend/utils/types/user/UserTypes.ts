@@ -8,7 +8,7 @@ export type User = {
   password?: string;
   updateAt?: string;
   createdAt?: string;
-  role: string;
+  role?: string;
 };
 
 export type UserLogin = {

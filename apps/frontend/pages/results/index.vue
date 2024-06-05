@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import * as yup from "yup";
-
 useHead({
   title: "Championnat",
 });
@@ -156,81 +154,10 @@ const items = [
 const onChange = (tab: number) => {
   item.value = items[tab].slot;
 };
-
-const modalCreateCompet = ref(false);
-const createCompetIsLoading = ref(false);
-const schema = yup.object({
-  name: yup.string().required(),
-  number: yup.number().required(),
-});
-
-const { handleSubmit, defineField, errors, resetForm } = useForm<Compet>({
-  validationSchema: schema,
-  validateOnMount: false,
-});
-
-const [name] = defineField("name");
-const [number] = defineField("number");
-
-const onSubmit = handleSubmit(async (values) => {
-  createCompetIsLoading.value = true;
-  await createCompet(values);
-  resetForm();
-  createCompetIsLoading.value = false;
-  modalCreateCompet.value = false;
-  await fetchCompets();
-});
 </script>
 
 <template>
   <NuxtLayout name="default">
-    <Modal v-model="modalCreateCompet" v-if="isAdmin()">
-      <template #header>
-        <Typo tag="h3" class="w-full text-center">
-          Création d'un championnat
-        </Typo>
-      </template>
-
-      <template #body>
-        <Form @submit="onSubmit">
-          <Typo>
-            <TextInput
-              label="Nom"
-              name="name"
-              id="name"
-              type="text"
-              placeholder="Nom du championnat"
-              v-model="name"
-              :errorMessage="getYupFieldErrorMessage('name', errors)"
-              required
-            />
-            <TextInput
-              label="Numéro"
-              name="number"
-              id="number"
-              type="number"
-              placeholder="Numéro du championnat"
-              v-model="number"
-              :errorMessage="getYupFieldErrorMessage('number', errors)"
-              required
-            />
-          </Typo>
-          <div class="flex justify-between mt-2">
-            <UButton
-              color="primary"
-              label="Annuler"
-              @click="modalCreateCompet = false"
-            />
-            <UButton
-              color="green"
-              label="Ajouter"
-              type="submit"
-              :loading="createCompetIsLoading"
-            />
-          </div>
-        </Form>
-      </template>
-    </Modal>
     <div class="flex gap-2 items-start">
       <div class="flex gap-8 flex-col">
         <div class="flex gap-2 flex-col">
@@ -257,16 +184,6 @@ const onSubmit = handleSubmit(async (values) => {
               }))
             "
             option-attribute="name"
-          />
-          <UButton
-            icon="i-heroicons-plus-circle-solid"
-            size="sm"
-            color="primary"
-            variant="solid"
-            label="Nouveau"
-            :trailing="false"
-            @click="modalCreateCompet = true"
-            v-if="isAdmin()"
           />
         </div>
         <div class="w-16 h-16 m-auto">

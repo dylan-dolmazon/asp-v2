@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import * as yup from "yup";
+import type { FormSubmitEvent } from "#ui/types";
 
 useHead({
   title: "Gestions des championnats",
@@ -13,71 +14,77 @@ const { data, refresh, pending } = await getCompets();
 
 const createCompetIsLoading = ref(false);
 const schemaCreate = yup.object({
-  name: yup.string().required(),
-  number: yup.number().required(),
+  name: yup
+    .string()
+    .required()
+    .test("len", "Le nom doit contenir 3 lettres minimum", (val) => {
+      return val.length >= 3;
+    }),
+  number: yup
+    .number()
+    .required()
+    .test("len", "Le numéro doit contenir 6 chiffres", (val) => {
+      return val.toString().length === 6;
+    }),
 });
 
-const {
-  handleSubmit: handleSubmitCreate,
-  defineField: defineFieldCreate,
-  errors: errorsCreate,
-  resetForm: resetFormCreate,
-} = useForm<Compet>({
-  validationSchema: schemaCreate,
-  validateOnMount: false,
+const stateCreate = reactive({
+  name: undefined,
+  number: undefined,
 });
 
-const [nameCreate] = defineFieldCreate("name");
-const [numberCreate] = defineFieldCreate("number");
-
-const onSubmitCreate = handleSubmitCreate(async (values) => {
+const onSubmitCreate = async (
+  event: FormSubmitEvent<yup.InferType<typeof schemaCreate>>
+) => {
   createCompetIsLoading.value = true;
-  await createCompet(values);
-  resetFormCreate();
+  await createCompet(event.data);
   createCompetIsLoading.value = false;
   refresh();
-});
+};
 
 const updateCompetIsLoading = ref(false);
 const updateModalIsOpen = ref(false);
 const schemaUpdate = yup.object({
-  name: yup.string().required(),
-  number: yup.number().required(),
-  order: yup.number(),
+  nameUpdate: yup
+    .string()
+    .required()
+    .test("len", "Le nom doit contenir 3 lettres minimum", (val) => {
+      return val.length >= 3;
+    }),
+  numberUpdate: yup
+    .number()
+    .required()
+    .test("len", "Le numéro doit contenir 6 chiffres", (val) => {
+      return val.toString().length === 6;
+    }),
+  orderUpdate: yup.number(),
 });
 
-const {
-  handleSubmit: handleSubmitUpdate,
-  defineField: defineFieldUpdate,
-  errors: errorsUpdate,
-  resetForm: resetFormUpdate,
-} = useForm<{ name: string; number: number; order: number }>({
-  validationSchema: schemaUpdate,
-  validateOnMount: false,
+const stateUpdate = reactive({
+  nameUpdate: undefined,
+  numberUpdate: undefined,
+  orderUpdate: undefined,
 });
 
-const [nameUpdate] = defineFieldUpdate("name");
-const [numberUpdate] = defineFieldUpdate("number");
-const [orderUpdate] = defineFieldUpdate("order");
-
-const onSubmitUpdate = handleSubmitUpdate(async (values) => {
+const onSubmitUpdate = async (
+  event: FormSubmitEvent<yup.InferType<typeof schemaUpdate>>
+) => {
   updateCompetIsLoading.value = true;
   await updateCompet(
     currentId.value,
     data.value?.data.find((compet) => compet.id === currentId.value)?.name !==
-      values.name
-      ? values.name
+      event.data.nameUpdate
+      ? event.data.nameUpdate
       : undefined,
     data.value?.data.find((compet) => compet.id === currentId.value)?.number !==
-      values.number
-      ? values.number
+      event.data.numberUpdate
+      ? event.data.numberUpdate
       : undefined
   );
-  resetFormUpdate();
   refresh();
   updateModalIsOpen.value = false;
   updateCompetIsLoading.value = false;
-});
+};
 
 const newFavorite = async (id: number) => {
   await updateCompetsOrder(id);
@@ -91,9 +98,9 @@ const actions = (row: any) => [
       icon: "i-heroicons-pencil-square",
       click: () => {
         currentId.value = row.id;
-        nameUpdate.value = row.name;
-        numberUpdate.value = row.number;
-        orderUpdate.value = row.order;
+        stateUpdate.nameUpdate = row.name;
+        stateUpdate.numberUpdate = row.number;
+        stateUpdate.orderUpdate = row.order;
         updateModalIsOpen.value = true;
       },
     },
@@ -161,38 +168,40 @@ const actions = (row: any) => [
       </template>
 
       <template #body>
-        <Form @submit="onSubmitUpdate">
-          <Typo>
-            <TextInput
-              label="Nom"
-              name="nameUpdate"
-              id="nameUpdate"
-              type="text"
-              placeholder="Nom du championnat"
-              v-model="nameUpdate"
-              :errorMessage="getYupFieldErrorMessage('name', errorsUpdate)"
-              required
-            />
-            <TextInput
-              label="Numéro"
-              name="numberUpdate"
-              id="numberUpdate"
-              type="number"
-              placeholder="Numéro du championnat"
-              v-model="numberUpdate"
-              :errorMessage="getYupFieldErrorMessage('number', errorsUpdate)"
-              required
-            />
-            <TextInput
-              label="Order"
-              name="orderUpdate"
-              id="orderUpdate"
-              type="number"
-              placeholder="Order de préférence"
-              :disabled="true"
-              v-model="orderUpdate"
-            />
-          </Typo>
+        <UForm
+          :schema="schemaUpdate"
+          :state="stateUpdate"
+          @submit="onSubmitUpdate"
+          class="space-y-4"
+        >
+          <TextInput
+            label="Nom"
+            name="nameUpdate"
+            id="nameUpdate"
+            type="text"
+            placeholder="Nom du championnat"
+            v-model="stateUpdate.nameUpdate"
+            required
+          />
+          <TextInput
+            label="Numéro"
+            name="numberUpdate"
+            id="numberUpdate"
+            type="number"
+            placeholder="Numéro du championnat"
+            v-model="stateUpdate.numberUpdate"
+            required
+          />
+          <TextInput
+            label="Order"
+            name="orderUpdate"
+            id="orderUpdate"
+            type="number"
+            placeholder="Order de préférence"
+            :disabled="true"
+            v-model="stateUpdate.orderUpdate"
+          />
+
           <div class="flex justify-between mt-2">
             <UButton
               color="primary"
@@ -206,33 +215,35 @@ const actions = (row: any) => [
               :loading="updateCompetIsLoading"
             />
           </div>
-        </Form>
+        </UForm>
       </template>
     </Modal>
     <div class="flex mt-10">
-      <Form @submit="onSubmitCreate" class="w-1/4">
-        <Typo>
-          <TextInput
-            label="Nom"
-            name="nameCreate"
-            id="nameCreate"
-            type="text"
-            placeholder="Nom du championnat"
-            v-model="nameCreate"
-            :errorMessage="getYupFieldErrorMessage('name', errorsCreate)"
-            required
-          />
-          <TextInput
-            label="Numéro"
-            name="numberCreate"
-            id="numberCreate"
-            type="number"
-            placeholder="Numéro du championnat"
-            v-model="numberCreate"
-            :errorMessage="getYupFieldErrorMessage('number', errorsCreate)"
-            required
-          />
-        </Typo>
+      <UForm
+        :schema="schemaCreate"
+        :state="stateCreate"
+        @submit="onSubmitCreate"
+        class="CreateForm space-y-8"
+      >
+        <Typo tag="h3" class="text-center"> Création d'un championnat </Typo>
+        <TextInput
+          label="Nom"
+          name="name"
+          id="name"
+          type="text"
+          placeholder="Nom du championnat"
+          v-model="stateCreate.name"
+          required
+        />
+        <TextInput
+          label="Numéro"
+          name="number"
+          id="number"
+          type="number"
+          placeholder="Numéro du championnat"
+          v-model="stateCreate.number"
+          required
+        />
         <UButton
           color="green"
           label="Ajouter"
@@ -241,7 +252,8 @@ const actions = (row: any) => [
           class="m-auto"
           :loading="createCompetIsLoading"
         />
-      </Form>
+      </UForm>
+
       <UTable
         :loading="pending"
         :columns="competsSortColumns"
@@ -288,5 +300,9 @@ const actions = (row: any) => [
   &--active {
     color: theme("colors.error");
   }
+}
+
+.CreateForm {
+  flex: 0 0 20%;
 }
 </style>
