@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import * as yup from "yup";
+import type { FormSubmitEvent } from "#ui/types";
 
 const step = defineModel<number>({ required: true });
 const { getPersonalsInfos, setPersonalsInfos } = useStepperState();
@@ -13,30 +14,21 @@ const schema = yup.object({
   weight: yup.number().optional(),
 });
 
-const { handleSubmit, defineField, errors, resetForm } = useForm({
-  validationSchema: schema,
-  initialValues: {
-    firstname: getPersonalsInfos().firstname,
-    lastname: getPersonalsInfos().lastname,
-    age: getPersonalsInfos().age,
-    nationality: getPersonalsInfos().nationality,
-    height: getPersonalsInfos().height,
-    weight: getPersonalsInfos().weight,
-  },
-  validateOnMount: false,
+const state = reactive({
+  firstname: getPersonalsInfos().firstname,
+  lastname: getPersonalsInfos().lastname,
+  age: getPersonalsInfos().age,
+  nationality: getPersonalsInfos().nationality,
+  height: getPersonalsInfos().height,
+  weight: getPersonalsInfos().weight,
 });
 
-const [firstname] = defineField("firstname");
-const [lastname] = defineField("lastname");
-const [age] = defineField("age");
-const [nationality] = defineField("nationality");
-const [height] = defineField("height");
-const [weight] = defineField("weight");
-
-const onSubmit = handleSubmit(async (values) => {
+const onSubmit = async (
+  event: FormSubmitEvent<yup.InferType<typeof schema>>
+) => {
   const { data } = await checkIfAlreadyExist({
-    firstname: values.firstname,
-    lastname: values.lastname,
+    firstname: event.data.firstname,
+    lastname: event.data.lastname,
   });
 
   if (data.value?.length && data.value?.length > 0) {
@@ -45,27 +37,25 @@ const onSubmit = handleSubmit(async (values) => {
       ["Un joueur avec ce nom et prénom existe déjà"],
       "error"
     );
-    resetForm();
   } else {
-    setPersonalsInfos(values);
+    setPersonalsInfos(event.data);
     step.value++;
   }
-});
+};
 
 const { data, pending } = await getCountries();
 </script>
 
 <template>
   <div class="CreatePlayerStepOne flex justify-between flex-col mt-20">
-    <Form @submit="onSubmit">
+    <UForm :schema="schema" :state="state" @submit="onSubmit" class="space-y-8">
       <TextInput
         label="Prénom"
         name="firstname"
         id="firstname"
         type="text"
         placeholder="Prénom du joueur"
-        v-model="firstname"
-        :errorMessage="getYupFieldErrorMessage('firstname', errors)"
+        v-model="state.firstname"
         required
       />
       <TextInput
@@ -74,8 +64,7 @@ const { data, pending } = await getCountries();
         id="lastname"
         type="text"
         placeholder="Nom du joueur"
-        v-model="lastname"
-        :errorMessage="getYupFieldErrorMessage('lastname', errors)"
+        v-model="state.lastname"
         required
       />
       <TextInput
@@ -84,8 +73,7 @@ const { data, pending } = await getCountries();
         id="age"
         type="number"
         placeholder="Age du joueur"
-        v-model="age"
-        :errorMessage="getYupFieldErrorMessage('age', errors)"
+        v-model="state.age"
         required
       />
       <Select
@@ -93,7 +81,7 @@ const { data, pending } = await getCountries();
         name="nationality"
         id="nationality"
         placeholder="Nationalité du joueur"
-        v-model="nationality"
+        v-model="state.nationality"
         :options="
           (data || []).map((country) => ({
             value: country.code,
@@ -101,7 +89,6 @@ const { data, pending } = await getCountries();
           }))
         "
         :loading="pending"
-        :errorMessage="getYupFieldErrorMessage('nationality', errors)"
         required
       />
       <TextInput
@@ -110,8 +97,7 @@ const { data, pending } = await getCountries();
         id="height"
         type="number"
         placeholder="Taille du joueur"
-        v-model="height"
-        :errorMessage="getYupFieldErrorMessage('height', errors)"
+        v-model="state.height"
       />
       <TextInput
         label="Poids (en kg)"
@@ -119,10 +105,9 @@ const { data, pending } = await getCountries();
         id="weight"
         type="number"
         placeholder="Poids du joueur"
-        v-model="weight"
-        :errorMessage="getYupFieldErrorMessage('weight', errors)"
+        v-model="state.weight"
       />
-      <div class="text-center mt-12">
+      <div class="text-center">
         <UButton
           icon="i-heroicons-arrow-right-circle-solid"
           size="lg"
@@ -131,8 +116,9 @@ const { data, pending } = await getCountries();
           label="Valider les informations personnels"
           trailing
           type="submit"
+          class="mt-8"
         />
       </div>
-    </Form>
+    </UForm>
   </div>
 </template>

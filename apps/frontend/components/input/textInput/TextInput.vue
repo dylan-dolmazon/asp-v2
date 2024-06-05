@@ -6,10 +6,6 @@ const props = defineProps({
     type: String,
     default: "text",
   },
-  value: {
-    type: String,
-    default: undefined,
-  },
   name: {
     type: String,
     required: true,
@@ -26,10 +22,6 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
-  errorMessage: {
-    type: String,
-    default: "",
-  },
   min: {
     type: Number,
   },
@@ -39,6 +31,13 @@ const props = defineProps({
   disabled: {
     type: Boolean,
     default: false,
+  },
+  icon: {
+    type: String,
+  },
+  size: {
+    type: String as PropType<"2xs" | "xs" | "sm" | "md" | "lg" | "xl">,
+    default: "lg",
   },
 });
 
@@ -54,47 +53,38 @@ const togglePasswordVisibility = () => {
 </script>
 
 <template>
-  <div
-    class="TextInput"
-    :class="{ 'has-error': !!errorMessage, 'TextInput--disabled': disabled }"
-  >
-    <label :for="name" :class="{ 'TextInput--required': required }">{{
-      label
-    }}</label>
-    <input
-      :name="name"
-      :id="name"
+  <UFormGroup :label="label" :name="name" size="xl" :required="required">
+    <UInput
+      v-model="model"
       :type="type"
-      :min="min"
-      :max="max"
-      @input="
-        (e: any) => {
-          if (!e.target.value) {
-            type === 'number' ? (model = 0) : (model = '');
-          }
-        }
-      "
+      :required="required"
       :placeholder="placeholder"
       :disabled="disabled"
-      v-model="model"
+      :icon="icon"
+      :size="size"
+      :id="name"
+      class="relative"
+      :min="min"
+      :max="max"
     />
     <UButton
       v-if="type === 'password'"
       :icon="visible ? 'i-heroicons-eye-slash-solid' : 'i-heroicons-eye-solid'"
-      class="TextInput-togglePassword"
-      size="lg"
+      class="TogglePassword"
+      :size="size"
       color="primary"
       square
       type="button"
       variant="solid"
       @click="togglePasswordVisibility"
     />
-    <p class="TextInput-help-message" v-show="errorMessage">
-      {{ errorMessage }}
-    </p>
-  </div>
+  </UFormGroup>
 </template>
 
-<style scoped>
-@import "./TextInput.scss";
+<style scoped lang="scss">
+.TogglePassword {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
 </style>

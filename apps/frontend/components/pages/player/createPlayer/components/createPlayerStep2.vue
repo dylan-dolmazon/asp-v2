@@ -1,54 +1,43 @@
 <script setup lang="ts">
 import * as yup from "yup";
+import type { FormSubmitEvent } from "#ui/types";
 
 const step = defineModel<number>({ required: true });
 const { getStats, setStats } = useStepperState();
 
 const schema = yup.object({
-  footed: yup.mixed(),
-  position: yup.mixed(),
+  footed: yup.mixed<Footed>().required(),
+  position: yup.mixed<Position>().required(),
   assists: yup.number().min(0).required(),
-  goalsscored: yup.number().min(0).optional(),
-  redcards: yup.number().min(0).optional(),
-  yellowcards: yup.number().min(0).optional(),
+  goalsscored: yup.number().min(0).required(),
+  redcards: yup.number().min(0).required(),
+  yellowcards: yup.number().min(0).required(),
 });
 
-const { handleSubmit, defineField, errors } = useForm({
-  validationSchema: schema,
-  initialValues: {
-    footed: getStats().footed,
-    position: getStats().position,
-    assists: getStats().assists,
-    yellowcards: getStats().yellowcards,
-    goalsscored: getStats().goalsscored,
-    redcards: getStats().redcards,
-  },
-  validateOnMount: false,
+const state = reactive({
+  footed: getStats().footed,
+  position: getStats().position,
+  assists: getStats().assists,
+  yellowcards: getStats().yellowcards,
+  goalsscored: getStats().goalsscored,
+  redcards: getStats().redcards,
 });
 
-const [footed] = defineField("footed");
-const [position] = defineField("position");
-const [assists] = defineField("assists");
-const [yellowcards] = defineField("yellowcards");
-const [goalsscored] = defineField("goalsscored");
-const [redcards] = defineField("redcards");
-
-const onSubmit = handleSubmit((values) => {
-  setStats(values);
+const onSubmit = (event: FormSubmitEvent<yup.InferType<typeof schema>>) => {
+  setStats(event.data);
   step.value++;
-});
+};
 </script>
 
 <template>
-  <div class="CreatePlayerStepOne flex justify-between flex-col mt-20">
-    <Form @submit="onSubmit">
+  <div class="CreatePlayerStepTwo flex justify-between flex-col mt-20">
+    <UForm :schema="schema" :state="state" @submit="onSubmit" class="space-y-8">
       <Select
         label="Poste"
         name="position"
         id="position"
         placeholder="Poste du joueur"
-        v-model="position"
-        :errorMessage="getYupFieldErrorMessage('position', errors)"
+        v-model="state.position"
         required
         :options="
           Object.keys(PositionFull).map((key) => ({
@@ -63,8 +52,7 @@ const onSubmit = handleSubmit((values) => {
         id="footed"
         type="text"
         placeholder="Pied fort du joueur"
-        v-model="footed"
-        :errorMessage="getYupFieldErrorMessage('footed', errors)"
+        v-model="state.footed"
         required
         :options="
           Object.keys(FootedFull).map((key) => ({
@@ -79,8 +67,7 @@ const onSubmit = handleSubmit((values) => {
         id="assists"
         type="number"
         placeholder="Assists du joueur"
-        v-model="assists"
-        :errorMessage="getYupFieldErrorMessage('assists', errors)"
+        v-model="state.assists"
       />
       <TextInput
         label="Nombre de buts marqués"
@@ -88,8 +75,7 @@ const onSubmit = handleSubmit((values) => {
         id="goalsscored"
         type="number"
         placeholder="Nombre de buts marqués par le joueur"
-        v-model="goalsscored"
-        :errorMessage="getYupFieldErrorMessage('goalsscored', errors)"
+        v-model="state.goalsscored"
       />
       <TextInput
         label="Cartons jaune"
@@ -97,8 +83,7 @@ const onSubmit = handleSubmit((values) => {
         id="yellowcards"
         type="number"
         placeholder="Carton jaune du joueur"
-        v-model="yellowcards"
-        :errorMessage="getYupFieldErrorMessage('yellowcards', errors)"
+        v-model="state.yellowcards"
       />
       <TextInput
         label="Cartons rouge"
@@ -106,11 +91,11 @@ const onSubmit = handleSubmit((values) => {
         id="redcards"
         type="number"
         placeholder="Cartons rouge du joueur"
-        v-model="redcards"
-        :errorMessage="getYupFieldErrorMessage('redcards', errors)"
+        v-model="state.redcards"
       />
-      <div class="text-center mt-12">
+      <div class="text-center">
         <UButton
+          class="mt-8"
           icon="i-heroicons-arrow-right-circle-solid"
           size="lg"
           color="primary"
@@ -120,6 +105,6 @@ const onSubmit = handleSubmit((values) => {
           type="submit"
         />
       </div>
-    </Form>
+    </UForm>
   </div>
 </template>

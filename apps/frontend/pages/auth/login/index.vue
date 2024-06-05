@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import * as yup from "yup";
+import type { FormSubmitEvent } from "#ui/types";
+
 const router = useRouter();
 
 const schema = yup.object({
@@ -7,16 +9,15 @@ const schema = yup.object({
   password: yup.string().required(),
 });
 
-const { handleSubmit, defineField, errors } = useForm<UserLogin>({
-  validationSchema: schema,
-  validateOnMount: false,
+const state = reactive({
+  email: undefined,
+  password: undefined,
 });
 
-const [email] = defineField("email");
-const [password] = defineField("password");
-
-const onSubmit = handleSubmit(async (values) => {
-  const { error, data } = await loginUser(values);
+const onSubmit = async (
+  event: FormSubmitEvent<yup.InferType<typeof schema>>
+) => {
+  const { error, data } = await loginUser(event.data);
   if (!error.value && data?.value) {
     addToast(
       "Connexion réussie",
@@ -30,7 +31,7 @@ const onSubmit = handleSubmit(async (values) => {
     tokenCookie.value = JSON.parse(JSON.stringify(token));
     router.back();
   }
-});
+};
 </script>
 
 <template>
@@ -40,23 +41,23 @@ const onSubmit = handleSubmit(async (values) => {
         <Typo tag="h2" format="bold" class="text-center mb-6">
           Bienvenue sur l'application de l'AS Pertuis
         </Typo>
-        <Form @submit="onSubmit">
+        <UForm :schema="schema" :state="state" @submit="onSubmit">
           <TextInput
             name="email"
             type="email"
             label="Mail"
+            class="mt-6"
             placeholder="Votre mail"
-            v-model="email"
-            :errorMessage="getYupFieldErrorMessage('email', errors)"
+            v-model="state.email"
             required
           />
           <TextInput
             name="password"
             type="password"
+            class="mt-6"
             label="Mot de passe"
             placeholder="Votre mot de passe"
-            v-model="password"
-            :errorMessage="getYupFieldErrorMessage('password', errors)"
+            v-model="state.password"
             required
           />
           <UButton
@@ -64,13 +65,13 @@ const onSubmit = handleSubmit(async (values) => {
             size="sm"
             color="primary"
             type="submit"
-            class="mt-6"
             variant="solid"
+            class="mt-12"
             block
             label="Se connecter"
             :trailing="false"
           />
-        </Form>
+        </UForm>
       </div>
     </div>
     <div class="link flex justify-between mt-10 h-fit">

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import * as yup from "yup";
+import type { FormSubmitEvent } from "#ui/types";
 
 const step = defineModel<number>({ required: true });
 const { getPerformance, setPerformance } = useStepperState();
@@ -13,36 +14,25 @@ const schema = yup.object({
   dribbling: yup.number().min(1).max(100).required(),
 });
 
-const { handleSubmit, defineField, errors } = useForm({
-  validationSchema: schema,
-  initialValues: {
-    defending: getPerformance().defending,
-    pace: getPerformance().pace,
-    passing: getPerformance().passing,
-    physical: getPerformance().physical,
-    shooting: getPerformance().shooting,
-    dribbling: getPerformance().dribbling,
-  },
-  validateOnMount: false,
+const state = reactive({
+  defending: getPerformance().defending,
+  pace: getPerformance().pace,
+  passing: getPerformance().passing,
+  physical: getPerformance().physical,
+  shooting: getPerformance().shooting,
+  dribbling: getPerformance().dribbling,
 });
 
-const [defending] = defineField("defending");
-const [pace] = defineField("pace");
-const [passing] = defineField("passing");
-const [physical] = defineField("physical");
-const [shooting] = defineField("shooting");
-const [dribbling] = defineField("dribbling");
-
-const onSubmit = handleSubmit((values) => {
-  setPerformance(values);
+const onSubmit = (event: FormSubmitEvent<yup.InferType<typeof schema>>) => {
+  setPerformance(event.data);
   step.value++;
-});
+};
 </script>
 
 <template>
-  <div class="CreatePlayerStepOne flex justify-between flex-col mt-20">
-    <Form @submit="onSubmit">
-      <div class="flex gap-5 mb-5">
+  <div class="CreatePlayerStepThree flex justify-between flex-col mt-20">
+    <UForm :schema="schema" :state="state" @submit="onSubmit" class="space-y-8">
+      <div class="CreatePlayerStepThree-stat">
         <TextInput
           label="Défense"
           name="defending"
@@ -51,13 +41,13 @@ const onSubmit = handleSubmit((values) => {
           :min="1"
           :max="100"
           placeholder="Score de défense du joueur"
-          v-model="defending"
-          :errorMessage="getYupFieldErrorMessage('defending', errors)"
+          v-model="state.defending"
           required
+          class="w-full"
         />
-        <Stat :stat="defending" />
+        <Stat :stat="state.defending" />
       </div>
-      <div class="flex gap-5 mb-5">
+      <div class="CreatePlayerStepThree-stat">
         <TextInput
           label="Vitesse"
           name="pace"
@@ -66,13 +56,13 @@ const onSubmit = handleSubmit((values) => {
           :min="1"
           :max="100"
           placeholder="Score de vitesse du joueur"
-          v-model="pace"
-          :errorMessage="getYupFieldErrorMessage('pace', errors)"
+          v-model="state.pace"
           required
+          class="w-full"
         />
-        <Stat :stat="pace" />
+        <Stat :stat="state.pace" />
       </div>
-      <div class="flex gap-5 mb-5">
+      <div class="CreatePlayerStepThree-stat">
         <TextInput
           label="Passe"
           name="passing"
@@ -81,13 +71,13 @@ const onSubmit = handleSubmit((values) => {
           :min="1"
           :max="100"
           placeholder="Score de passe du joueur"
-          v-model="passing"
-          :errorMessage="getYupFieldErrorMessage('passing', errors)"
+          v-model="state.passing"
           required
+          class="w-full"
         />
-        <Stat :stat="passing" />
+        <Stat :stat="state.passing" />
       </div>
-      <div class="flex gap-5 mb-5">
+      <div class="CreatePlayerStepThree-stat">
         <TextInput
           label="Drible"
           name="dribbling"
@@ -96,13 +86,13 @@ const onSubmit = handleSubmit((values) => {
           :min="1"
           :max="100"
           placeholder="Score de drible du joueur"
-          v-model="dribbling"
-          :errorMessage="getYupFieldErrorMessage('dribbling', errors)"
+          v-model="state.dribbling"
           required
+          class="w-full"
         />
-        <Stat :stat="dribbling" />
+        <Stat :stat="state.dribbling" />
       </div>
-      <div class="flex gap-5 mb-5">
+      <div class="CreatePlayerStepThree-stat">
         <TextInput
           label="Physique"
           name="physical"
@@ -111,13 +101,13 @@ const onSubmit = handleSubmit((values) => {
           :min="1"
           :max="100"
           placeholder="Score de physique du joueur"
-          v-model="physical"
-          :errorMessage="getYupFieldErrorMessage('physical', errors)"
+          v-model="state.physical"
           required
+          class="w-full"
         />
-        <Stat :stat="physical" />
+        <Stat :stat="state.physical" />
       </div>
-      <div class="flex gap-5 mb-5">
+      <div class="CreatePlayerStepThree-stat">
         <TextInput
           label="Tire"
           name="shooting"
@@ -126,14 +116,15 @@ const onSubmit = handleSubmit((values) => {
           :min="1"
           :max="100"
           placeholder="Score de tire du joueur"
-          v-model="shooting"
-          :errorMessage="getYupFieldErrorMessage('shooting', errors)"
+          v-model="state.shooting"
           required
+          class="w-full"
         />
-        <Stat :stat="shooting" />
+        <Stat :stat="state.shooting" />
       </div>
-      <div class="text-center mt-12">
+      <div class="text-center">
         <UButton
+          class="mt-8"
           icon="i-heroicons-arrow-right-circle-solid"
           size="lg"
           color="primary"
@@ -143,6 +134,16 @@ const onSubmit = handleSubmit((values) => {
           type="submit"
         />
       </div>
-    </Form>
+    </UForm>
   </div>
 </template>
+
+<style scoped lang="scss">
+.CreatePlayerStepThree {
+  &-stat {
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+  }
+}
+</style>
