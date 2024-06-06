@@ -6,9 +6,9 @@ export const emailList = [
   },
   {
     name: "Mot de passe oublié",
-    subject: "Liens réinitialisation de votre mot de passe",
+    subject: "Lien réinitialisation de votre mot de passe",
     template: "mot-de-passe-oublie",
-  }
+  },
 ];
 
 export function createEmailTable(emails) {
