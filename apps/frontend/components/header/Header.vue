@@ -114,7 +114,7 @@ const logout = () => {
         <div class="Header-user-settings Header-user-settings--disabled">
           <ul>
             <li class="mb-4 hover:text-primary">
-              <ULink to="/">Paramétres du compte</ULink>
+              <ULink to="/settings">Paramétres</ULink>
             </li>
             <li class="hover:text-primary">
               <ULink variant="link" :onclick="logout">Déconnexion</ULink>

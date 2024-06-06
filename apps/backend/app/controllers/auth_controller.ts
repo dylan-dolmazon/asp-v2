@@ -1,10 +1,28 @@
 import User from '#models/user'
 import { sendEmail } from '#services/email/send'
-import { loginUserValidator } from '#validators/Auth/login_user'
-import { storeAdminValidator, storeUserValidator } from '#validators/Auth/store_user'
+import { loginUserValidator } from '#validators/Auth/login'
+import { storeUserValidator } from '#validators/Auth/store'
+import { updateUserValidator, updateUserToAdminValidator } from '#validators/Auth/update'
 import type { HttpContext } from '@adonisjs/core/http'
+import env from '#start/env'
 
 export default class AuthController {
+  async index({ request }: HttpContext) {
+    const { page = 1, limit = 10, name } = request.qs()
+    const query = User.query().orderBy('createdAt', 'desc')
+
+    if (name) {
+      query.where((builder) => {
+        builder
+          .where('firstname', 'ilike', `%${name}%`)
+          .orWhere('lastname', 'ilike', `%${name}%`)
+          .orWhere('username', 'ilike', `%${name}%`)
+      })
+    }
+
+    return await query.paginate(page, limit)
+  }
+
   async register({ request, response }: HttpContext) {
     const payload = await request.validateUsing(storeUserValidator)
 
@@ -33,11 +51,58 @@ export default class AuthController {
     })
   }
 
-  async registerAdmin({ request, response }: HttpContext) {
-    const payload = await request.validateUsing(storeAdminValidator)
+  async update({ request, response, params }: HttpContext) {
+    const payload = await request.validateUsing(updateUserValidator)
+    const userInfos = await User.findOrFail(params.id)
+    const userLogin = await User.verifyCredentials(userInfos.email, payload.password)
 
-    const { key, ...datas } = payload
+    const emailToUpdate = payload.email && userLogin.email !== payload.email
+    const usernameToUpdate = payload.username && userLogin.username !== payload.username
+    let messages: { message: string }[] = []
 
-    return response.status(201).send(User.create({ ...datas, role: 'admin' }))
+    if (emailToUpdate) {
+      const exist = await User.findBy('email', payload.email)
+
+      if (exist !== null) messages.push({ message: 'Nouvel e-mail renseigné déjà enregistré' })
+    }
+
+    if (usernameToUpdate) {
+      const exist = await User.findBy('username', payload.username)
+
+      if (exist !== null) messages.push({ message: 'Nouvel username renseigné déjà enregistré' })
+    }
+
+    if (messages.length > 0) {
+      return response.status(409).send({
+        errors: messages,
+      })
+    }
+
+    const { password, ...payloadWithoutPassword } = payload
+
+    userLogin.merge(payloadWithoutPassword)
+    await userLogin.save()
+    return userLogin
+  }
+
+  async updateToAdmin({ request, response }: HttpContext) {
+    const payload = await request.validateUsing(updateUserToAdminValidator)
+    const roles = request.header('Abilities')?.split(',')
+
+    if (!roles?.includes('moderator') || payload.key !== env.get('ADMIN_SECRET_KEY')) {
+      return response.status(401).send({
+        errors: [{ message: "Vous n'êtes pas autorisé à effectuer cette action" }],
+      })
+    }
+
+    payload.users.forEach(async ({ username, role }) => {
+      const user = await User.findByOrFail('username', username)
+      user.merge({ role })
+      await user.save()
+    })
+
+    return response.ok({
+      messages: [{ message: 'Tout les utilisateurs ont bien étaient modifié' }],
+    })
   }
 }

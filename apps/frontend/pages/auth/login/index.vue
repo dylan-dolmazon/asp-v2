@@ -4,6 +4,8 @@ import type { FormSubmitEvent } from "#ui/types";
 
 const router = useRouter();
 
+const loading = ref(false);
+
 const schema = yup.object({
   email: yup.string().email().required(),
   password: yup.string().required(),
@@ -17,7 +19,9 @@ const state = reactive({
 const onSubmit = async (
   event: FormSubmitEvent<yup.InferType<typeof schema>>
 ) => {
-  const { error, data } = await loginUser(event.data);
+  loading.value = true;
+  const { error, pending, data } = await loginUser(event.data);
+  loading.value = pending.value;
   if (!error.value && data?.value) {
     addToast(
       "Connexion réussie",
@@ -70,6 +74,7 @@ const onSubmit = async (
             block
             label="Se connecter"
             :trailing="false"
+            :loading="loading"
           />
         </UForm>
       </div>

@@ -84,7 +84,7 @@ export default defineAppConfig({
     input: {
       color: {
         white: {
-          outline: "bg-default-100",
+          outline: "bg-default-100 read-only:cursor-default",
         },
       },
       variant: {
