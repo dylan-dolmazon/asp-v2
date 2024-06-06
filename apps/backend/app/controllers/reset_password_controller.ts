@@ -26,7 +26,7 @@ export default class ResetPasswordController {
 
     sendEmail(
       'mot-de-passe-oublie',
-      'Voici votre liens de réinitialisation de mot de passe.',
+      'Voici votre lien de réinitialisation de mot de passe.',
       [user.email],
       [{ key: 'link', value: url }]
     )
