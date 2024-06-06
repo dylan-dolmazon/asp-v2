@@ -88,7 +88,7 @@ const sendMail = () => {
 // `pushEmails` function:
 // Push the emails to the S3 tebi bucket
 //
-const pushEmails = () => {
+const pushEmails = (done) => {
   // Configuration
   const credentials = {
     accessKeyId: process.env.TEBI_EMAIL_KEY,
@@ -118,7 +118,7 @@ const pushEmails = () => {
       })
     );
   });
-  return true;
+  done();
 };
 
 //
@@ -189,4 +189,4 @@ gulp.task("watch", watch);
 
 gulp.task("mail", sendMail);
 
-gulp.task("push", gulp.series("clean", generateHtml, pushEmails));
+gulp.task("push",  pushEmails);

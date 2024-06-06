@@ -1,9 +1,14 @@
 export const emailList = [
   {
-    name: "inscription",
+    name: "Inscription",
     subject: "Bienvenue sur ASP !",
     template: "inscription",
   },
+  {
+    name: "Mot de passe oublié",
+    subject: "Liens réinitialisation de votre mot de passe",
+    template: "mot-de-passe-oublie",
+  }
 ];
 
 export function createEmailTable(emails) {
