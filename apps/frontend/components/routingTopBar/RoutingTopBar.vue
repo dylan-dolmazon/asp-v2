@@ -19,8 +19,7 @@ const currentPage: PageType = pages_config.find((page) =>
     <div
       v-if="
         currentPage.link &&
-        (currentPage.link?.linkAccessRoles.includes(user?.role) ||
-          currentPage.link?.linkAccessRoles.includes('all'))
+        currentPage.link?.linkAccessRoles.includes(user?.role || 'all')
       "
     >
       <CustomLink

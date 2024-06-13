@@ -17,13 +17,13 @@
 .Container {
   display: flex;
   &-headerComponent {
-    width: 5%;
+    width: 85px;
     background-color: theme("colors.background.header");
   }
   &-content {
-    width: 95%;
+    width: calc(100% - 85px);
     height: fit-content;
-    margin-left: 5%;
+    margin-left: 85px;
     padding-bottom: 40px;
   }
 }

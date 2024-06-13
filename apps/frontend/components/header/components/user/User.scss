@@ -1,0 +1,29 @@
+.User {
+  position: relative;
+  border-top: 1px solid theme("colors.white");
+
+  &-settings {
+    &--disabled {
+      display: none;
+    }
+
+    &--enabled {
+      display: block;
+      position: absolute;
+      left: 80%;
+      bottom: 80%;
+      z-index: 999;
+      background-color: theme("colors.background.settings");
+      color: theme("colors.white");
+      width: 215px;
+      border-radius: 20px;
+      padding: 20px;
+    }
+  }
+
+  &-connectIcon {
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+}
