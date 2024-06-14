@@ -1,0 +1,35 @@
+.favorite {
+  color: theme("colors.gris.500");
+
+  &:hover {
+    color: theme("colors.error");
+  }
+
+  &:hover:not(&--active) {
+    scale: 1.1;
+    cursor: pointer;
+  }
+
+  &--active {
+    color: theme("colors.error");
+  }
+}
+
+.CreateForm {
+  flex: 0 0 20%;
+}
+
+.Results {
+  @screen sm {
+    display: flex;
+  }
+
+  &-table {
+    width: 85%;
+    margin-top: 40px;
+
+    @screen sm {
+      margin-top: 0;
+    }
+  }
+}
