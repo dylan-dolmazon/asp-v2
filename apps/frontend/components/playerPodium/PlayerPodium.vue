@@ -5,7 +5,7 @@ defineProps({
 </script>
 
 <template>
-  <div class="flex justify-between mx-5 mt-10">
+  <div class="PlayerPodium">
     <PlayerCard
       v-for="(player, index) in players"
       :key="player.id"
@@ -17,12 +17,32 @@ defineProps({
 </template>
 
 <style lang="scss" scoped>
-.PlayerCard {
-  &:nth-child(1) {
-    margin-top: 40px;
+.PlayerPodium {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  @screen sm {
+    justify-content: space-between;
+    flex-direction: row;
   }
-  &:nth-child(3) {
-    margin-top: 60px;
+
+  .PlayerCard {
+    &:nth-child(1) {
+      margin-top: 40px;
+    }
+    &:nth-child(2) {
+      margin-top: 60px;
+    }
+    &:nth-child(3) {
+      margin-top: 60px;
+    }
+
+    @screen sm {
+      &:nth-child(2) {
+        margin-top: 0;
+      }
+    }
   }
 }
 </style>

@@ -7,12 +7,14 @@ const currentPage: PageType = pages_config.find((page) =>
 </script>
 
 <template>
-  <div
-    class="RoutingTopBar text-primary bg-background-surface px-8 py-7 flex justify-between items-center"
-  >
-    <div class="w-1/2 px-4 flex justify-between items-center">
-      <UBreadcrumb divider="/" :links="currentPage.breadCrumb" />
-      <Typo tag="h1" class="translate-x-1/2">
+  <div class="RoutingTopBar">
+    <div class="RoutingTopBar-content">
+      <UBreadcrumb
+        divider="/"
+        :links="currentPage.breadCrumb"
+        class="RoutingTopBar-content-breadcrumb"
+      />
+      <Typo tag="h2" class="sm:translate-x-1/2">
         {{ currentPage.title }}
       </Typo>
     </div>
@@ -21,6 +23,7 @@ const currentPage: PageType = pages_config.find((page) =>
         currentPage.link &&
         currentPage.link?.linkAccessRoles.includes(user?.role || 'all')
       "
+      class="RoutingTopBar-link"
     >
       <CustomLink
         :href="currentPage.link.href"
@@ -31,3 +34,7 @@ const currentPage: PageType = pages_config.find((page) =>
     </div>
   </div>
 </template>
+
+<style scoped lang="scss">
+@import "./RoutingTopBar.scss";
+</style>

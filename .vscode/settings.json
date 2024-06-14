@@ -24,6 +24,7 @@
   "module-templates.templateFiles": [
     "./templates/component.json",
   ],
+  "css.customData": [".vscode/tailwind.json"],
   "sqltools.connections": [
     {
       "previewLimit": 50,

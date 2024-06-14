@@ -1,0 +1,38 @@
+.RoutingTopBar {
+  background-color: theme("colors.background.surface");
+  color: theme("colors.default.DEFAULT");
+  text-align: center;
+  padding: 15px 5px;
+
+  @screen sm {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &-content {
+    @screen sm {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 50%;
+      padding: 0 15px;
+    }
+
+    &-breadcrumb {
+      display: none;
+
+      @screen sm {
+        display: block;
+      }
+    }
+  }
+
+  &-link {
+    display: none;
+
+    @screen sm {
+      display: block;
+    }
+  }
+}

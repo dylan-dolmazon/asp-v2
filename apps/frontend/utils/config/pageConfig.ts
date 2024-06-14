@@ -30,7 +30,7 @@ export const pages_config: PageType[] = [
     link: {
       href: "/admin/buteurs",
       text: "Modifier le classement",
-      linkAccessRoles: ["admin"],
+      linkAccessRoles: ["admin", "moderator"],
     },
     breadCrumb: [{ label: "Accueil" }],
   },
@@ -84,7 +84,7 @@ export const pages_config: PageType[] = [
   {
     title: "Paramétres",
     path: "/settings",
-    allowedRoles: ["user","admin", "moderator"],
+    allowedRoles: ["user", "admin", "moderator"],
     breadCrumb: [{ label: "Paramétre" }],
   },
 ];

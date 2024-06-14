@@ -34,7 +34,7 @@ watch(players, async (newPlayers) => {
 
 <template>
   <NuxtLayout name="default">
-    <div class="w-2/3 m-auto">
+    <div class="HomePage m-auto">
       <PlayerPodium :players="currentTopPlayers" />
       <div class="mt-12">
         <UTable
@@ -58,3 +58,13 @@ watch(players, async (newPlayers) => {
     </div>
   </NuxtLayout>
 </template>
+
+<style scoped lang="scss">
+.HomePage {
+  width: 100%;
+
+  @screen sm {
+    width: 65%;
+  }
+}
+</style>

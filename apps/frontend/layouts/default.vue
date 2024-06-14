@@ -1,12 +1,28 @@
+<script setup lang="ts">
+const isOpen = ref(false);
+</script>
+
 <template>
   <div class="Container w-full h-full">
-    <div class="Container-headerComponent h-full fixed">
+    <div class="Container-headerComponent Container-headerComponent--desktop">
       <Header />
     </div>
-    <div class="Container-content w-full">
+    <Icon
+      name="mdi:forwardburger"
+      width="40"
+      height="40"
+      class="Container-burgerIcon text-default"
+      @click="isOpen = !isOpen"
+    ></Icon>
+    <USlideover v-model="isOpen" side="left" class="w-[85px]">
+      <div class="Container-headerComponent">
+        <Header />
+      </div>
+    </USlideover>
+    <div class="Container-right">
       <RoutingTopBar />
 
-      <div class="m-12">
+      <div class="Container-right-content">
         <slot />
       </div>
     </div>
@@ -14,17 +30,5 @@
 </template>
 
 <style scoped lang="scss">
-.Container {
-  display: flex;
-  &-headerComponent {
-    width: 85px;
-    background-color: theme("colors.background.header");
-  }
-  &-content {
-    width: calc(100% - 85px);
-    height: fit-content;
-    margin-left: 85px;
-    padding-bottom: 40px;
-  }
-}
+@import "./default.scss";
 </style>

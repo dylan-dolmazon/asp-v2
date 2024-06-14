@@ -1,26 +1,86 @@
 h1 {
-  font-size: 33px;
+  font-size: 20px;
   font-style: normal;
-  line-height: 40px;
+  line-height: 22px;
+
+  @screen sm {
+    font-size: 24px;
+    line-height: 29px;
+  }
+
+  @screen md {
+    font-size: 28px;
+    line-height: 33px;
+  }
+
+  @screen lg {
+    font-size: 33px;
+    line-height: 40px;
+  }
 }
 
 h2 {
-  font-size: 27px;
+  font-size: 18px;
   font-style: normal;
-  line-height: 34px;
+  line-height: 19px;
+
+  @screen sm {
+    font-size: 21px;
+    line-height: 26px;
+  }
+
+  @screen md {
+    font-size: 25px;
+    line-height: 30px;
+  }
+
+  @screen lg {
+    font-size: 27px;
+    line-height: 34px;
+  }
 }
 
 h3 {
-  font-size: 23px;
-  font-weight: 400;
-  line-height: 28px;
+  font-size: 16px;
+  font-style: normal;
+  line-height: 19px;
+
+  @screen sm {
+    font-size: 18px;
+    line-height: 22px;
+  }
+
+  @screen md {
+    font-size: 20px;
+    line-height: 24px;
+  }
+
+  @screen lg {
+    font-size: 23px;
+    line-height: 28px;
+  }
 }
 
 h4 {
-  font-size: 19px;
+  font-size: 14px;
   font-style: normal;
   font-weight: 700;
-  line-height: 23px;
+  line-height: 16px;
+
+  @screen sm {
+    font-size: 16px;
+    line-height: 19px;
+  }
+
+  @screen md {
+    font-size: 18px;
+    line-height: 22px;
+  }
+
+  @screen lg {
+    font-size: 20px;
+    line-height: 24px;
+  }
 }
 
 .p1 {
