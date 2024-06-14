@@ -22,14 +22,20 @@ useHead({
   justify-content: center;
   align-items: center;
   color: theme("colors.black");
+  padding: 0 40px;
 
   .Form {
+    width: 100%;
     padding: 40px;
     background-color: theme("colors.background.DEFAULT");
     border-radius: 30px;
 
-    &-content {
-      width: 350px;
+    @screen sm {
+      width: fit-content;
+
+      &-content {
+        width: 350px;
+      }
     }
   }
 }

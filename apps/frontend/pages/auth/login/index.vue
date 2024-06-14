@@ -79,7 +79,7 @@ const onSubmit = async (
         </UForm>
       </div>
     </div>
-    <div class="link flex justify-between mt-10 h-fit">
+    <div class="link">
       <CustomLink
         href="/auth/register"
         variant="white"
@@ -101,6 +101,17 @@ const onSubmit = async (
 
 <style scoped lang="scss">
 .link {
-  width: 430px;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 40px;
+  align-items: center;
+
+  @screen sm {
+    width: 430px;
+    justify-content: space-between;
+    flex-direction: row;
+  }
 }
 </style>
