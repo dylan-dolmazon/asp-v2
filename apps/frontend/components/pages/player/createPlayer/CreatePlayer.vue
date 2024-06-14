@@ -12,9 +12,17 @@ watch(currentStep, (value) => {
   <USlideover v-model="isOpen">
     <UCard class="flex flex-col flex-1">
       <template #header>
-        <Typo tag="h3" class="h-8 text-center w-full text-default">
-          Créer un nouveau joueur pour votre équipe !
-        </Typo>
+        <div class="flex items-center">
+          <Typo tag="h3" class="text-center w-full text-default">
+            Créer un nouveau joueur pour votre équipe !
+          </Typo>
+          <UButton
+            color="gray"
+            variant="ghost"
+            icon="i-heroicons-x-mark-20-solid"
+            @click="isOpen = false"
+          />
+        </div>
       </template>
 
       <Stepper

@@ -101,14 +101,14 @@ watch(slideOverCreateIsOpen, () => {
         </div>
       </template>
     </Modal>
-    <div class="relative">
+    <div class="Equipe-head">
       <UInput
         icon="i-heroicons-magnifying-glass-20-solid"
         size="lg"
         color="white"
         trailing
         placeholder="Search..."
-        class="w-2/6 mx-auto my-8"
+        class="Equipe-head-search"
         @input="(event: any) => searchName(event.target.value)"
       />
       <UButton
@@ -120,7 +120,7 @@ watch(slideOverCreateIsOpen, () => {
         label="Ajouter un joueur"
         trailing
         @click="slideOverCreateIsOpen = true"
-        class="absolute right-8 top-0"
+        class="Equipe-head-button"
       />
     </div>
     <UTable :loading="pending" :columns="playersColumns" :rows="players?.data">
@@ -143,3 +143,7 @@ watch(slideOverCreateIsOpen, () => {
     />
   </NuxtLayout>
 </template>
+
+<style scoped>
+@import "equipe.scss";
+</style>

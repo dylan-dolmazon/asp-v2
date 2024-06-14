@@ -1,0 +1,24 @@
+.Equipe {
+  &-head {
+    display: flex;
+    gap: 15px;
+    padding: 40px 0;
+
+    @screen sm {
+      display: block;
+      position: relative;
+      padding: 0;
+
+      &-button {
+        position: absolute;
+        right: 38px;
+        top: 0;
+      }
+
+      &-search {
+        width: 33%;
+        margin: 32px auto;
+      }
+    }
+  }
+}
