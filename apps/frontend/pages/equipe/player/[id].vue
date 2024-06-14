@@ -48,10 +48,8 @@ const suppPlayer = async (id: string) => {
           </div>
         </template>
       </Modal>
-      <div class="flex">
-        <div
-          class="relative flex flex-col items-center bg-background-header p-10 justify-evenly"
-        >
+      <div class="PlayerDetail">
+        <div class="PlayerDetail-card">
           <PlayerCard :player="data.player" :style="'special'" />
           <div class="Actions flex gap-1">
             <UButton
@@ -71,11 +69,11 @@ const suppPlayer = async (id: string) => {
             />
           </div>
         </div>
-        <div class="w-full">
-          <Typo tag="h3" format="bold" class="w-full text-center mb-10">
+        <div class="PlayerDetail-infos">
+          <Typo tag="h3" format="bold" class="PlayerDetail-infos-title">
             {{ data.player.fullname }} - {{ data.player.positionLabel }}
           </Typo>
-          <div class="flex justify-between p-10">
+          <div class="PlayerDetail-infos-stats">
             <Stat :stat="data.player.pace" title="Vitesse" />
             <Stat :stat="data.player.shooting" title="Tirs" />
             <Stat :stat="data.player.passing" title="Passes" />
@@ -168,7 +166,7 @@ const suppPlayer = async (id: string) => {
       </div>
       <UDivider class="m-10 w-auto" />
 
-      <div class="mt-12 flex justify-between">
+      <div class="PlayerInfos">
         <div class="flex flex-col items-center gap-4">
           <Typo tag="h3" format="bold" class="text-default">Nationalité</Typo>
           <div class="flex items-center gap-4">
