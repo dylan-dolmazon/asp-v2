@@ -71,7 +71,7 @@ const updatePlayer = async () => {
       color="white"
       trailing
       placeholder="Search..."
-      class="w-2/6 mx-auto my-8"
+      class="searchBar"
       @input="(event: any) => searchName(event.target.value)"
     />
     <UTable
@@ -116,3 +116,14 @@ const updatePlayer = async () => {
     </div>
   </NuxtLayout>
 </template>
+
+<style scoped lang="scss">
+.searchBar {
+  margin: 30px 0;
+
+  @screen sm {
+    width: 33%;
+    margin: 30px auto;
+  }
+}
+</style>

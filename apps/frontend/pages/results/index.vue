@@ -158,8 +158,8 @@ const onChange = (tab: number) => {
 
 <template>
   <NuxtLayout name="default">
-    <div class="flex gap-2 items-start">
-      <div class="flex gap-8 flex-col">
+    <div class="Result">
+      <div class="Result-settings">
         <div class="flex gap-2 flex-col">
           <USelect
             :loading="compet === 0"
@@ -210,7 +210,7 @@ const onChange = (tab: number) => {
           <Snackbar
             v-if="!isLoading && classment?.length === 0"
             type="Erreur"
-            class="mt-10 mx-20"
+            class="Result-snackbar"
           >
             <div>
               <Typo tag="p" format="normal" class="pr-1">
@@ -254,7 +254,7 @@ const onChange = (tab: number) => {
             v-if="calendar?.length === 0 && !isLoading"
             title="Aucun match trouvé"
             type="Attention"
-            class="mt-10 mx-20"
+            class="Result-snackbar"
           >
             <div>
               <Typo tag="p" format="normal" class="pr-1">
@@ -297,7 +297,7 @@ const onChange = (tab: number) => {
             v-if="results?.length === 0 && !isLoading"
             title="Aucun match trouvé"
             type="Attention"
-            class="mt-10 mx-20"
+            class="Result-snackbar mt-"
           >
             <div>
               <Typo tag="p" format="normal" class="pr-1">
@@ -323,3 +323,7 @@ const onChange = (tab: number) => {
     </div>
   </NuxtLayout>
 </template>
+
+<style scoped lang="scss">
+@import "results.scss";
+</style>

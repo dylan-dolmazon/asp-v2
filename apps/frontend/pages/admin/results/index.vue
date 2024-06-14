@@ -218,7 +218,7 @@ const actions = (row: any) => [
         </UForm>
       </template>
     </Modal>
-    <div class="flex mt-10">
+    <div class="Results mt-10">
       <UForm
         :schema="schemaCreate"
         :state="stateCreate"
@@ -258,7 +258,7 @@ const actions = (row: any) => [
         :loading="pending"
         :columns="competsSortColumns"
         :rows="data?.data"
-        class="w-4/5"
+        class="Results-table"
       >
         <template #favorite-data="{ row }">
           <UButton
@@ -285,24 +285,5 @@ const actions = (row: any) => [
 </template>
 
 <style scoped lang="scss">
-.favorite {
-  color: theme("colors.gris.500");
-
-  &:hover {
-    color: theme("colors.error");
-  }
-
-  &:hover:not(&--active) {
-    scale: 1.1;
-    cursor: pointer;
-  }
-
-  &--active {
-    color: theme("colors.error");
-  }
-}
-
-.CreateForm {
-  flex: 0 0 20%;
-}
+@import "results.scss";
 </style>

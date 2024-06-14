@@ -1,0 +1,40 @@
+.AdminDashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  @screen sm {
+    display: grid;
+    gap: 15px;
+    height: calc(100vh - 170px);
+    grid-template-columns: repeat(4, auto);
+    grid-template-rows: repeat(3, auto);
+  }
+
+  &-item {
+    width: 100%;
+    &:hover {
+      cursor: pointer;
+    }
+    background-color: theme("colors.background.surface");
+    border-radius: 3px;
+    padding: 5px 10px;
+
+    @screen sm {
+      &--rowSpan2 {
+        grid-row: span 2;
+      }
+
+      &--colSpan2 {
+        grid-column: span 2;
+      }
+
+      &--colSpan3 {
+        grid-column: span 3;
+      }
+
+      &--colSpan5 {
+        grid-column: span 5;
+      }
+    }
+  }
+}
