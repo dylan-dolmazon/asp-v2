@@ -39,7 +39,7 @@ const updateUsers = async () => {
     color="white"
     trailing
     placeholder="Search..."
-    class="w-2/6 mx-auto my-8"
+    class="searchBar"
     @input="(event: any) => searchName(event.target.value)"
   />
   <UTable :loading="pending" :columns="usersColumns" :rows="users?.data">
@@ -71,3 +71,14 @@ const updateUsers = async () => {
     />
   </div>
 </template>
+
+<style scoped lang="scss">
+.searchBar {
+  margin: 30px 0;
+
+  @screen sm {
+    width: 33%;
+    margin: 30px auto;
+  }
+}
+</style>

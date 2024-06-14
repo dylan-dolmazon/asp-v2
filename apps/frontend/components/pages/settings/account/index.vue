@@ -120,7 +120,7 @@ const onSubmit = async (
           class="text-default"
         ></Icon>
       </UButton>
-      <div class="ml-5 my-5 mr-20">
+      <div class="Settings-form">
         <UForm
           :schema="schema"
           :state="state"
@@ -189,7 +189,7 @@ const onSubmit = async (
       </div>
     </div>
   </div>
-  <div class="flex justify-center gap-12">
+  <div class="Settings-dates">
     <div v-if="user.createdAt" class="flex gap-2">
       <Typo class="text-center">Créé le</Typo>
       <UBadge>
