@@ -48,5 +48,5 @@ const logout = () => {
 </template>
 
 <style scoped>
-@import "./user.scss";
+@import "./User.scss";
 </style>

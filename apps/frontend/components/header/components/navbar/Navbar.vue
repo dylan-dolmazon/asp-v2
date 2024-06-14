@@ -90,5 +90,5 @@ const route = useRoute();
 </template>
 
 <style scoped>
-@import "./navbar.scss";
+@import "./Navbar.scss";
 </style>
