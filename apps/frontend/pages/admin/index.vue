@@ -6,7 +6,7 @@ useHead({
 
 <template>
   <NuxtLayout name="default">
-    <div class="AdminDashboard grid gap-4">
+    <div class="AdminDashboard">
       <!-- Première colonne, deux lignes -->
       <div
         class="AdminDashboard-item"
@@ -17,7 +17,7 @@ useHead({
 
       <!-- Deux colonnes du milieu, une ligne -->
       <div
-        class="AdminDashboard-item col-span-2"
+        class="AdminDashboard-item AdminDashboard-item--colSpan2"
         :onClick="() => navigateTo('/admin/buteurs')"
       >
         <ScorerRanking />
@@ -29,36 +29,25 @@ useHead({
       </div>
 
       <!-- Première colonne, deux lignes -->
-      <div class="AdminDashboard-item row-span-2">
+      <div class="AdminDashboard-item AdminDashboard-item--rowSpan2">
         Première colonne - Deux lignes
       </div>
 
       <div class="AdminDashboard-item">Première colonne - Deux lignes</div>
 
       <!-- Deux colonnes du milieu, une ligne -->
-      <div class="AdminDashboard-item col-span-3">
+      <div class="AdminDashboard-item AdminDashboard-item--colSpan3">
         Deux colonnes du milieu - Une ligne
       </div>
 
       <!-- Dernière ligne entière -->
-      <div class="AdminDashboard-item col-span-5">Dernière ligne entière</div>
+      <div class="AdminDashboard-item AdminDashboard-item--colSpan5">
+        Dernière ligne entière
+      </div>
     </div>
   </NuxtLayout>
 </template>
 
-<style scoped>
-.AdminDashboard {
-  height: calc(100vh - 170px);
-  grid-template-columns: repeat(4, auto);
-  grid-template-rows: repeat(3, auto);
-
-  &-item {
-    &:hover {
-      cursor: pointer;
-    }
-    background-color: theme("colors.background.surface");
-    border-radius: 3px;
-    padding: 5px 10px;
-  }
-}
+<style scoped lang="scss">
+@import "admin.scss";
 </style>
