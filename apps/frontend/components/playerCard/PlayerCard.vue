@@ -68,15 +68,7 @@ defineProps({
     </div>
     <div class="PlayerCard-medals" v-if="rankingNumber != undefined">
       <Ranking
-        :number="
-          rankingNumber === 0
-            ? 2
-            : rankingNumber === 1
-              ? 1
-              : rankingNumber === 2
-                ? 3
-                : undefined
-        "
+        :number="rankingNumber + 1"
         :class="`classment-${rankingNumber}`"
       />
     </div>

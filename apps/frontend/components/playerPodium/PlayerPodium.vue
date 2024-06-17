@@ -11,7 +11,7 @@ defineProps({
       :key="player.id"
       :player="player"
       :rankingNumber="index"
-      :style="index === 0 ? 'gold' : index === 1 ? 'special' : 'silver'"
+      :style="index === 0 ? 'special' : index === 1 ? 'gold' : 'silver'"
     />
   </div>
 </template>
@@ -21,26 +21,28 @@ defineProps({
   display: flex;
   flex-direction: column;
   align-items: center;
+  .PlayerCard {
+    margin-top: 40px;
+  }
 
   @screen sm {
     justify-content: space-between;
     flex-direction: row;
-  }
+    .PlayerCard {
+      margin-top: 0;
 
-  .PlayerCard {
-    &:nth-child(1) {
-      margin-top: 40px;
-    }
-    &:nth-child(2) {
-      margin-top: 60px;
-    }
-    &:nth-child(3) {
-      margin-top: 60px;
-    }
+      &--gold {
+        margin-top: 30px;
+        order: 0;
+      }
 
-    @screen sm {
-      &:nth-child(2) {
-        margin-top: 0;
+      &--special {
+        order: 1;
+      }
+
+      &--silver {
+        margin-top: 80px;
+        order: 2;
       }
     }
   }
