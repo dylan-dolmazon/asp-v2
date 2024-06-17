@@ -16,9 +16,6 @@ watch(players, async (newPlayers) => {
 
   if (page.value === 1 && playersData.length >= 3) {
     initialTopPlayers.value = playersData.slice(0, 3);
-    // const tmp = initialTopPlayers.value[0];
-    // initialTopPlayers.value[0] = initialTopPlayers.value[1];
-    // initialTopPlayers.value[1] = tmp;
 
     podium = initialTopPlayers.value;
     tableData = playersData.slice(3);

@@ -1,5 +1,7 @@
 <script setup lang="ts">
-const props = defineProps({
+const model = defineModel({ required: true });
+
+defineProps({
   name: {
     type: String,
     required: true,
@@ -8,32 +10,28 @@ const props = defineProps({
     type: String,
     required: true,
   },
-  value: {
+  required: {
     type: Boolean,
     default: false,
   },
 });
-
-const name = toRef(props, "name");
-
-const { value: inputValue } = useField(name, undefined, {
-  initialValue: props.value,
-});
 </script>
 
 <template>
-  <div class="checkboxContainer">
-    <input
-      class="tgl tgl-skewed"
-      :name="name"
-      :id="name"
-      type="checkbox"
-      :value="inputValue"
-      v-model="inputValue"
-    />
-    <label class="tgl-btn" :for="name" data-tg-off="NON" data-tg-on="OUI" />
-    <Typo> {{ label }}</Typo>
-  </div>
+  <UFormGroup :name="name" size="xl" :required="required">
+    <div class="checkboxContainer">
+      <input
+        class="tgl tgl-skewed"
+        :name="name"
+        :id="name"
+        type="checkbox"
+        v-model="model"
+      />
+
+      <label class="tgl-btn" :for="name" data-tg-off="NON" data-tg-on="OUI" />
+      <Typo> {{ label }}</Typo>
+    </div>
+  </UFormGroup>
 </template>
 
 <style scoped>

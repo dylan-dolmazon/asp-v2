@@ -2,11 +2,8 @@
 import * as yup from "yup";
 import type { FormSubmitEvent } from "#ui/types";
 
-console.log('coucou');
-
 const step = defineModel<number>({ required: true });
 const { getPersonalsInfos, setPersonalsInfos } = useStepperState();
-console.log('✌️getPersonalsInfos --->', getPersonalsInfos());
 
 const schema = yup.object({
   firstname: yup.string().required(),
@@ -85,9 +82,7 @@ const onSubmit = async (
         id="nationality"
         placeholder="Nationalité du joueur"
         v-model="state.nationality"
-        :options="[
-          { name: 'France', value: 'FR' },
-        ]"
+        :options="[{ name: 'France', value: 'FR' }]"
         required
       />
       <TextInput

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import * as yup from "yup";
 import type { FormSubmitEvent } from "#ui/types";
+const { setUserInfos } = useUserInfos();
 
 const router = useRouter();
 
@@ -9,11 +10,13 @@ const loading = ref(false);
 const schema = yup.object({
   email: yup.string().email().required(),
   password: yup.string().required(),
+  remember: yup.boolean().required(),
 });
 
 const state = reactive({
   email: undefined,
   password: undefined,
+  remember: false,
 });
 
 const onSubmit = async (
@@ -28,11 +31,9 @@ const onSubmit = async (
       [`Content de vous revoir ${data.value?.username}`],
       "success"
     );
-    const { token, ...userValue } = data.value;
-    const userCookie = useCookie<User>("user");
-    const tokenCookie = useCookie<Token>("token");
-    userCookie.value = JSON.parse(JSON.stringify(userValue));
-    tokenCookie.value = JSON.parse(JSON.stringify(token));
+
+    setUserInfos(data.value, event.data.remember);
+
     router.back();
   }
 };
@@ -63,6 +64,12 @@ const onSubmit = async (
             placeholder="Votre mot de passe"
             v-model="state.password"
             required
+          />
+          <Checkbox
+            name="remember"
+            label="Se souvenir de moi"
+            class="mt-6"
+            v-model="state.remember"
           />
           <UButton
             icon="i-heroicons-check"

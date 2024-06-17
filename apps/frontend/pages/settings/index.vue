@@ -1,4 +1,6 @@
 <script setup lang="ts">
+const { isAdmin } = useUserInfos();
+
 const items = [
   {
     slot: "account",
@@ -13,7 +15,7 @@ const items = [
 <template>
   <NuxtLayout name="default">
     <div class="Settings">
-      <Account v-if="!isAdmin()" />
+      <Account v-if="!isAdmin" />
       <UTabs :items="items" class="w-full h-full" v-else>
         <template #account="{ item }">
           <Account />
