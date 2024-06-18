@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import * as yup from "yup";
 import type { FormSubmitEvent } from "#ui/types";
+const { isAdmin } = useUserInfos();
 
 useHead({
   title: "Gestions des championnats",
@@ -158,7 +159,7 @@ const actions = (row: any) => [
         </div>
       </template>
     </Modal>
-    <Modal v-model="updateModalIsOpen" v-if="isAdmin()">
+    <Modal v-model="updateModalIsOpen" v-if="isAdmin">
       <template #header>
         <Typo tag="h3" class="w-full text-center">
           Modification du championnat "{{

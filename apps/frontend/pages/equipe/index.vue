@@ -1,4 +1,6 @@
 <script setup lang="ts">
+const { isAdmin } = useUserInfos();
+
 useHead({
   title: "Mon équipe",
 });
@@ -24,7 +26,7 @@ const suppPlayer = async (id: string) => {
   deleteLoading.value = false;
 };
 
-const actions = isAdmin()
+const actions = isAdmin.value
   ? (row: any) => [
       [
         {
@@ -112,7 +114,7 @@ watch(slideOverCreateIsOpen, () => {
         @input="(event: any) => searchName(event.target.value)"
       />
       <UButton
-        v-if="isAdmin()"
+        v-if="isAdmin"
         icon="i-heroicons-user-plus-solid"
         size="lg"
         color="primary"

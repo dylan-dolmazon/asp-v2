@@ -1,10 +1,11 @@
 export default defineNuxtRouteMiddleware((to) => {
+  const { isLoggin, getUserInfos } = useUserInfos();
   const allowedRoles = pages_config.find((page) =>
     configPagePathIsSameAsTo(page.path, to.path)
   )?.allowedRoles;
   if (!allowedRoles) return navigateTo("/", { redirectCode: 302 });
   if (allowedRoles.includes("all")) return;
-  if (!isLoggin()) {
+  if (!isLoggin.value) {
     addToast(
       "Acces refusé",
       ["Vous devez être connecté pour accéder à cette page"],
@@ -12,8 +13,11 @@ export default defineNuxtRouteMiddleware((to) => {
     );
     return navigateTo("/auth/login", { redirectCode: 302 });
   }
-  const user = useCookie<User>("user");
-  if (!allowedRoles.includes(user.value.role)) {
+
+  if (
+    !getUserInfos.value.role ||
+    !allowedRoles.includes(getUserInfos.value.role)
+  ) {
     addToast(
       "Acces refusé",
       ["Vous n'avez pas les droits pour accéder à cette page"],

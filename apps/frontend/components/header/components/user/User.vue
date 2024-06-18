@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const user = useCookie<User>("user");
+const { isLoggin, resetUserInfos } = useUserInfos();
 
 const items = [
   [
@@ -21,17 +21,14 @@ const items = [
 ];
 
 const logout = () => {
-  const userCookie = useCookie("user");
-  const tokenCookie = useCookie("token");
-  userCookie.value = null;
-  tokenCookie.value = null;
+  resetUserInfos();
   navigateTo("/auth/login");
 };
 </script>
 
 <template>
   <div class="User">
-    <div v-if="user" class="w-fit h-fit pt-2">
+    <div v-if="isLoggin" class="w-fit h-fit pt-2">
       <UDropdown :items="items">
         <UAvatar
           src="https://avatars.githubusercontent.com/u/739984?v=4"
