@@ -1,3 +1,5 @@
-export const getPlayer = async (id: string) => {
-  return await useCustomFetch<Player>(`players/${id}`);
+export const getPlayer = async (id: Ref) => {
+  return await useCustomFetch<Player>("players/id", "GET", {
+    params: { id },
+  });
 };

@@ -3,7 +3,35 @@ import * as yup from "yup";
 import type { FormSubmitEvent } from "#ui/types";
 
 const step = defineModel<number>({ required: true });
-const { getPersonalsInfos, setPersonalsInfos } = useCreatePlayerStepperState();
+
+const props = defineProps({
+  firstname: {
+    type: String,
+    required: true,
+  },
+  lastname: {
+    type: String,
+    required: true,
+  },
+  age: {
+    type: Number,
+    required: true,
+  },
+  nationality: {
+    type: String,
+    required: true,
+  },
+  height: {
+    type: Number,
+    required: false,
+  },
+  weight: {
+    type: Number,
+    required: false,
+  },
+});
+
+const { getPersonalsInfos, setPersonalsInfos } = useModifyPlayerStepperState();
 const form = ref();
 
 const aleradyExist = ref(false);
@@ -19,16 +47,34 @@ const schema = yup.object({
 });
 
 const state = reactive({
-  firstname: getPersonalsInfos().firstname,
-  lastname: getPersonalsInfos().lastname,
-  age: getPersonalsInfos().age,
-  nationality: getPersonalsInfos().nationality,
-  height: getPersonalsInfos().height,
-  weight: getPersonalsInfos().weight,
+  firstname:
+    getPersonalsInfos().firstname != ""
+      ? getPersonalsInfos().firstname
+      : props.firstname,
+  lastname:
+    getPersonalsInfos().lastname != ""
+      ? getPersonalsInfos().lastname
+      : props.lastname,
+  age: getPersonalsInfos().age != 0 ? getPersonalsInfos().age : props.age,
+  nationality:
+    getPersonalsInfos().nationality != "FR"
+      ? getPersonalsInfos().nationality
+      : props.nationality,
+  height:
+    getPersonalsInfos().height != 0 ? getPersonalsInfos().height : props.height,
+  weight:
+    getPersonalsInfos().weight != 0 ? getPersonalsInfos().weight : props.weight,
 });
 
 const checkName = useDebounceFn(async (firstname: string, lastname: string) => {
-  if (firstname && firstname !== "" && lastname && lastname !== "") {
+  if (
+    firstname &&
+    firstname !== "" &&
+    lastname &&
+    lastname !== "" &&
+    firstname !== props.firstname &&
+    lastname !== props.lastname
+  ) {
     alreadyCheckIsPending.value = true;
     const { data, error, pending } = await checkIfAlreadyExist({
       firstname: firstname,

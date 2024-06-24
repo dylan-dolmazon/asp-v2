@@ -38,7 +38,7 @@ router.post('players', [PlayersController, 'store']).use(
 )
 
 router.get('players', [PlayersController, 'index'])
-router.get('players/:id', [PlayersController, 'show'])
+router.get('players/id', [PlayersController, 'show'])
 router.put('players/:id', [PlayersController, 'update']).use(
   middleware.auth({
     guards: ['api'],

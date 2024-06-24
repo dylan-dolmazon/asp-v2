@@ -1,4 +1,4 @@
-export const useCreatePlayerStepperState = () => {
+export const useModifyPlayerStepperState = () => {
   const stepperState = useState<StepperData>("stepperData", () => ({
     infosPersonnels: {
       firstname: "",

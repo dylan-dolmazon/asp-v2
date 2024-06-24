@@ -3,7 +3,35 @@ import * as yup from "yup";
 import type { FormSubmitEvent } from "#ui/types";
 
 const step = defineModel<number>({ required: true });
-const { getPerformance, setPerformance } = useCreatePlayerStepperState();
+
+const props = defineProps({
+  defending: {
+    type: Number,
+    required: true,
+  },
+  pace: {
+    type: Number,
+    required: true,
+  },
+  passing: {
+    type: Number,
+    required: true,
+  },
+  physical: {
+    type: Number,
+    required: true,
+  },
+  shooting: {
+    type: Number,
+    required: true,
+  },
+  dribbling: {
+    type: Number,
+    required: true,
+  },
+});
+
+const { getPerformance, setPerformance } = useModifyPlayerStepperState();
 
 const schema = yup.object({
   defending: yup.number().min(1).max(100).required(),
@@ -15,12 +43,25 @@ const schema = yup.object({
 });
 
 const state = reactive({
-  defending: getPerformance().defending,
-  pace: getPerformance().pace,
-  passing: getPerformance().passing,
-  physical: getPerformance().physical,
-  shooting: getPerformance().shooting,
-  dribbling: getPerformance().dribbling,
+  defending:
+    getPerformance().defending !== 0
+      ? getPerformance().defending
+      : props.defending,
+  pace: getPerformance().pace !== 0 ? getPerformance().pace : props.pace,
+  passing:
+    getPerformance().passing !== 0 ? getPerformance().passing : props.passing,
+  physical:
+    getPerformance().physical !== 0
+      ? getPerformance().physical
+      : props.physical,
+  shooting:
+    getPerformance().shooting !== 0
+      ? getPerformance().shooting
+      : props.shooting,
+  dribbling:
+    getPerformance().dribbling !== 0
+      ? getPerformance().dribbling
+      : props.dribbling,
 });
 
 const onSubmit = (event: FormSubmitEvent<yup.InferType<typeof schema>>) => {

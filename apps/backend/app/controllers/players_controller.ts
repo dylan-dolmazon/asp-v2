@@ -5,6 +5,7 @@ import { updateManyPlayerValidator } from '#validators/Player/update_many'
 import type { HttpContext } from '@adonisjs/core/http'
 import { getCountry } from '#services/country/get_country'
 import db from '@adonisjs/lucid/services/db'
+import { ModelQueryBuilderContract } from '@adonisjs/lucid/types/model'
 
 export default class PlayersController {
   async index({ request }: HttpContext) {
@@ -12,9 +13,7 @@ export default class PlayersController {
     const query = Player.query().orderBy('createdAt', 'desc')
 
     if (name) {
-      query.where((builder) => {
-        builder.where('firstname', 'ilike', `%${name}%`).orWhere('lastname', 'ilike', `%${name}%`)
-      })
+      query.where(buildSearchQuery(name))
     }
 
     return await query.paginate(page, limit)
@@ -25,9 +24,7 @@ export default class PlayersController {
     const query = Player.query().orderBy('goalsscored', 'desc')
 
     if (name) {
-      query.where((builder) => {
-        builder.where('firstname', 'ilike', `%${name}%`).orWhere('lastname', 'ilike', `%${name}%`)
-      })
+      query.where(buildSearchQuery(name))
     }
 
     const players = await query.paginate(page, limit)
@@ -46,8 +43,10 @@ export default class PlayersController {
     return { data: modifiedPlayers, meta: players.serialize().meta }
   }
 
-  async show({ params }: HttpContext) {
-    const { id } = params
+  async show({ request, response }: HttpContext) {
+    const { id } = request.qs()
+
+    if (id === '-1') return response.ok({})
 
     let player = await Player.findOrFail(id)
     const country = await getCountry(player.nationality)
@@ -109,7 +108,7 @@ export default class PlayersController {
   async store({ request, response }: HttpContext) {
     const roles = request.header('Abilities')?.split(',')
 
-    if (!roles?.includes('admin')) {
+    if (!roles?.includes('admin') && !roles?.includes('moderator')) {
       return response.status(401).send({ errors: [{ message: 'Accés refusé' }] })
     }
     const payload = await request.validateUsing(createPlayerValidator)
@@ -119,10 +118,11 @@ export default class PlayersController {
   async update({ request, params, response }: HttpContext) {
     const roles = request.header('Abilities')?.split(',')
 
-    if (!roles?.includes('admin')) {
+    if (!roles?.includes('admin') && !roles?.includes('moderator')) {
       return response.status(401).send({ errors: [{ message: 'Accés refusé' }] })
     }
     const payload = await request.validateUsing(updatePlayerValidator)
+
     const entry = await Player.findOrFail(params.id)
     entry.merge(payload)
     return entry.save()
@@ -153,22 +153,42 @@ export default class PlayersController {
   }
 
   async search({ request }: HttpContext) {
-    const { name } = request.qs()
-    return Player.query()
-      .where('firstname', 'ilike', `%${name}%`)
-      .orWhere('lastname', 'ilike', `%${name}%`)
+    const { page = 1, limit = 10, name } = request.qs()
+    const query = Player.query()
+
+    query.where(buildSearchQuery(name))
+
+    return await query.paginate(page, limit)
   }
 
   async alreadyExists({ request, response }: HttpContext) {
     const roles = request.header('Abilities')?.split(',')
 
-    if (!roles?.includes('admin')) {
+    if (!roles?.includes('admin') && !roles?.includes('moderator')) {
       return response.status(401).send({ errors: [{ message: 'Accés refusé' }] })
     }
+
     const { firstname, lastname } = request.body()
 
     return Player.query()
       .whereRaw('LOWER(firstname) = ?', firstname.toLowerCase())
       .andWhereRaw('LOWER(lastname) = ?', lastname.toLowerCase())
+  }
+}
+
+const buildSearchQuery = (name: string) => {
+  const nameTerms = name
+    .split(' ')
+    .map((term: string) => term.trim())
+    .filter((term: string) => term.length > 0)
+
+  return (builder: ModelQueryBuilderContract<typeof Player, Player>) => {
+    nameTerms.forEach((term: string) => {
+      builder.orWhere((subBuilder) => {
+        subBuilder
+          .where('firstname', 'ilike', `%${term}%`)
+          .orWhere('lastname', 'ilike', `%${term}%`)
+      })
+    })
   }
 }

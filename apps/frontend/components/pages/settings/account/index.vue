@@ -6,7 +6,7 @@ useHead({
   title: "Paramétres",
 });
 
-const user = useCookie<User>("user");
+const { getUserInfos, setUserInfos } = useUserInfos();
 
 const modifyInfos = ref(false);
 const loading = ref(false);
@@ -20,10 +20,10 @@ const schema = yup.object({
 });
 
 const state = reactive({
-  lastname: user.value.lastname,
-  firstname: user.value.firstname,
-  username: user.value.username,
-  email: user.value.email,
+  lastname: getUserInfos.value.lastname,
+  firstname: getUserInfos.value.firstname,
+  username: getUserInfos.value.username,
+  email: getUserInfos.value.email,
   password: "",
 });
 
@@ -32,7 +32,10 @@ const onSubmit = async (
 ) => {
   loading.value = true;
   const datasToUpdate = Object.keys(event.data).reduce((acc, key) => {
-    if (event.data[key as keyof UserUpdate] !== user.value[key as keyof User]) {
+    if (
+      event.data[key as keyof UserUpdate] !==
+      getUserInfos.value[key as keyof User]
+    ) {
       return {
         ...acc,
         [key]: event.data[key as keyof UserUpdate],
@@ -40,8 +43,9 @@ const onSubmit = async (
     }
     return acc;
   }, {} as UserUpdate);
+
   const { pending, data, error } = await updateUser(
-    user.value.id!,
+    getUserInfos.value.id!,
     datasToUpdate
   );
 
@@ -53,11 +57,11 @@ const onSubmit = async (
     );
 
     const { password: oldPassword, ...restDatas } = datasToUpdate;
-    user.value = {
-      ...user.value,
+    setUserInfos({
+      ...getUserInfos.value,
       ...restDatas,
       updatedAt: data.value.updatedAt,
-    };
+    });
     modifyInfos.value = false;
   }
 
@@ -79,12 +83,12 @@ const onSubmit = async (
           class="rounded-full mb-8"
         />
         <Typo tag="h3" class="text-white">
-          {{ user.firstname }} {{ user.lastname }}
+          {{ getUserInfos.firstname }} {{ getUserInfos.lastname }}
         </Typo>
       </div>
       <div class="Settings-userCard-role">
         <Typo class="pr-2">Rôle: </Typo>
-        <Typo format="bold">{{ translateRole(user.role) }}</Typo>
+        <Typo format="bold">{{ translateRole(getUserInfos.role) }}</Typo>
       </div>
     </div>
     <div class="Settings-userCard-right">
@@ -190,16 +194,16 @@ const onSubmit = async (
     </div>
   </div>
   <div class="Settings-dates">
-    <div v-if="user.createdAt" class="flex gap-2">
+    <div v-if="getUserInfos.createdAt" class="flex gap-2">
       <Typo class="text-center">Créé le</Typo>
       <UBadge>
-        {{ getDateformated(user.createdAt, "DD-MM-YYYY") }}
+        {{ getDateformated(getUserInfos.createdAt, "DD-MM-YYYY") }}
       </UBadge>
     </div>
-    <div v-if="user.updatedAt" class="flex gap-2">
+    <div v-if="getUserInfos.updatedAt" class="flex gap-2">
       <Typo class="text-center">Derniére modification le</Typo>
       <UBadge>
-        {{ getDateformated(user.updatedAt, "DD-MM-YYYY") }}
+        {{ getDateformated(getUserInfos.updatedAt, "DD-MM-YYYY") }}
       </UBadge>
     </div>
   </div>
