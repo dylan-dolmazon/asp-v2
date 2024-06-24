@@ -9,15 +9,17 @@ defineProps({
 
 <template>
   <div class="GameResults">
-    <div v-for="result in results" class="my-10 flex">
-      <div class="GameResults-match w-3/5 text-center my-12 pr-32">
+    <div v-for="result in results" class="GameResults-match my-10">
+      <div class="GameResults-match-equipes">
         <Typo format="bold" class="text-primary">
           {{ getDateformated(result.date, "dddd DD MMMM YYYY") }} -
           {{ result.time }}
         </Typo>
-        <div class="flex items-center justify-evenly gap-36 my-8">
+        <div
+          class="GameResults-match-score flex items-center justify-evenly my-8"
+        >
           <div
-            class="flex items-center gap-4 w-40 overflow-visible whitespace-nowrap"
+            class="GameResults-match-logo flex items-center gap-4 w-40 overflow-visible whitespace-nowrap"
           >
             <NuxtImg
               :src="result.home?.club.logo"
@@ -26,13 +28,13 @@ defineProps({
             />
             <Typo format="bold">{{ result.home?.name }}</Typo>
           </div>
-          <div class="flex gap-1">
-            <Typo format="bold">{{ result.score?.home }}</Typo>
+          <div class="flex gap-2 items-center">
+            <p class="text-4xl font-bold">{{ result.score?.home }}</p>
             <Typo format="bold">-</Typo>
-            <Typo format="bold">{{ result.score?.away }}</Typo>
+            <p class="text-4xl font-bold">{{ result.score?.away }}</p>
           </div>
           <div
-            class="flex items-center gap-4 flex-row-reverse w-40 overflow-visible whitespace-nowrap"
+            class="GameResults-match-logo--reverse flex items-center gap-4 w-40 overflow-visible whitespace-nowrap"
           >
             <NuxtImg
               :src="result.away?.club.logo"
@@ -48,7 +50,7 @@ defineProps({
           {{ result.stade?.city }}
         </Typo>
       </div>
-      <div class="GameResults-infos w-2/5 pl-32">
+      <div class="GameResults-infos">
         <Typo class="text-primary" format="bold">
           journée: {{ result.journee }}
         </Typo>

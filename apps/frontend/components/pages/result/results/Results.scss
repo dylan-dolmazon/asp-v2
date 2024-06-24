@@ -1,4 +1,43 @@
 .GameResults {
+  &-match {
+    display: flex;
+    flex-direction: column;
+    @screen md {
+      flex-direction: row;
+    }
+
+    &-equipes {
+      text-align: center;
+      @screen md {
+        width: 60%;
+        margin: 3rem 0;
+        padding-right: 8rem;
+      }
+    }
+
+    &-score {
+      flex-direction: column;
+      gap: 10px;
+      @screen md {
+        flex-direction: row;
+        gap: 9rem;
+      }
+    }
+
+    &-logo {
+      flex-direction: column;
+      @screen md {
+        flex-direction: row;
+      }
+      &--reverse {
+        flex-direction: column-reverse;
+        @screen md {
+          flex-direction: row-reverse;
+        }
+      }
+    }
+  }
+
   &-infos {
     flex: 1;
     position: relative;
@@ -6,15 +45,39 @@
     align-items: center;
     flex-direction: column;
     justify-content: space-evenly;
+    width: 100%;
+    margin-top: 20px;
+    padding-bottom: 20px;
 
-    &::before {
+    &::after {
       position: absolute;
       content: "";
-      top: 0;
+      bottom: 0;
       left: 0;
-      height: 100%;
-      width: 2px;
+      width: 100%;
+      height: 2px;
       background-color: theme("colors.default.DEFAULT");
+    }
+
+    @screen md {
+      margin-top: 0;
+      width: 40%;
+      padding-left: 8rem;
+      padding-top: 0px;
+
+      &::after {
+        display: none;
+      }
+
+      &::before {
+        position: absolute;
+        content: "";
+        top: 0;
+        left: 0;
+        width: 2px;
+        height: 100%;
+        background-color: theme("colors.default.DEFAULT");
+      }
     }
   }
 }
