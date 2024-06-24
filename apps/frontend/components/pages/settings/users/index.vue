@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const user = useCookie<User>("user");
+const { getUserInfos } = useUserInfos();
 
 const page = ref(1);
 const search = ref("");
@@ -53,7 +53,7 @@ const updateUsers = async () => {
           { value: 'moderator', name: 'Moderateur' },
         ]"
         option-attribute="name"
-        :disabled="row.id === user.id"
+        :disabled="row.id === getUserInfos.id"
       />
     </template>
   </UTable>

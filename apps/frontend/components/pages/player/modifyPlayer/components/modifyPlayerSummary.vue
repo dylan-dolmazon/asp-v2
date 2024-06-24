@@ -2,15 +2,25 @@
 const step = defineModel<number>("step", { required: true });
 const isOpen = defineModel<boolean>("isOpen", { required: true });
 
+const props = defineProps({
+  player: {
+    type: Object as PropType<Player>,
+    required: true,
+  },
+});
+
 const { getPersonalsInfos, getPerformance, getStats, reset } =
-  useCreatePlayerStepperState();
+  useModifyPlayerStepperState();
 
 const onSubmit = async () => {
-  const { error } = await createPlayer({
-    ...getPersonalsInfos(),
-    ...getStats(),
-    ...getPerformance(),
-  });
+  const { error } = await updatePlayer(
+    {
+      ...getPersonalsInfos(),
+      ...getStats(),
+      ...getPerformance(),
+    },
+    props.player.id
+  );
 
   if (!error.value) {
     reset();
@@ -247,7 +257,7 @@ const onSubmit = async () => {
         </div>
       </div>
     </div>
-    <UButton block class="mt-8" @click="onSubmit">Créer le joueur</UButton>
+    <UButton block class="mt-8" @click="onSubmit">Modifier le joueur</UButton>
   </div>
 </template>
 

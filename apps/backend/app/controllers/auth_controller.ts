@@ -12,14 +12,22 @@ export default class AuthController {
     const query = User.query().orderBy('createdAt', 'desc')
 
     if (name) {
+      const nameTerms = name
+        .split(' ')
+        .map((term: string) => term.trim())
+        .filter((term: string) => term.length > 0)
+
       query.where((builder) => {
-        builder
-          .where('firstname', 'ilike', `%${name}%`)
-          .orWhere('lastname', 'ilike', `%${name}%`)
-          .orWhere('username', 'ilike', `%${name}%`)
+        nameTerms.forEach((term: string) => {
+          builder.orWhere((subBuilder) => {
+            subBuilder
+              .where('firstname', 'ilike', `%${term}%`)
+              .orWhere('lastname', 'ilike', `%${term}%`)
+              .orWhere('username', 'ilike', `%${term}%`)
+          })
+        })
       })
     }
-
     return await query.paginate(page, limit)
   }
 

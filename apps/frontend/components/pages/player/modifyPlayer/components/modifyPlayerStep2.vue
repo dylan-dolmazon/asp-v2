@@ -3,7 +3,35 @@ import * as yup from "yup";
 import type { FormSubmitEvent } from "#ui/types";
 
 const step = defineModel<number>({ required: true });
-const { getStats, setStats } = useCreatePlayerStepperState();
+
+const props = defineProps({
+  footed: {
+    type: String,
+    required: true,
+  },
+  position: {
+    type: String,
+    required: true,
+  },
+  assists: {
+    type: Number,
+    required: true,
+  },
+  goalsscored: {
+    type: Number,
+    required: true,
+  },
+  redcards: {
+    type: Number,
+    required: true,
+  },
+  yellowcards: {
+    type: Number,
+    required: true,
+  },
+});
+
+const { getStats, setStats } = useModifyPlayerStepperState();
 
 const schema = yup.object({
   footed: yup.mixed<Footed>().required(),
@@ -15,12 +43,18 @@ const schema = yup.object({
 });
 
 const state = reactive({
-  footed: getStats().footed,
-  position: getStats().position,
-  assists: getStats().assists,
-  yellowcards: getStats().yellowcards,
-  goalsscored: getStats().goalsscored,
-  redcards: getStats().redcards,
+  footed:
+    getStats().footed != FootedFull.RIGHT ? getStats().footed : props.footed,
+  position:
+    getStats().position != PositionFull.FORWARD
+      ? getStats().position
+      : props.position,
+  assists: getStats().assists != 0 ? getStats().assists : props.assists,
+  goalsscored:
+    getStats().goalsscored != 0 ? getStats().goalsscored : props.goalsscored,
+  yellowcards:
+    getStats().yellowcards != 0 ? getStats().yellowcards : props.yellowcards,
+  redcards: getStats().redcards != 0 ? getStats().redcards : props.redcards,
 });
 
 const onSubmit = (event: FormSubmitEvent<yup.InferType<typeof schema>>) => {

@@ -52,3 +52,36 @@ export type PlayerStats = {
     totalPlayersCount: number;
   };
 };
+
+export type InfosPersonnels = {
+  firstname: string;
+  lastname: string;
+  age: number;
+  nationality: string;
+  height: number;
+  weight: number;
+};
+
+export type Stats = {
+  assists: number;
+  footed: Footed;
+  goalsscored: number;
+  position: Position;
+  redcards: number;
+  yellowcards: number;
+};
+
+export type FifaStats = {
+  defending: number;
+  dribbling: number;
+  pace: number;
+  passing: number;
+  physical: number;
+  shooting: number;
+};
+
+export interface StepperData {
+  infosPersonnels: InfosPersonnels;
+  stats: Stats;
+  performance: FifaStats;
+}

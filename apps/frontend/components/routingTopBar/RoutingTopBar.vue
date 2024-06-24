@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const user = useCookie<User>("user");
+const { getUserInfos } = useUserInfos();
 const route = useRoute();
 const currentPage: PageType = pages_config.find((page) =>
   configPagePathIsSameAsTo(page.path, clearPagePathName(route.path))
@@ -21,7 +21,7 @@ const currentPage: PageType = pages_config.find((page) =>
     <div
       v-if="
         currentPage.link &&
-        currentPage.link?.linkAccessRoles.includes(user?.role || 'all')
+        currentPage.link?.linkAccessRoles.includes(getUserInfos?.role || 'all')
       "
       class="RoutingTopBar-link"
     >

@@ -1,12 +1,17 @@
 <script setup lang="ts">
-const { isAdmin } = useUserInfos();
-
 useHead({
   title: "Mon équipe",
 });
+
+const { isAdmin } = useUserInfos();
+
 const page = ref(1);
-const modalModifyIsOpen = ref(false);
+const modalDeleteIsOpen = ref(false);
 const slideOverCreateIsOpen = ref(false);
+
+const slideOverModifyIsOpen = ref(false);
+const playerId = ref(-1);
+
 const deleteLoading = ref(false);
 const search = ref("");
 
@@ -22,7 +27,7 @@ const suppPlayer = async (id: string) => {
   deleteLoading.value = true;
   await deletePlayer(id);
   refresh();
-  modalModifyIsOpen.value = false;
+  modalDeleteIsOpen.value = false;
   deleteLoading.value = false;
 };
 
@@ -38,7 +43,10 @@ const actions = isAdmin.value
         {
           label: "Modifier",
           icon: "i-heroicons-pencil-square",
-          click: () => console.log("Edit", row.id),
+          click: () => {
+            playerId.value = row.id;
+            slideOverModifyIsOpen.value = true;
+          },
         },
       ],
       [
@@ -49,7 +57,7 @@ const actions = isAdmin.value
             selectedPlayer.value = players.value?.data.find(
               (player) => player.id === row.id
             );
-            modalModifyIsOpen.value = true;
+            modalDeleteIsOpen.value = true;
           },
         },
       ],
@@ -65,15 +73,22 @@ const actions = isAdmin.value
       ],
     ];
 
-watch(slideOverCreateIsOpen, () => {
-  refresh();
+watch(slideOverCreateIsOpen, (newValue) => {
+  if (!newValue) refresh();
+});
+watch(slideOverModifyIsOpen, (newValue) => {
+  if (!newValue) refresh();
 });
 </script>
 
 <template>
   <NuxtLayout name="default">
     <CreatePlayer v-model="slideOverCreateIsOpen" />
-    <Modal v-model="modalModifyIsOpen">
+    <ModifyPlayer
+      v-model:is-open="slideOverModifyIsOpen"
+      v-model:player-id="playerId"
+    />
+    <Modal v-model="modalDeleteIsOpen">
       <template #header>
         <Typo tag="h3" class="text-error w-full text-center">
           Supprimer {{ selectedPlayer?.fullname }}
@@ -92,7 +107,7 @@ watch(slideOverCreateIsOpen, () => {
           <UButton
             color="primary"
             label="Annuler"
-            @click="modalModifyIsOpen = false"
+            @click="modalDeleteIsOpen = false"
           />
           <UButton
             color="red"
