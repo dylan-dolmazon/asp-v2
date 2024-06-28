@@ -25,6 +25,9 @@ importers:
       '@adonisjs/mail':
         specifier: ^9.2.x
         version: 9.2.1(@adonisjs/core@6.3.1)(@types/luxon@3.4.2)(@types/node@20.11.26)(dayjs@1.11.10)(edge.js@6.0.2)(luxon@3.4.4)
+      '@adonisjs/static':
+        specifier: ^1.1.1
+        version: 1.1.1(@adonisjs/core@6.3.1)
       '@aws-sdk/client-s3':
         specifier: ^3.511.x
         version: 3.572.0
@@ -680,6 +683,18 @@ packages:
     dependencies:
       '@poppinss/colors': 4.1.2
       string-width: 7.1.0
+
+  /@adonisjs/static@1.1.1(@adonisjs/core@6.3.1):
+    resolution: {integrity: sha512-Ukd2WB21/eajKLNQbaQ3Chxdqn7HyeHSO41J29oWc8DQFEhxxQIUGq0C1Kv5cJFY7PvZm9RAKMBi/2JC58LFWQ==}
+    engines: {node: '>=18.16.0'}
+    peerDependencies:
+      '@adonisjs/core': ^6.2.0
+    dependencies:
+      '@adonisjs/core': 6.3.1(@adonisjs/assembler@7.2.3)(@vinejs/vine@1.7.1)(edge.js@6.0.2)
+      serve-static: 1.15.0
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
 
   /@adonisjs/tsconfig@1.3.0:
     resolution: {integrity: sha512-+nOykDG44b4JSAdsrTdh5HuZqJpr6F+dHpfNYgHfYsFJIEtZo8plHilZAM7iabCRN5R49SPv5p8Ixcp47Rr50g==}
