@@ -1,15 +1,15 @@
 import { HttpContext } from '@adonisjs/core/http'
 import axios from 'axios'
 import dayjs from 'dayjs'
-import { Championnat, ClubInfo, Game } from '#types/club_types.js'
-
-const apiUrl = 'https://api-dofa.prd-aws.fff.fr/'
+import { ClubInfo, Game } from '#types/club_types.js'
+import env from '#start/env'
+import { transformChampionnat } from '#services/dofa/transform_championnat'
 
 export default class DofasController {
   async getClubRank({ params }: HttpContext) {
     const { competId, poolId } = params
     const clubRank = await axios.get(
-      `${apiUrl}/api/compets/${competId}/phases/1/poules/${poolId}/classement_journees`
+      `${env.get('DOFA_URL')}/api/compets/${competId}/phases/1/poules/${poolId}/classement_journees`
     )
     return transformClassment(clubRank.data['hydra:member'])
   }
@@ -23,7 +23,7 @@ export default class DofasController {
     const endpoint = `calendrier?ma_dat%5Bbefore%5D=${dates[1]}&ma_dat%5Bafter%5D=${dates[0]}`
 
     const response = await axios.get(
-      `${apiUrl}/api/compets/${competId}/phases/1/poules/${poolId}/${endpoint}`
+      `${env.get('DOFA_URL')}/api/compets/${competId}/phases/1/poules/${poolId}/${endpoint}`
     )
 
     const transformedClubs = await Promise.all(await transformClubs(response.data['hydra:member']))
@@ -40,7 +40,7 @@ export default class DofasController {
     const endpoint = `resultat?ma_dat%5Bbefore%5D=${dates[1]}&ma_dat%5Bafter%5D=${dates[0]}`
 
     const response = await axios.get(
-      `${apiUrl}/api/compets/${competId}/phases/1/poules/${poolId}/${endpoint}`
+      `${env.get('DOFA_URL')}/api/compets/${competId}/phases/1/poules/${poolId}/${endpoint}`
     )
 
     const transformedClubs = await Promise.all(await transformClubs(response.data['hydra:member']))
@@ -50,7 +50,7 @@ export default class DofasController {
 
   async getCompetInfos({ params }: HttpContext) {
     const { competId } = params
-    const result = await axios.get(`${apiUrl}/api/compets/${competId}`)
+    const result = await axios.get(`${env.get('DOFA_URL')}/api/compets/${competId}`)
     return transformChampionnat(result.data)
   }
 }
@@ -64,9 +64,9 @@ const transformClubs = async (data: any): Promise<ClubInfo[]> => {
       }
     }
 
-    const homeClubName = await axios.get(`${apiUrl}${club.home.club['@id']}`)
+    const homeClubName = await axios.get(`${env.get('DOFA_URL')}${club.home.club['@id']}`)
 
-    const awayClubName = await axios.get(`${apiUrl}${club.away.club['@id']}`)
+    const awayClubName = await axios.get(`${env.get('DOFA_URL')}${club.away.club['@id']}`)
 
     return {
       ...club,
@@ -81,18 +81,6 @@ const transformToSlug = (input: string): string => {
   const withoutTrailingDot = input.replace(/\.$/, '') // Supprimer le point en fin de chaîne
   const replacedSpacesAndDots = withoutTrailingDot.replace(/[\s.]+/g, '-')
   return replacedSpacesAndDots.toLowerCase()
-}
-
-const transformChampionnat = (data: any): Championnat => {
-  const pools = data.phases[0].groups.map((pool: any) => ({
-    name: pool.name,
-    number: pool.stage_number,
-  }))
-  return {
-    label: data.name,
-    code: data.cp_no,
-    pools: pools,
-  }
 }
 
 const transformCalendar = (data: any): Game[] => {

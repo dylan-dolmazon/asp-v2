@@ -1,9 +1,9 @@
 import { DateTime } from 'luxon'
 import { BaseModel, belongsTo, column } from '@adonisjs/lucid/orm'
-import District from './district.js'
 import type { BelongsTo } from '@adonisjs/lucid/types/relations'
+import Compet from './compet.js'
 
-export default class Compet extends BaseModel {
+export default class EquipeHistory extends BaseModel {
   @column({ isPrimary: true })
   declare id: number
 
@@ -11,19 +11,25 @@ export default class Compet extends BaseModel {
   declare name: string
 
   @column()
+  declare categoryLabel: string
+
+  @column()
+  declare type: string
+
+  @column()
+  declare pool: string
+
+  @column()
   declare number: number
 
   @column()
-  declare order: number
+  declare competId: number
 
   @column()
-  declare shortName: string
+  declare classementHistoryId: number
 
-  @column()
-  declare districtId: number
-
-  @belongsTo(() => District)
-  declare district: BelongsTo<typeof District>
+  @belongsTo(() => Compet)
+  declare compet: BelongsTo<typeof Compet>
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime

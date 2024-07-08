@@ -15,12 +15,6 @@ const { data, refresh, pending } = await getCompets();
 
 const createCompetIsLoading = ref(false);
 const schemaCreate = yup.object({
-  name: yup
-    .string()
-    .required()
-    .test("len", "Le nom doit contenir 3 lettres minimum", (val) => {
-      return val.length >= 3;
-    }),
   number: yup
     .number()
     .required()
@@ -30,15 +24,16 @@ const schemaCreate = yup.object({
 });
 
 const stateCreate = reactive({
-  name: undefined,
   number: undefined,
 });
+const formCreate = ref();
 
 const onSubmitCreate = async (
   event: FormSubmitEvent<yup.InferType<typeof schemaCreate>>
 ) => {
   createCompetIsLoading.value = true;
-  await createCompet(event.data);
+  await createCompet(event.data.number);
+  stateCreate.number = undefined;
   createCompetIsLoading.value = false;
   refresh();
 };
@@ -46,12 +41,7 @@ const onSubmitCreate = async (
 const updateCompetIsLoading = ref(false);
 const updateModalIsOpen = ref(false);
 const schemaUpdate = yup.object({
-  nameUpdate: yup
-    .string()
-    .required()
-    .test("len", "Le nom doit contenir 3 lettres minimum", (val) => {
-      return val.length >= 3;
-    }),
+  nameUpdate: yup.string(),
   numberUpdate: yup
     .number()
     .required()
@@ -62,8 +52,8 @@ const schemaUpdate = yup.object({
 });
 
 const stateUpdate = reactive({
-  nameUpdate: undefined,
   numberUpdate: undefined,
+  nameUpdate: undefined,
   orderUpdate: undefined,
 });
 
@@ -73,10 +63,6 @@ const onSubmitUpdate = async (
   updateCompetIsLoading.value = true;
   await updateCompet(
     currentId.value,
-    data.value?.data.find((compet) => compet.id === currentId.value)?.name !==
-      event.data.nameUpdate
-      ? event.data.nameUpdate
-      : undefined,
     data.value?.data.find((compet) => compet.id === currentId.value)?.number !==
       event.data.numberUpdate
       ? event.data.numberUpdate
@@ -99,8 +85,8 @@ const actions = (row: any) => [
       icon: "i-heroicons-pencil-square",
       click: () => {
         currentId.value = row.id;
-        stateUpdate.nameUpdate = row.name;
         stateUpdate.numberUpdate = row.number;
+        stateUpdate.nameUpdate = row.name;
         stateUpdate.orderUpdate = row.order;
         updateModalIsOpen.value = true;
       },
@@ -176,13 +162,13 @@ const actions = (row: any) => [
           class="space-y-4"
         >
           <TextInput
-            label="Nom"
+            label="Nom du championnat"
             name="nameUpdate"
             id="nameUpdate"
             type="text"
             placeholder="Nom du championnat"
             v-model="stateUpdate.nameUpdate"
-            required
+            :disabled="true"
           />
           <TextInput
             label="Numéro"
@@ -221,21 +207,13 @@ const actions = (row: any) => [
     </Modal>
     <div class="Results mt-10">
       <UForm
+        :ref="formCreate"
         :schema="schemaCreate"
         :state="stateCreate"
         @submit="onSubmitCreate"
         class="CreateForm space-y-8"
       >
         <Typo tag="h3" class="text-center"> Création d'un championnat </Typo>
-        <TextInput
-          label="Nom"
-          name="name"
-          id="name"
-          type="text"
-          placeholder="Nom du championnat"
-          v-model="stateCreate.name"
-          required
-        />
         <TextInput
           label="Numéro"
           name="number"

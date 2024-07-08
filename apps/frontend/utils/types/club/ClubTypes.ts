@@ -5,11 +5,6 @@ export type Compet = {
   order: number;
 };
 
-export type CreateCompet = {
-  name: string;
-  number: number;
-};
-
 export type Championnat = {
   label: string;
   code: number;
