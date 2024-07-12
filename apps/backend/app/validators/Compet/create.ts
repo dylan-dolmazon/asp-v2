@@ -4,17 +4,11 @@ import vine from '@vinejs/vine'
  */
 export const createCompetValidator = vine.compile(
   vine.object({
-    name: vine
-      .string()
-      .trim()
-      .minLength(3)
-      .unique(async (db, value) => {
-        const compet = await db.from('compets').where('name', value).first()
-        return !compet
-      }),
     number: vine
       .number()
       .positive()
+      .withoutDecimals()
+      .min(99999)
       .unique(async (db, value) => {
         const compet = await db.from('compets').where('number', value).first()
         return !compet

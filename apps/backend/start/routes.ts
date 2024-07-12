@@ -9,6 +9,7 @@
 const AuthController = () => import('#controllers/auth_controller')
 import router from '@adonisjs/core/services/router'
 import { middleware } from '#start/kernel'
+const ClassementHistoriesController = () => import('#controllers/classement_histories_controller')
 const ResetPasswordController = () => import('#controllers/reset_password_controller')
 const CompetsController = () => import('#controllers/compets_controller')
 const DofasController = () => import('#controllers/dofas_controller')
@@ -113,3 +114,26 @@ router.put('compets/:id', [CompetsController, 'update']).use(
   })
 )
 router.get('compets', [CompetsController, 'index'])
+router.get('compets/updates', [CompetsController, 'autoUpdates']).use(
+  middleware.auth({
+    guards: ['api'],
+  })
+)
+
+// ------------------- Classement historique routes ------------------- //
+router.get('classement-history', [ClassementHistoriesController, 'index'])
+router.put('classement-history/save/:id', [ClassementHistoriesController, 'save']).use(
+  middleware.auth({
+    guards: ['api'],
+  })
+)
+router.put('classement-history/save', [ClassementHistoriesController, 'saveAll']).use(
+  middleware.auth({
+    guards: ['api'],
+  })
+)
+router.put('classement-history/check', [ClassementHistoriesController, 'checkHistories']).use(
+  middleware.auth({
+    guards: ['api'],
+  })
+)

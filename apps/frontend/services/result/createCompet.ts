@@ -1,7 +1,7 @@
-export const createCompet = async (compet: CreateCompet) => {
+export const createCompet = async (competNumber: number) => {
   return await useCustomFetch(`/compets/create`, "POST", {
     body: {
-      ...compet,
+      number: competNumber,
     },
   });
 };

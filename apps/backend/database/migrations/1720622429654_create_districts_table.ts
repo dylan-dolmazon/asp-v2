@@ -1,7 +1,7 @@
 import { BaseSchema } from '@adonisjs/lucid/schema'
 
 export default class extends BaseSchema {
-  protected tableName = 'compets'
+  protected tableName = 'districts'
 
   async up() {
     this.schema.createTable(this.tableName, (table) => {
@@ -9,7 +9,8 @@ export default class extends BaseSchema {
 
       table.string('name').notNullable().unique()
       table.integer('number').notNullable().unique()
-      table.integer('order').notNullable().unique()
+      table.string('level').notNullable()
+
       table.timestamp('created_at')
       table.timestamp('updated_at')
     })

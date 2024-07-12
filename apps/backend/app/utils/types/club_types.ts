@@ -13,23 +13,23 @@ export type Championnat = {
 }
 
 export type ClubInfo = {
-  club: {
+  club?: {
     '@id': string
     '@type': string
     'cl_no': number
     'logo'?: string
   }
   name: string
-  category_label: string
-  ranking?: number
-  goals_for_count?: number
-  goals_against_count?: number
-  goals_difference?: number
-  won_games_count?: number
-  draw_games_count?: number
-  lost_games_count?: number
-  total_games_count?: number
-  point_count?: number
+  categoryLabel: string
+  ranking: number
+  goalFor?: number
+  goalAgainst?: number
+  goalDifference?: number
+  win?: number
+  draw?: number
+  loss?: number
+  totalMatchs?: number
+  points?: number
 }
 
 export type Game = {

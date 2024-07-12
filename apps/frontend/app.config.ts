@@ -32,6 +32,9 @@ export default defineAppConfig({
           variant: "ghost",
           class: "-m-1.5 text-white",
         },
+        checkbox: {
+          color: "green",
+        },
       },
     },
     pagination: {

@@ -58,8 +58,8 @@ export type InfosPersonnels = {
   lastname: string;
   age: number;
   nationality: string;
-  height: number;
-  weight: number;
+  height?: number;
+  weight?: number;
 };
 
 export type Stats = {
