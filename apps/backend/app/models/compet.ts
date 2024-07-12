@@ -8,6 +8,9 @@ export default class Compet extends BaseModel {
   declare id: number
 
   @column()
+  declare season: string
+
+  @column()
   declare name: string
 
   @column()

@@ -4,6 +4,10 @@ export const competsSortColumns = [
     label: "Compétition",
   },
   {
+    key: "district.name",
+    label: "District",
+  },
+  {
     key: "number",
     label: "Numéro",
   },
@@ -14,6 +18,10 @@ export const competsSortColumns = [
   {
     key: "favorite",
     label: "Favorite",
+  },
+  {
+    key: "season",
+    label: "Saison",
   },
   {
     key: "actions",

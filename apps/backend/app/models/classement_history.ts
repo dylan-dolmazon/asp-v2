@@ -61,4 +61,8 @@ export default class ClassementHistory extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime
+
+  static get table() {
+    return 'classement_historys'
+  }
 }

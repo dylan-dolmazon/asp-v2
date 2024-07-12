@@ -321,6 +321,11 @@ const onChange = (tab: number) => {
         </template>
       </UTabs>
     </div>
+    <UDivider class="mt-12" />
+    <History
+      v-if="competitions && competitions?.length > 0"
+      :competitions="competitions"
+    />
   </NuxtLayout>
 </template>
 

@@ -11,14 +11,13 @@ export default class extends BaseSchema {
       table.integer('number').notNullable().unique()
       table.integer('order').notNullable().unique()
       table.string('short_name').notNullable().unique()
-      table.integer('district_id')
-
-      // table
-      //   .integer('classement_history_id')
-      //   .unsigned()
-      //   .references('id')
-      //   .inTable('classement_histories')
-      //   .onDelete('CASCADE')
+      table.string('season').notNullable()
+      table
+        .integer('district_id')
+        .unsigned()
+        .references('id')
+        .inTable('districts')
+        .onDelete('CASCADE')
 
       table.timestamp('created_at')
       table.timestamp('updated_at')

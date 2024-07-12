@@ -101,10 +101,81 @@ const actions = (row: any) => [
     },
   ],
 ];
+
+const alreadyExistsModalIsOpen = ref(false);
+const selected = ref<Compet[]>([]);
+const alreadyExistsCompets = ref<Compet[]>([]);
+const alreadyExistsPending = ref(false);
+
+const saveHistory = async (selectedItems: number[]) => {
+  await saveAllHistory(selectedItems);
+  refresh();
+};
+
+const checkHistory = async (selectedItems: number[], season: string) => {
+  alreadyExistsPending.value = true;
+  const { data: compets } = await checkAllHistory(selectedItems, season);
+  if (compets.value && compets.value.length > 0) {
+    alreadyExistsCompets.value = compets.value;
+    alreadyExistsModalIsOpen.value = true;
+  } else {
+    await saveHistory(selectedItems);
+  }
+  alreadyExistsPending.value = false;
+};
 </script>
 
 <template>
   <NuxtLayout name="default">
+    <Modal v-model="alreadyExistsModalIsOpen">
+      <template #header>
+        <Typo tag="h4" class="text-warning w-full text-center">
+          Certains championnats ont déjà un historique enregistré pour la saison
+          sélectionnée
+        </Typo>
+      </template>
+
+      <template #body>
+        <typo class="text-primary text-center mb-6">
+          Êtes-vous sur de vouloir mettre à jours ces classement ? les autres
+          seront eux enregistrés normalement
+        </typo>
+        <ul>
+          <li
+            v-for="compet in alreadyExistsCompets"
+            class="flex justify-center gap-4"
+          >
+            <Typo>{{ compet.name }}</Typo>
+            <span>-</span>
+            <Typo>{{ compet.number }}</Typo>
+          </li>
+        </ul>
+      </template>
+
+      <template #footer>
+        <div class="flex justify-between">
+          <UButton
+            color="primary"
+            label="Annuler"
+            @click="alreadyExistsModalIsOpen = false"
+          />
+          <UButton
+            label="Mettre à jours"
+            class="bg-warning hover:bg-gold"
+            :loading="alreadyExistsPending"
+            @click="
+              async () => {
+                alreadyExistsPending = true;
+                await saveHistory(selected.map((item) => item.number));
+                refresh();
+                alreadyExistsPending = false;
+                alreadyExistsModalIsOpen = false;
+              }
+            "
+          />
+        </div>
+      </template>
+    </Modal>
     <Modal v-model="deleteModalIsOpen">
       <template #header>
         <Typo tag="h3" class="text-error w-full text-center">
@@ -224,7 +295,6 @@ const actions = (row: any) => [
           required
         />
         <UButton
-          color="green"
           label="Ajouter"
           type="submit"
           size="sm"
@@ -232,33 +302,51 @@ const actions = (row: any) => [
           :loading="createCompetIsLoading"
         />
       </UForm>
-
-      <UTable
-        :loading="pending"
-        :columns="competsSortColumns"
-        :rows="data?.data"
-        class="Results-table"
-      >
-        <template #favorite-data="{ row }">
-          <UButton
-            variant="link"
-            class="favorite"
-            :class="row.order === 1 && 'favorite--active'"
-            @click="newFavorite(row.id)"
-          >
-            <Icon name="ic:twotone-favorite" width="20" height="20"></Icon>
-          </UButton>
-        </template>
-        <template #actions-data="{ row }">
-          <UDropdown :items="actions(row)">
+      <div class="Results-table">
+        <UTable
+          :loading="pending"
+          :columns="competsSortColumns"
+          :rows="data?.data"
+          v-model="selected"
+        >
+          <template #favorite-data="{ row }">
             <UButton
-              color="gray"
-              variant="ghost"
-              icon="i-heroicons-ellipsis-horizontal-20-solid"
-            />
-          </UDropdown>
-        </template>
-      </UTable>
+              variant="link"
+              class="favorite"
+              :class="row.order === 1 && 'favorite--active'"
+              @click="newFavorite(row.id)"
+            >
+              <Icon name="ic:twotone-favorite" width="20" height="20"></Icon>
+            </UButton>
+          </template>
+          <template #actions-data="{ row }">
+            <UDropdown :items="actions(row)">
+              <UButton
+                color="gray"
+                variant="ghost"
+                icon="i-heroicons-ellipsis-horizontal-20-solid"
+              />
+            </UDropdown>
+          </template>
+        </UTable>
+        <div class="text-center mt-8">
+          <UButton
+            size="lg"
+            :disabled="selected.length === 0"
+            color="green"
+            :loading="alreadyExistsPending"
+            :onClick="
+              () =>
+                checkHistory(
+                  selected.map((item) => item.number),
+                  selected[0].season
+                )
+            "
+          >
+            Sauvegarder le classement
+          </UButton>
+        </div>
+      </div>
     </div>
   </NuxtLayout>
 </template>

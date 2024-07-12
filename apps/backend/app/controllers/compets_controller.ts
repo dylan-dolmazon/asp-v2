@@ -29,6 +29,7 @@ export default class CompetsController {
       shortName: dofaResponse.data.shortname,
       number: payload.number,
       order: payload.order,
+      season: `${dofaResponse.data.season} - ${dofaResponse.data.season + 1}`,
     }
 
     const addedCompet = new Compet()
@@ -41,7 +42,18 @@ export default class CompetsController {
 
   async index({ request }: HttpContext) {
     const { limit = 100 } = request.qs()
-    return Compet.query().orderBy('order', 'asc').paginate(1, limit)
+    const page = request.qs().page || 1
+
+    const compets = await Compet.query().orderBy('order', 'asc').paginate(page, limit)
+
+    const competsWithDisticts = await Promise.all(
+      compets.all().map(async (compet) => {
+        await compet.load('district')
+        return compet
+      })
+    )
+
+    return { meta: compets.getMeta(), data: competsWithDisticts }
   }
 
   async newFavorite({ params }: HttpContext) {
@@ -69,7 +81,9 @@ export default class CompetsController {
   async update({ request, params }: HttpContext) {
     const compet = await Compet.findOrFail(params.id)
     const payload = await request.validateUsing(updateCompetValidator)
-    const dofaResponse = await axios.get(`${env.get('DOFA_URL')}/api/compets/${payload.number}`)
+    const dofaResponse = await axios.get(
+      `${env.get('DOFA_URL')}/api/compets/${payload.number}.json`
+    )
 
     const district = await getDistrict(dofaResponse.data.cdg)
 
@@ -84,6 +98,29 @@ export default class CompetsController {
     })
     await compet.save()
     return compet
+  }
+
+  async autoUpdates({ response }: HttpContext) {
+    const compets = await Compet.all()
+    compets.forEach(async (compet) => {
+      const dofaResponse = await axios.get(
+        `${env.get('DOFA_URL')}/api/compets/${compet.number}.json`
+      )
+      const district = await getDistrict(dofaResponse.data.cdg)
+
+      if (compet.districtId !== district.id) {
+        await compet.related('district').associate(district)
+      }
+
+      compet.merge({
+        name: dofaResponse.data.name,
+        shortName: dofaResponse.data.shortname,
+        season: `${dofaResponse.data.season} - ${dofaResponse.data.season + 1}`,
+      })
+      await compet.save()
+    })
+
+    return response.status(204)
   }
 
   async destroy({ params, response }: HttpContext) {

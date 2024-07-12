@@ -114,14 +114,25 @@ router.put('compets/:id', [CompetsController, 'update']).use(
   })
 )
 router.get('compets', [CompetsController, 'index'])
+router.get('compets/updates', [CompetsController, 'autoUpdates']).use(
+  middleware.auth({
+    guards: ['api'],
+  })
+)
 
 // ------------------- Classement historique routes ------------------- //
+router.get('classement-history', [ClassementHistoriesController, 'index'])
 router.put('classement-history/save/:id', [ClassementHistoriesController, 'save']).use(
   middleware.auth({
     guards: ['api'],
   })
 )
 router.put('classement-history/save', [ClassementHistoriesController, 'saveAll']).use(
+  middleware.auth({
+    guards: ['api'],
+  })
+)
+router.put('classement-history/check', [ClassementHistoriesController, 'checkHistories']).use(
   middleware.auth({
     guards: ['api'],
   })

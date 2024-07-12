@@ -20,6 +20,7 @@
 }
 
 .Results {
+  margin-bottom: 48px;
   @screen sm {
     display: flex;
   }
@@ -30,6 +31,7 @@
 
     @screen sm {
       margin-top: 0;
+      width: 100%;
     }
   }
 }

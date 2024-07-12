@@ -25,9 +25,6 @@ export default class EquipeHistory extends BaseModel {
   @column()
   declare competId: number
 
-  @column()
-  declare classementHistoryId: number
-
   @belongsTo(() => Compet)
   declare compet: BelongsTo<typeof Compet>
 
@@ -36,4 +33,8 @@ export default class EquipeHistory extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime
+
+  static get table() {
+    return 'equipe_historys'
+  }
 }
