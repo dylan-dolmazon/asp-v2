@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import * as yup from "yup";
 import type { FormSubmitEvent } from "#ui/types";
+import { storeToRefs } from "pinia";
 
 const step = defineModel<number>({ required: true });
 
@@ -31,7 +32,8 @@ const props = defineProps({
   },
 });
 
-const { getPerformance, setPerformance } = useModifyPlayerStepperState();
+const modifyPlayerStore = useModifyPlayerStepperStore();
+const { getPerformance } = storeToRefs(modifyPlayerStore);
 
 const schema = yup.object({
   defending: yup.number().min(1).max(100).required(),
@@ -44,28 +46,31 @@ const schema = yup.object({
 
 const state = reactive({
   defending:
-    getPerformance().defending !== 0
-      ? getPerformance().defending
+    getPerformance.value.defending !== 0
+      ? getPerformance.value.defending
       : props.defending,
-  pace: getPerformance().pace !== 0 ? getPerformance().pace : props.pace,
+  pace:
+    getPerformance.value.pace !== 0 ? getPerformance.value.pace : props.pace,
   passing:
-    getPerformance().passing !== 0 ? getPerformance().passing : props.passing,
+    getPerformance.value.passing !== 0
+      ? getPerformance.value.passing
+      : props.passing,
   physical:
-    getPerformance().physical !== 0
-      ? getPerformance().physical
+    getPerformance.value.physical !== 0
+      ? getPerformance.value.physical
       : props.physical,
   shooting:
-    getPerformance().shooting !== 0
-      ? getPerformance().shooting
+    getPerformance.value.shooting !== 0
+      ? getPerformance.value.shooting
       : props.shooting,
   dribbling:
-    getPerformance().dribbling !== 0
-      ? getPerformance().dribbling
+    getPerformance.value.dribbling !== 0
+      ? getPerformance.value.dribbling
       : props.dribbling,
 });
 
 const onSubmit = (event: FormSubmitEvent<yup.InferType<typeof schema>>) => {
-  setPerformance(event.data);
+  modifyPlayerStore.setPerformance(event.data);
   step.value++;
 };
 </script>

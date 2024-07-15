@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import * as yup from "yup";
 import type { FormSubmitEvent } from "#ui/types";
-const { isAdmin } = useUserInfos();
+import { storeToRefs } from "pinia";
+
+const userStore = useUserStore();
+const { isLoggin } = storeToRefs(userStore);
 
 useHead({
   title: "Gestions des championnats",
@@ -216,7 +219,7 @@ const checkHistory = async (selectedItems: number[], season: string) => {
         </div>
       </template>
     </Modal>
-    <Modal v-model="updateModalIsOpen" v-if="isAdmin">
+    <Modal v-model="updateModalIsOpen" v-if="isLoggin">
       <template #header>
         <Typo tag="h3" class="w-full text-center">
           Modification du championnat "{{

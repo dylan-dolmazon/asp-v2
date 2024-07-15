@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { storeToRefs } from "pinia";
+
 const step = defineModel<number>("step", { required: true });
 const isOpen = defineModel<boolean>("isOpen", { required: true });
 
@@ -9,21 +11,22 @@ const props = defineProps({
   },
 });
 
-const { getPersonalsInfos, getPerformance, getStats, reset } =
-  useModifyPlayerStepperState();
+const modifyPlayerStore = useModifyPlayerStepperStore();
+const { getPersonalsInfos, getStats, getPerformance } =
+  storeToRefs(modifyPlayerStore);
 
 const onSubmit = async () => {
   const { error } = await updatePlayer(
     {
-      ...getPersonalsInfos(),
-      ...getStats(),
-      ...getPerformance(),
+      ...getPersonalsInfos.value,
+      ...getStats.value,
+      ...getPerformance.value,
     },
     props.player.id
   );
 
   if (!error.value) {
-    reset();
+    modifyPlayerStore.reset();
     step.value = 1;
     isOpen.value = false;
   }
@@ -56,7 +59,7 @@ const onSubmit = async () => {
         >
           <Typo tag="p" class="CreatePlayerSummary-info-label">Prénom</Typo>
           <Typo tag="p" class="CreatePlayerSummary-info-content">
-            {{ getPersonalsInfos().firstname }}
+            {{ getPersonalsInfos.firstname }}
           </Typo>
         </div>
         <div
@@ -64,7 +67,7 @@ const onSubmit = async () => {
         >
           <Typo tag="p" class="CreatePlayerSummary-info-label">Nom</Typo>
           <Typo tag="p" class="CreatePlayerSummary-info-content">
-            {{ getPersonalsInfos().lastname }}
+            {{ getPersonalsInfos.lastname }}
           </Typo>
         </div>
         <div
@@ -72,7 +75,7 @@ const onSubmit = async () => {
         >
           <Typo tag="p" class="CreatePlayerSummary-info-label">Age</Typo>
           <Typo tag="p" class="CreatePlayerSummary-info-content">
-            {{ getPersonalsInfos().age }}
+            {{ getPersonalsInfos.age }}
           </Typo>
         </div>
       </div>
@@ -85,9 +88,9 @@ const onSubmit = async () => {
           </Typo>
           <Typo tag="p" class="CreatePlayerSummary-info-content">
             {{
-              getPersonalsInfos().height === 0
+              getPersonalsInfos.height === 0
                 ? "Non renseigné"
-                : getPersonalsInfos().height
+                : getPersonalsInfos.height
             }}
           </Typo>
         </div>
@@ -99,9 +102,9 @@ const onSubmit = async () => {
           </Typo>
           <Typo tag="p" class="CreatePlayerSummary-info-content">
             {{
-              getPersonalsInfos().weight === 0
+              getPersonalsInfos.weight === 0
                 ? "Non renseigné"
-                : getPersonalsInfos().weight
+                : getPersonalsInfos.weight
             }}
           </Typo>
         </div>
@@ -131,7 +134,7 @@ const onSubmit = async () => {
         >
           <Typo tag="p" class="CreatePlayerSummary-info-label">Poste</Typo>
           <Typo tag="p" class="CreatePlayerSummary-info-content">
-            {{ getPosition(getStats().position) }}
+            {{ getPosition(getStats.position) }}
           </Typo>
         </div>
         <div
@@ -139,7 +142,7 @@ const onSubmit = async () => {
         >
           <Typo tag="p" class="CreatePlayerSummary-info-label">Pied fort</Typo>
           <Typo tag="p" class="CreatePlayerSummary-info-content">
-            {{ getFooted(getStats().footed) }}
+            {{ getFooted(getStats.footed) }}
           </Typo>
         </div>
       </div>
@@ -151,7 +154,7 @@ const onSubmit = async () => {
             Passe décisives
           </Typo>
           <Typo tag="p" class="CreatePlayerSummary-info-content">
-            {{ getStats().assists }}
+            {{ getStats.assists }}
           </Typo>
         </div>
         <div
@@ -161,7 +164,7 @@ const onSubmit = async () => {
             Buts marqués
           </Typo>
           <Typo tag="p" class="CreatePlayerSummary-info-content">
-            {{ getStats().goalsscored }}
+            {{ getStats.goalsscored }}
           </Typo>
         </div>
         <div
@@ -171,7 +174,7 @@ const onSubmit = async () => {
             Cartons jaune
           </Typo>
           <Typo tag="p" class="CreatePlayerSummary-info-content">
-            {{ getStats().yellowcards }}
+            {{ getStats.yellowcards }}
           </Typo>
         </div>
         <div
@@ -181,7 +184,7 @@ const onSubmit = async () => {
             Cartons rouge
           </Typo>
           <Typo tag="p" class="CreatePlayerSummary-info-content">
-            {{ getStats().redcards }}
+            {{ getStats.redcards }}
           </Typo>
         </div>
       </div>
@@ -210,7 +213,7 @@ const onSubmit = async () => {
         >
           <Typo tag="p" class="CreatePlayerSummary-info-label">Défense</Typo>
           <Typo tag="p" class="CreatePlayerSummary-info-content">
-            {{ getPerformance().defending }}
+            {{ getPerformance.defending }}
           </Typo>
         </div>
         <div
@@ -218,7 +221,7 @@ const onSubmit = async () => {
         >
           <Typo tag="p" class="CreatePlayerSummary-info-label">Vitesse</Typo>
           <Typo tag="p" class="CreatePlayerSummary-info-content">
-            {{ getPerformance().pace }}
+            {{ getPerformance.pace }}
           </Typo>
         </div>
         <div
@@ -226,7 +229,7 @@ const onSubmit = async () => {
         >
           <Typo tag="p" class="CreatePlayerSummary-info-label">Passe</Typo>
           <Typo tag="p" class="CreatePlayerSummary-info-content">
-            {{ getPerformance().passing }}
+            {{ getPerformance.passing }}
           </Typo>
         </div>
       </div>
@@ -236,7 +239,7 @@ const onSubmit = async () => {
         >
           <Typo tag="p" class="CreatePlayerSummary-info-label">Drible</Typo>
           <Typo tag="p" class="CreatePlayerSummary-info-content">
-            {{ getPerformance().dribbling }}
+            {{ getPerformance.dribbling }}
           </Typo>
         </div>
         <div
@@ -244,7 +247,7 @@ const onSubmit = async () => {
         >
           <Typo tag="p" class="CreatePlayerSummary-info-label">Physique</Typo>
           <Typo tag="p" class="CreatePlayerSummary-info-content">
-            {{ getPerformance().physical }}
+            {{ getPerformance.physical }}
           </Typo>
         </div>
         <div
@@ -252,7 +255,7 @@ const onSubmit = async () => {
         >
           <Typo tag="p" class="CreatePlayerSummary-info-label">Tire</Typo>
           <Typo tag="p" class="CreatePlayerSummary-info-content">
-            {{ getPerformance().shooting }}
+            {{ getPerformance.shooting }}
           </Typo>
         </div>
       </div>

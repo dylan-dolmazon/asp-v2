@@ -14,11 +14,13 @@
   "dependencies": {
     "@nuxt/image": "^1.4.x",
     "@nuxt/ui": "^2.17.x",
+    "@pinia/nuxt": "^0.5.x",
     "@vee-validate/nuxt": "^4.12.x",
     "@vee-validate/yup": "^4.12.x",
     "dayjs": "^1.11.x",
     "nuxt": "^3.10.x",
     "nuxt-icon": "^0.6.x",
+    "pinia": "^2.1.x",
     "sass": "^1.71.x",
     "vue": "^3.4.x",
     "vue-router": "^4.3.x",

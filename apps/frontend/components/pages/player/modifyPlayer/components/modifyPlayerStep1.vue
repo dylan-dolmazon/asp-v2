@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import * as yup from "yup";
 import type { FormSubmitEvent } from "#ui/types";
+import { storeToRefs } from "pinia";
 
 const step = defineModel<number>({ required: true });
 
@@ -31,7 +32,9 @@ const props = defineProps({
   },
 });
 
-const { getPersonalsInfos, setPersonalsInfos } = useModifyPlayerStepperState();
+const modifyPlayerStore = useModifyPlayerStepperStore();
+const { getPersonalsInfos } = storeToRefs(modifyPlayerStore);
+
 const form = ref();
 
 const aleradyExist = ref(false);
@@ -48,29 +51,32 @@ const schema = yup.object({
 
 const state = reactive({
   firstname:
-    getPersonalsInfos().firstname != ""
-      ? getPersonalsInfos().firstname
+    getPersonalsInfos.value.firstname != ""
+      ? getPersonalsInfos.value.firstname
       : props.firstname,
   lastname:
-    getPersonalsInfos().lastname != ""
-      ? getPersonalsInfos().lastname
+    getPersonalsInfos.value.lastname != ""
+      ? getPersonalsInfos.value.lastname
       : props.lastname,
-  age: getPersonalsInfos().age != 0 ? getPersonalsInfos().age : props.age,
+  age:
+    getPersonalsInfos.value.age != 0 ? getPersonalsInfos.value.age : props.age,
   nationality:
-    getPersonalsInfos().nationality != "FR"
-      ? getPersonalsInfos().nationality
+    getPersonalsInfos.value.nationality != "FR"
+      ? getPersonalsInfos.value.nationality
       : props.nationality,
   height:
-    getPersonalsInfos().height != 0 ? getPersonalsInfos().height : props.height,
+    getPersonalsInfos.value.height != 0
+      ? getPersonalsInfos.value.height
+      : props.height,
   weight:
-    getPersonalsInfos().weight != 0 ? getPersonalsInfos().weight : props.weight,
+    getPersonalsInfos.value.weight != 0
+      ? getPersonalsInfos.value.weight
+      : props.weight,
 });
 
 const checkName = useDebounceFn(async (firstname: string, lastname: string) => {
   if (
-    firstname &&
     firstname !== "" &&
-    lastname &&
     lastname !== "" &&
     firstname !== props.firstname &&
     lastname !== props.lastname
@@ -80,7 +86,6 @@ const checkName = useDebounceFn(async (firstname: string, lastname: string) => {
       firstname: firstname,
       lastname: lastname,
     });
-    alreadyCheckIsPending.value = pending.value;
 
     if (data.value?.length && data.value?.length > 0) {
       aleradyExist.value = true;
@@ -96,7 +101,10 @@ const checkName = useDebounceFn(async (firstname: string, lastname: string) => {
       ]);
     } else if (error.value) {
       aleradyExist.value = true;
+    } else {
+      aleradyExist.value = false;
     }
+    alreadyCheckIsPending.value = false;
   }
 }, 600);
 
@@ -104,7 +112,7 @@ const onSubmit = async (
   event: FormSubmitEvent<yup.InferType<typeof schema>>
 ) => {
   if (!aleradyExist.value && !alreadyCheckIsPending.value) {
-    setPersonalsInfos(event.data);
+    modifyPlayerStore.setPersonalsInfos(event.data);
     step.value++;
   }
 };

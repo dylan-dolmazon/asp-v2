@@ -1,6 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  ssr: false,
+  ssr: true,
   runtimeConfig: {
     API_URL: process.env.API_URL,
     public: {
@@ -16,7 +16,16 @@ export default defineNuxtConfig({
     "@nuxt/image",
     "nuxt-icon",
     "@vueuse/nuxt",
+    [
+      "@pinia/nuxt",
+      {
+        autoImports: ["defineStore", "acceptHMRUpdate"],
+      },
+    ],
   ],
+  pinia: {
+    storesDirs: ["stores/**"],
+  },
   css: ["~/assets/style/main.scss"],
   colorMode: {
     preference: "light",
@@ -37,6 +46,6 @@ export default defineNuxtConfig({
     },
   ],
   imports: {
-    dirs: ["utils/**", "services/**", "composables/*"],
+    dirs: ["utils/**", "services/**", "composables/*", "stores/**"],
   },
 });

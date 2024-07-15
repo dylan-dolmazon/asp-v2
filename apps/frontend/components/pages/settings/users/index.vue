@@ -1,5 +1,8 @@
 <script setup lang="ts">
-const { getUserInfos } = useUserInfos();
+import { storeToRefs } from "pinia";
+
+const userStore = useUserStore();
+const { getUserInfos } = storeToRefs(userStore);
 
 const page = ref(1);
 const search = ref("");
