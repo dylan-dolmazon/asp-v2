@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const route = useRoute();
 const { isLoggin, resetUserInfos } = useUserInfos();
 
 const items = [
@@ -55,7 +56,12 @@ const logout = () => {
         </template>
       </UDropdown>
     </div>
-    <UButton v-else variant="link" to="/auth/login" class="w-20 h-20">
+    <UButton
+      v-else
+      variant="link"
+      :to="`/auth/login?redirect=${route.path}`"
+      class="w-20 h-20"
+    >
       <UIcon
         name="i-heroicons-user-circle-solid"
         class="User-connectIcon w-full h-full text-white"
