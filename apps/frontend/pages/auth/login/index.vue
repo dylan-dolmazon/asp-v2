@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import * as yup from "yup";
 import type { FormSubmitEvent } from "#ui/types";
+const route = useRoute();
+
 const { setUserInfos } = useUserInfos();
 
 const router = useRouter();
@@ -34,7 +36,11 @@ const onSubmit = async (
 
     setUserInfos(data.value, event.data.remember);
 
-    router.back();
+    if (!!route.query.redirect) {
+      router.push(route.query.redirect as string);
+    } else {
+      router.push("/");
+    }
   }
 };
 </script>

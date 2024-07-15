@@ -11,7 +11,7 @@ export default defineNuxtRouteMiddleware((to) => {
       ["Vous devez être connecté pour accéder à cette page"],
       "error"
     );
-    return navigateTo("/auth/login", { redirectCode: 302 });
+    return navigateTo(`/auth/login?redirect=${to.path}`, { redirectCode: 302 });
   }
 
   if (
