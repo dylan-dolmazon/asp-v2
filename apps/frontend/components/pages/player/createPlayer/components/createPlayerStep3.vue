@@ -3,7 +3,8 @@ import * as yup from "yup";
 import type { FormSubmitEvent } from "#ui/types";
 
 const step = defineModel<number>({ required: true });
-const { getPerformance, setPerformance } = useCreatePlayerStepperState();
+const createPlayerStore = useCreatePlayerStepperStore();
+const { getPerformance } = storeToRefs(createPlayerStore);
 
 const schema = yup.object({
   defending: yup.number().min(1).max(100).required(),
@@ -15,16 +16,16 @@ const schema = yup.object({
 });
 
 const state = reactive({
-  defending: getPerformance().defending,
-  pace: getPerformance().pace,
-  passing: getPerformance().passing,
-  physical: getPerformance().physical,
-  shooting: getPerformance().shooting,
-  dribbling: getPerformance().dribbling,
+  defending: getPerformance.value.defending,
+  pace: getPerformance.value.pace,
+  passing: getPerformance.value.passing,
+  physical: getPerformance.value.physical,
+  shooting: getPerformance.value.shooting,
+  dribbling: getPerformance.value.dribbling,
 });
 
 const onSubmit = (event: FormSubmitEvent<yup.InferType<typeof schema>>) => {
-  setPerformance(event.data);
+  createPlayerStore.setPerformance(event.data);
   step.value++;
 };
 </script>

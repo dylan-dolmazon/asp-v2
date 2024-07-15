@@ -3,7 +3,7 @@ import * as yup from "yup";
 import type { FormSubmitEvent } from "#ui/types";
 const route = useRoute();
 
-const { setUserInfos } = useUserInfos();
+const userStore = useUserStore();
 
 const router = useRouter();
 
@@ -34,7 +34,7 @@ const onSubmit = async (
       "success"
     );
 
-    setUserInfos(data.value, event.data.remember);
+    userStore.setUserInfos(data.value, event.data.remember);
 
     if (!!route.query.redirect) {
       router.push(route.query.redirect as string);

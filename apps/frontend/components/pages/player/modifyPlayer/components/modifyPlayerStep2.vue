@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import * as yup from "yup";
 import type { FormSubmitEvent } from "#ui/types";
+import { storeToRefs } from "pinia";
 
 const step = defineModel<number>({ required: true });
 
@@ -31,7 +32,8 @@ const props = defineProps({
   },
 });
 
-const { getStats, setStats } = useModifyPlayerStepperState();
+const modifyPlayerStore = useModifyPlayerStepperStore();
+const { getStats } = storeToRefs(modifyPlayerStore);
 
 const schema = yup.object({
   footed: yup.mixed<Footed>().required(),
@@ -44,21 +46,28 @@ const schema = yup.object({
 
 const state = reactive({
   footed:
-    getStats().footed != FootedFull.RIGHT ? getStats().footed : props.footed,
+    getStats.value.footed != FootedFull.RIGHT
+      ? getStats.value.footed
+      : props.footed,
   position:
-    getStats().position != PositionFull.FORWARD
-      ? getStats().position
+    getStats.value.position != PositionFull.FORWARD
+      ? getStats.value.position
       : props.position,
-  assists: getStats().assists != 0 ? getStats().assists : props.assists,
+  assists: getStats.value.assists != 0 ? getStats.value.assists : props.assists,
   goalsscored:
-    getStats().goalsscored != 0 ? getStats().goalsscored : props.goalsscored,
+    getStats.value.goalsscored != 0
+      ? getStats.value.goalsscored
+      : props.goalsscored,
   yellowcards:
-    getStats().yellowcards != 0 ? getStats().yellowcards : props.yellowcards,
-  redcards: getStats().redcards != 0 ? getStats().redcards : props.redcards,
+    getStats.value.yellowcards != 0
+      ? getStats.value.yellowcards
+      : props.yellowcards,
+  redcards:
+    getStats.value.redcards != 0 ? getStats.value.redcards : props.redcards,
 });
 
 const onSubmit = (event: FormSubmitEvent<yup.InferType<typeof schema>>) => {
-  setStats(event.data);
+  modifyPlayerStore.setStats(event.data);
   step.value++;
 };
 </script>

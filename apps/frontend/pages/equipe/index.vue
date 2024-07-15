@@ -1,9 +1,12 @@
 <script setup lang="ts">
+import { storeToRefs } from "pinia";
+
 useHead({
   title: "Mon équipe",
 });
 
-const { isAdmin } = useUserInfos();
+const userStore = useUserStore();
+const { isAdmin } = storeToRefs(userStore);
 
 const page = ref(1);
 const modalDeleteIsOpen = ref(false);

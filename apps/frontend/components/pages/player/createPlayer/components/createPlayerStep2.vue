@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import * as yup from "yup";
 import type { FormSubmitEvent } from "#ui/types";
+import { storeToRefs } from "pinia";
 
 const step = defineModel<number>({ required: true });
-const { getStats, setStats } = useCreatePlayerStepperState();
+
+const createPlayerStore = useCreatePlayerStepperStore();
+const { getStats } = storeToRefs(createPlayerStore);
 
 const schema = yup.object({
   footed: yup.mixed<Footed>().required(),
@@ -15,16 +18,16 @@ const schema = yup.object({
 });
 
 const state = reactive({
-  footed: getStats().footed,
-  position: getStats().position,
-  assists: getStats().assists,
-  yellowcards: getStats().yellowcards,
-  goalsscored: getStats().goalsscored,
-  redcards: getStats().redcards,
+  footed: getStats.value.footed,
+  position: getStats.value.position,
+  assists: getStats.value.assists,
+  yellowcards: getStats.value.yellowcards,
+  goalsscored: getStats.value.goalsscored,
+  redcards: getStats.value.redcards,
 });
 
 const onSubmit = (event: FormSubmitEvent<yup.InferType<typeof schema>>) => {
-  setStats(event.data);
+  createPlayerStore.setStats(event.data);
   step.value++;
 };
 </script>

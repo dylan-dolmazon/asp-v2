@@ -1,5 +1,4 @@
 import type { UseFetchOptions } from "nuxt/app";
-const { getToken } = useUserInfos();
 
 type HttpMethod =
   | "GET"
@@ -17,6 +16,7 @@ export const useCustomFetch = async <T>(
   method: HttpMethod = "GET",
   options: UseFetchOptions<T> = {}
 ) => {
+  const userStore = useUserStore();
   const config = useRuntimeConfig();
   const baseURL = config.public.API_URL;
 
@@ -25,8 +25,8 @@ export const useCustomFetch = async <T>(
     method,
     baseURL: baseURL,
     headers: {
-      Authorization: `Bearer ${getToken.value?.token}`,
-      Abilities: getToken.value?.abilities.join(",") || "",
+      Authorization: `Bearer ${userStore.getToken?.token}`,
+      Abilities: userStore.getToken?.abilities.join(",") || "",
     },
   });
 

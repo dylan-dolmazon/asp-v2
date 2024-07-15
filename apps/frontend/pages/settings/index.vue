@@ -1,5 +1,8 @@
 <script setup lang="ts">
-const { isAdmin } = useUserInfos();
+import { storeToRefs } from "pinia";
+
+const userStore = useUserStore();
+const { isAdmin } = storeToRefs(userStore);
 
 const items = [
   {

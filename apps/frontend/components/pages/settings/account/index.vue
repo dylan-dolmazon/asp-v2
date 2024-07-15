@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import * as yup from "yup";
 import type { FormSubmitEvent } from "#ui/types";
+import { storeToRefs } from "pinia";
 
 useHead({
   title: "Paramétres",
 });
 
-const { getUserInfos, setUserInfos } = useUserInfos();
+const userStore = useUserStore();
+const { getUserInfos } = storeToRefs(userStore);
 
 const modifyInfos = ref(false);
 const loading = ref(false);
@@ -57,7 +59,7 @@ const onSubmit = async (
     );
 
     const { password: oldPassword, ...restDatas } = datasToUpdate;
-    setUserInfos({
+    userStore.setUserInfos({
       ...getUserInfos.value,
       ...restDatas,
       updatedAt: data.value.updatedAt,
@@ -83,7 +85,8 @@ const onSubmit = async (
           class="rounded-full mb-8"
         />
         <Typo tag="h3" class="text-white">
-          {{ getUserInfos.firstname }} {{ getUserInfos.lastname }}
+          {{ getUserInfos.firstname }}
+          {{ getUserInfos.lastname }}
         </Typo>
       </div>
       <div class="Settings-userCard-role">

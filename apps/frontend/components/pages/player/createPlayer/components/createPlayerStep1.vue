@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import * as yup from "yup";
 import type { FormSubmitEvent } from "#ui/types";
+import { storeToRefs } from "pinia";
 
 const step = defineModel<number>({ required: true });
-const { getPersonalsInfos, setPersonalsInfos } = useCreatePlayerStepperState();
+const createPlayerStore = useCreatePlayerStepperStore();
+const { getPersonalsInfos } = storeToRefs(createPlayerStore);
+
 const form = ref();
 
 const aleradyExist = ref(false);
@@ -19,22 +22,21 @@ const schema = yup.object({
 });
 
 const state = reactive({
-  firstname: getPersonalsInfos().firstname,
-  lastname: getPersonalsInfos().lastname,
-  age: getPersonalsInfos().age,
-  nationality: getPersonalsInfos().nationality,
-  height: getPersonalsInfos().height,
-  weight: getPersonalsInfos().weight,
+  firstname: getPersonalsInfos.value.firstname,
+  lastname: getPersonalsInfos.value.lastname,
+  age: getPersonalsInfos.value.age,
+  nationality: getPersonalsInfos.value.nationality,
+  height: getPersonalsInfos.value.height,
+  weight: getPersonalsInfos.value.weight,
 });
 
 const checkName = useDebounceFn(async (firstname: string, lastname: string) => {
-  if (firstname && firstname !== "" && lastname && lastname !== "") {
+  if (firstname !== "" && lastname !== "") {
     alreadyCheckIsPending.value = true;
     const { data, error, pending } = await checkIfAlreadyExist({
       firstname: firstname,
       lastname: lastname,
     });
-    alreadyCheckIsPending.value = pending.value;
 
     if (data.value?.length && data.value?.length > 0) {
       aleradyExist.value = true;
@@ -50,15 +52,24 @@ const checkName = useDebounceFn(async (firstname: string, lastname: string) => {
       ]);
     } else if (error.value) {
       aleradyExist.value = true;
+    } else {
+      aleradyExist.value = false;
     }
+    alreadyCheckIsPending.value = false;
   }
 }, 600);
 
 const onSubmit = async (
   event: FormSubmitEvent<yup.InferType<typeof schema>>
 ) => {
+  console.log("✌️aleradyExist.value --->", aleradyExist.value);
+  console.log(
+    "✌️alreadyCheckIsPending.value --->",
+    alreadyCheckIsPending.value
+  );
   if (!aleradyExist.value && !alreadyCheckIsPending.value) {
-    setPersonalsInfos(event.data);
+    console.log("test");
+    createPlayerStore.setPersonalsInfos(event.data);
     step.value++;
   }
 };

@@ -1,7 +1,7 @@
 <script setup lang="ts">
-const route = useRoute();
-const { isLoggin, resetUserInfos } = useUserInfos();
+const userStore = useUserStore();
 
+const route = useRoute();
 const items = [
   [
     {
@@ -22,14 +22,14 @@ const items = [
 ];
 
 const logout = () => {
-  resetUserInfos();
+  userStore.resetUserInfos();
   navigateTo("/auth/login");
 };
 </script>
 
 <template>
   <div class="User">
-    <div v-if="isLoggin" class="w-fit h-fit pt-2">
+    <div v-if="userStore.isLoggin" class="w-fit h-fit pt-2">
       <UDropdown :items="items">
         <UAvatar
           src="https://avatars.githubusercontent.com/u/739984?v=4"
