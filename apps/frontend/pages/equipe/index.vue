@@ -5,6 +5,7 @@ useHead({
   title: "Mon équipe",
 });
 
+const router = useRouter();
 const userStore = useUserStore();
 const { isAdmin } = storeToRefs(userStore);
 
@@ -24,7 +25,16 @@ const searchName = useDebounceFn((newVal) => {
 
 const selectedPlayer = ref<Player | undefined>(undefined);
 
-const { pending, data: players, refresh } = await getPlayers(page, 10, search);
+const sort = ref({
+  column: "createdAt",
+  direction: "desc",
+});
+
+const {
+  pending,
+  data: players,
+  refresh,
+} = await getPlayers(page, 10, sort, search);
 
 const suppPlayer = async (id: string) => {
   deleteLoading.value = true;
@@ -75,6 +85,19 @@ const actions = isAdmin.value
         },
       ],
     ];
+
+watch(sort, (value) => {
+  router.push({
+    query:
+      value.column === "createdAt"
+        ? {}
+        : {
+            ...router.currentRoute.value.query,
+            sortBy: value.column,
+            direction: value.direction,
+          },
+  });
+});
 
 watch(slideOverCreateIsOpen, (newValue) => {
   if (!newValue) refresh();
@@ -143,7 +166,13 @@ watch(slideOverModifyIsOpen, (newValue) => {
         class="Equipe-head-button"
       />
     </div>
-    <UTable :loading="pending" :columns="playersColumns" :rows="players?.data">
+    <UTable
+      v-model:sort="sort"
+      :loading="pending"
+      :columns="playersColumns"
+      :rows="players?.data"
+      sort-mode="manual"
+    >
       <template #actions-data="{ row }">
         <UDropdown :items="actions(row)">
           <UButton

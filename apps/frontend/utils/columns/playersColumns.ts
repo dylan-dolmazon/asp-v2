@@ -17,14 +17,17 @@ export const playersColumns = [
   {
     key: "firstname",
     label: "Prénom",
+    sortable: true,
   },
   {
     key: "lastname",
     label: "Nom",
+    sortable: true,
   },
   {
     key: "age",
     label: "Age",
+    sortable: true,
   },
   {
     key: "positionLabel",
@@ -41,26 +44,32 @@ export const playersColumns = [
   {
     key: "pace",
     label: "Vitesse",
+    sortable: true,
   },
   {
     key: "shooting",
     label: "Tirs",
+    sortable: true,
   },
   {
     key: "passing",
     label: "Passes",
+    sortable: true,
   },
   {
     key: "dribbling",
     label: "Dribbles",
+    sortable: true,
   },
   {
     key: "defending",
     label: "Défense",
+    sortable: true,
   },
   {
     key: "physical",
     label: "Physique",
+    sortable: true,
   },
   {
     key: "actions",
