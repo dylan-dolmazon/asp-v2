@@ -9,8 +9,15 @@ import { ModelQueryBuilderContract } from '@adonisjs/lucid/types/model'
 
 export default class PlayersController {
   async index({ request }: HttpContext) {
-    const { page = 1, limit = 10, name } = request.qs()
-    const query = Player.query().orderBy('createdAt', 'desc')
+    const {
+      page = 1,
+      limit = 10,
+      name,
+      sortBy = { column: 'createdAt', direction: 'desc' },
+    } = request.qs()
+
+    const { column, direction } = JSON.parse(sortBy)
+    const query = Player.query().orderBy(column, direction)
 
     if (name) {
       query.where(buildSearchQuery(name))
