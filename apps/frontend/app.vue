@@ -33,7 +33,7 @@ useSeoMeta({
   ogTitle: "AS Pertuis",
   description: "Application de gestion de l'équipe de football du Pertuis.",
   ogDescription: "Application de gestion de l'équipe de football du Pertuis.",
-  ogImage: "/twitter-card.png",
+  ogImage: "http://asp-app.fr.nf/api/twitter-card.png",
   twitterCard: "summary_large_image",
 });
 </script>
