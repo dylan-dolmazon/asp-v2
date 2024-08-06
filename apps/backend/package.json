@@ -63,6 +63,7 @@
     "@aws-sdk/s3-request-presigner": "^3.511.x",
     "@vinejs/vine": "^1.7.x",
     "axios": "^1.6.x",
+    "canvas": "^2.11.x",
     "dayjs": "^1.11.x",
     "luxon": "^3.4.x",
     "pg": "^8.11.x",

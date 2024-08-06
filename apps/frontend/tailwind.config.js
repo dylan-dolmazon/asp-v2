@@ -1,3 +1,5 @@
+import { _height } from "#tailwind-config/theme";
+
 export default {
   theme: {
     extend: {
@@ -53,6 +55,14 @@ export default {
         logo: {
           yellow: "#e2d618",
         },
+      },
+      height: {
+        "2xs": "24px",
+        xs: "28px",
+        sm: "32px",
+        md: "36px",
+        lg: "40px",
+        xl: "44px",
       },
     },
   },

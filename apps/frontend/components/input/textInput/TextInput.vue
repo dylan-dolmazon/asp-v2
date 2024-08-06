@@ -43,6 +43,10 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  skeleton: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const visible = ref(false);
@@ -57,7 +61,9 @@ const togglePasswordVisibility = () => {
 </script>
 
 <template>
-  <UFormGroup :label="label" :name="name" size="xl" :required="required">
+  <USkeleton v-if="skeleton" :class="`skeleton-h-${size}`" />
+
+  <UFormGroup v-else :label="label" :name="name" size="xl" :required="required">
     <UInput
       v-model="model"
       :type="type"
@@ -96,6 +102,32 @@ const togglePasswordVisibility = () => {
 .input--readOnly {
   input {
     cursor: default;
+  }
+}
+
+.skeleton-h {
+  &-2xs {
+    height: 48px;
+  }
+
+  &-xs {
+    height: 52px;
+  }
+
+  &-sm {
+    height: 56px;
+  }
+
+  &-md {
+    height: 60px;
+  }
+
+  &-lg {
+    height: 64px;
+  }
+
+  &-xl {
+    height: 68px;
   }
 }
 </style>

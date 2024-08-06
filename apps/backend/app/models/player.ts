@@ -2,6 +2,7 @@ import { DateTime } from 'luxon'
 import { BaseModel, column, computed } from '@adonisjs/lucid/orm'
 import { getPosition } from '../utils/functions/get_position.js'
 import { getFooted } from '../utils/functions/get_footed.js'
+import { capitalizeFirstLetter } from '#services/string/capitalize'
 
 export default class Player extends BaseModel {
   @column({ isPrimary: true })
@@ -63,7 +64,7 @@ export default class Player extends BaseModel {
 
   @computed()
   get fullname() {
-    return `${this.firstname} ${this.lastname}`
+    return `${capitalizeFirstLetter(this.firstname)} ${capitalizeFirstLetter(this.lastname)}`
   }
 
   @computed()

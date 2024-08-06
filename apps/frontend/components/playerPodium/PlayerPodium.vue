@@ -1,13 +1,18 @@
 <script setup lang="ts">
 defineProps({
   players: Array<PlayerRanking>,
+  skeleton: {
+    type: Boolean,
+    default: false,
+  },
 });
 </script>
 
 <template>
   <div class="PlayerPodium">
     <PlayerCard
-      v-for="(player, index) in players"
+      :skeleton="skeleton"
+      v-for="(player, index) in skeleton ? Array(3).fill({}) : players"
       :key="player.id"
       :player="player"
       :rankingNumber="index"
@@ -31,16 +36,16 @@ defineProps({
     .PlayerCard {
       margin-top: 0;
 
-      &--gold {
+      &:nth-child(2) {
         margin-top: 30px;
         order: 0;
       }
 
-      &--special {
+      &:nth-child(1) {
         order: 1;
       }
 
-      &--silver {
+      &:nth-child(3) {
         margin-top: 80px;
         order: 2;
       }
