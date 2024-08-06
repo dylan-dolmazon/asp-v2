@@ -6,6 +6,10 @@ defineProps({
     type: Object as PropType<ClubInfo[]>,
     required: true,
   },
+  isLoading: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const sort = ref({
@@ -33,6 +37,7 @@ watch(sort, (value) => {
     class="mt-8"
     :rows="classment"
     :columns="classmentColumns"
+    :loading="isLoading"
   >
     <template #name-data="{ row }">
       <Ranking :number="row.ranking" />

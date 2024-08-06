@@ -9,11 +9,16 @@ defineProps({
     type: String as PropType<"gold" | "silver" | "special">,
     default: "gold",
   },
+  skeleton: {
+    type: Boolean,
+    default: false,
+  },
 });
 </script>
 
 <template>
-  <div class="PlayerCard" :class="`PlayerCard--${style}`">
+  <USkeleton v-if="skeleton" class="PlayerCard" />
+  <div v-else class="PlayerCard" :class="`PlayerCard--${style}`">
     <div class="PlayerCard-top">
       <div class="PlayerCard-top-infos">
         <Typo format="bold" class="PlayerCard-top-infos-rating">

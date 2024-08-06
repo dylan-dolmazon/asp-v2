@@ -189,7 +189,7 @@ const onChange = (tab: number) => {
         <div class="w-16 h-16 m-auto">
           <Icon
             v-if="isLoading"
-            name="svg-spinners:3-dots-fade"
+            name="svg-spinners:ring-resize"
             width="64"
             height="64"
           />
@@ -230,7 +230,7 @@ const onChange = (tab: number) => {
               </Typo>
             </div>
           </Snackbar>
-          <Classment v-else :classment="classment" />
+          <Classment v-else :classment="classment" :isLoading />
         </template>
 
         <template #calendar="{ item }">

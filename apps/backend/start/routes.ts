@@ -15,6 +15,7 @@ const CompetsController = () => import('#controllers/compets_controller')
 const DofasController = () => import('#controllers/dofas_controller')
 const CountriesController = () => import('#controllers/countries_controller')
 const PlayersController = () => import('#controllers/players_controller')
+const CanvasController = () => import('#controllers/canvas_controller')
 
 router
   .get('/', async () => {
@@ -133,6 +134,13 @@ router.put('classement-history/save', [ClassementHistoriesController, 'saveAll']
   })
 )
 router.put('classement-history/check', [ClassementHistoriesController, 'checkHistories']).use(
+  middleware.auth({
+    guards: ['api'],
+  })
+)
+
+// ------------------- Canvas routes ------------------- //
+router.get('canvas', [CanvasController, 'index']).use(
   middleware.auth({
     guards: ['api'],
   })
